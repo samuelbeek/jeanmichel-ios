@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Jukebox
 
 struct Podcast {
     let title : String
@@ -16,6 +17,12 @@ struct Podcast {
     static func getUrlsForPodcasts(podcasts : [Podcast]) -> [NSURL] {
         return podcasts.map { podcast -> NSURL in
             return podcast.audioUrl
+        }
+    }
+    
+    static func getJukeBoxItemsForPodcasts(podcasts : [Podcast]) -> [JukeboxItem] {
+        return getUrlsForPodcasts(podcasts).map { url -> JukeboxItem in
+            return JukeboxItem(URL: url)
         }
     }
  }
