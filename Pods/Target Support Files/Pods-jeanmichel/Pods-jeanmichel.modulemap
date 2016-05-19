@@ -1,0 +1,6 @@
+framework module Pods_jeanmichel {
+  umbrella header "Pods-jeanmichel-umbrella.h"
+
+  export *
+  module * { export * }
+}
