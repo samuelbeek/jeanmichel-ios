@@ -8,47 +8,35 @@
 
 import UIKit
 
-class BrowseTableViewController : UITableViewController {
+class StationTableViewController : UITableViewController {
     
-    var dataSource : UITableViewDataSource!
+    var dataSource : TableViewDataSourceProxy!
+    var stations = [Station(title: "science", endpoint: "27%2C11"), Station(title: "stories", endpoint: "27%2C11"), Station(title: "internet", endpoint: "27%2C11"), Station(title: "design", endpoint: "27%2C11")]
     
     init() {
         super.init(nibName: nil, bundle: nil)
     }
     
     override func viewDidLoad() {
+        self.title = "stations"
+
         super.viewDidLoad()
-        let source = PodcastDataSource()
+        let source = StationDataSource()
+        source.data = stations
         let proxy = TableViewDataSourceProxy(dataSource: source)
         dataSource = proxy
         tableView.dataSource = dataSource
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
         tableView.reloadData()
         tableView.delegate = self
-        self.title = "stations"
-        
-        API.getPodcasts() { [weak self] result in
-        
-            guard let strongSelf = self else {
-                return
-            }
-            
-            switch result {
-                
-            case .Value(let podcasts):
-                source.data = podcasts
-                strongSelf.tableView.reloadData()
-                break
-            case .Error(let error):
-                print(error)
-            }
-            
-        }
         
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        guard let station = stations[safe: indexPath.row] else {
+             return
+        }
+        self.navigationController?.pushViewController(EpisodeViewController(station: station), animated: true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -59,4 +47,9 @@ class BrowseTableViewController : UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+extension Array {
+    subscript (safe index: Int) -> Element? {
+        return indices ~= index ? self[index] : nil
+    }
 }

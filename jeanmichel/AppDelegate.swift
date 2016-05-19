@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
         if let window = window {
-            let navigationController = UINavigationController(rootViewController: BrowseTableViewController())
+            let navigationController = UINavigationController(rootViewController: StationTableViewController())
             window.backgroundColor = UIColor.whiteColor()
             window.rootViewController = navigationController
             window.makeKeyAndVisible()

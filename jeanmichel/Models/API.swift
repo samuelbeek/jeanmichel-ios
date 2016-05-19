@@ -19,8 +19,8 @@ struct API {
     
     static let baseUrl = "http://localhost:3000"
     
-    static func getPodcasts(callback: Result<[Podcast]> ->()) {
-        Alamofire.request(.GET, "\(baseUrl)/audiosearch/shows/episodes?shows=27%2C11", encoding: .JSON, parameters: nil).responseJSON {
+    static func getPodcasts(endpoint: String, callback: Result<[Podcast]> ->()) {
+        Alamofire.request(.GET, "\(baseUrl)/audiosearch/shows/episodes?shows=\(endpoint)", encoding: .JSON, parameters: nil).responseJSON {
             response in
             
             switch response.result {
