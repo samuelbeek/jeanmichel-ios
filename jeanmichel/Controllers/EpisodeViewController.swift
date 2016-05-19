@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Jukebox
 
 class EpisodeViewController : UITableViewController {
     
@@ -39,6 +40,7 @@ class EpisodeViewController : UITableViewController {
                 
             case .Value(let podcasts):
                 source.data = podcasts
+                
                 strongSelf.tableView.reloadData()
                 break
             case .Error(let error):
@@ -52,6 +54,7 @@ class EpisodeViewController : UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
+    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)

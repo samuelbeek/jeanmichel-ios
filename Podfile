@@ -4,6 +4,7 @@
 use_frameworks!
 
 target 'jeanmichel' do
-  pod 'SwiftyJSON', '~> 2.3'
   pod 'Alamofire', '~> 3.4'
+  pod 'Jukebox', '~> 0.1.0'
+  pod 'SwiftyJSON', '~> 2.3'
 end
