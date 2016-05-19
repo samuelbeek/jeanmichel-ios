@@ -18,11 +18,12 @@ class BrowseTableViewController : UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let proxy = TableViewDataSourceProxy(dataSource: MovieTitleDataSource())
+        let proxy = TableViewDataSourceProxy(dataSource: PodcastDataSource())
         dataSource = proxy
         tableView.dataSource = dataSource
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
         tableView.reloadData()
+        self.title = "stations"
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -33,19 +34,4 @@ class BrowseTableViewController : UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-}
-
-class MovieTitleDataSource: TableViewDataSourceable, DataContaining {
-    typealias Data = [String]
-    typealias Section = Data
-    var data: Data? = ["Casino Royale","Quantum of Solace","Skyfall","Spectre"]
-    
-    func reuseIdentifier(forIndexPath indexPath: NSIndexPath) -> String {
-        return Constants.defaultCellIdentifier
-    }
-    
-    func configure(cell cell: UITableViewCell, forItem item: String, inView view: UITableView) -> UITableViewCell {
-        cell.textLabel?.text = item
-        return cell
-    }
 }

@@ -26,6 +26,7 @@
 		5BAC54DF1CEE559E0068BECA /* TableViewDataSourceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54D01CEE559E0068BECA /* TableViewDataSourceable.swift */; };
 		5BAC54E01CEE559E0068BECA /* TableViewDataSourceProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54D11CEE559E0068BECA /* TableViewDataSourceProxy.swift */; };
 		5BAC54E21CEE56590068BECA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54E11CEE56590068BECA /* Constants.swift */; };
+		5BAC54E41CEE61E40068BECA /* PodcastDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54E31CEE61E40068BECA /* PodcastDataSource.swift */; };
 		CD7B90E725843AE806E7F4C0 /* Pods_jeanmichel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 827D7768A15AFFFF07AF20BA /* Pods_jeanmichel.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		5BAC54D01CEE559E0068BECA /* TableViewDataSourceable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TableViewDataSourceable.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5BAC54D11CEE559E0068BECA /* TableViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TableViewDataSourceProxy.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5BAC54E11CEE56590068BECA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		5BAC54E31CEE61E40068BECA /* PodcastDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastDataSource.swift; sourceTree = "<group>"; };
 		6151EB817A0A56E4929BC15E /* Pods-jeanmichel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jeanmichel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-jeanmichel/Pods-jeanmichel.debug.xcconfig"; sourceTree = "<group>"; };
 		827D7768A15AFFFF07AF20BA /* Pods_jeanmichel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_jeanmichel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1FE79C6C12FD9BD3B9039C4 /* Pods-jeanmichel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jeanmichel.release.xcconfig"; path = "Pods/Target Support Files/Pods-jeanmichel/Pods-jeanmichel.release.xcconfig"; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				5BAC54E11CEE56590068BECA /* Constants.swift */,
+				5BAC54E31CEE61E40068BECA /* PodcastDataSource.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				5BAC54D51CEE559E0068BECA /* CollectionViewDataSourceProxy.swift in Sources */,
 				5BAC54D21CEE559E0068BECA /* CellProviding.swift in Sources */,
 				5BAC54BF1CEE54B90068BECA /* BrowseTableViewController.swift in Sources */,
+				5BAC54E41CEE61E40068BECA /* PodcastDataSource.swift in Sources */,
 				5BAC54D31CEE559E0068BECA /* CollectionViewDataSource.swift in Sources */,
 				5BAC54E01CEE559E0068BECA /* TableViewDataSourceProxy.swift in Sources */,
 				5BAC54D81CEE559E0068BECA /* EmptyCheckable.swift in Sources */,
