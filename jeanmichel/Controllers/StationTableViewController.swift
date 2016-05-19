@@ -29,7 +29,6 @@ class StationTableViewController : UITableViewController {
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
         tableView.reloadData()
         tableView.delegate = self
-        
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -39,9 +38,6 @@ class StationTableViewController : UITableViewController {
         self.navigationController?.pushViewController(EpisodeViewController(station: station), animated: true)
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
