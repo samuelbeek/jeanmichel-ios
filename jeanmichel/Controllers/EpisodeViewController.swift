@@ -40,11 +40,8 @@ class EpisodeViewController : UITableViewController {
                 
             case .Value(let podcasts):
                 source.data = podcasts
-                guard let master = strongSelf.navigationController as? MasterViewController else {
-                    return
-                }
-                master.setItems(podcasts)
-                master.play()
+                AudioPlayer.instance.setItems(podcasts)
+                AudioPlayer.instance.play()
                 strongSelf.tableView.reloadData()
                 break
             case .Error(let error):
@@ -56,10 +53,7 @@ class EpisodeViewController : UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let master = self.navigationController as? MasterViewController else {
-            return
-        }
-        master.play(indexPath.row)
+        AudioPlayer.instance.play(indexPath.row)
     }
     
     
