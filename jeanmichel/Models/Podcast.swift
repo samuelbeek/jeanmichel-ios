@@ -12,4 +12,10 @@ struct Podcast {
     let title : String
     let description : String
     let audioUrl : NSURL
-}
+    
+    static func getUrlsForPodcasts(podcasts : [Podcast]) -> [NSURL] {
+        return podcasts.map { podcast -> NSURL in
+            return podcast.audioUrl
+        }
+    }
+ }
