@@ -24,21 +24,30 @@ class BrowseTableViewController : UITableViewController {
         tableView.dataSource = dataSource
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
         tableView.reloadData()
+        tableView.delegate = self
         self.title = "stations"
         
-        API.getPodcasts() { result in
-            debugPrint(result)
+        API.getPodcasts() { [weak self] result in
+        
+            guard let strongSelf = self else {
+                return
+            }
             
             switch result {
+                
             case .Value(let podcasts):
                 source.data = podcasts
-                self.tableView.reloadData()
+                strongSelf.tableView.reloadData()
                 break
             case .Error(let error):
-                debugPrint(error)
+                print(error)
             }
             
         }
+        
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
     
