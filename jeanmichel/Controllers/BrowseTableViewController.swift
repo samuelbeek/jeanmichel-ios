@@ -18,12 +18,28 @@ class BrowseTableViewController : UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let proxy = TableViewDataSourceProxy(dataSource: PodcastDataSource())
+        let source = PodcastDataSource()
+        let proxy = TableViewDataSourceProxy(dataSource: source)
         dataSource = proxy
         tableView.dataSource = dataSource
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
         tableView.reloadData()
         self.title = "stations"
+        
+        API.getPodcasts() { result in
+            debugPrint(result)
+            
+            switch result {
+            case .Value(let podcasts):
+                source.data = podcasts
+                self.tableView.reloadData()
+                break
+            case .Error(let error):
+                debugPrint(error)
+            }
+            
+        }
+        
     }
     
     override func viewDidAppear(animated: Bool) {

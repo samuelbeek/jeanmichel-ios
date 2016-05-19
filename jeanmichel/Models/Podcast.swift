@@ -10,6 +10,6 @@ import Foundation
 
 struct Podcast {
     let title : String
+    let description : String
     let audioUrl : NSURL
-    let imageUrl : NSURL
 }

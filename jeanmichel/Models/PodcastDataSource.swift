@@ -9,16 +9,16 @@
 import UIKit
 
 class PodcastDataSource: TableViewDataSourceable, DataContaining {
-    typealias Data = [String]
+    typealias Data = [Podcast]
     typealias Section = Data
-    var data: Data? = ["Science","Art","Design","Interviewss"]
+    var data: Data?
     
     func reuseIdentifier(forIndexPath indexPath: NSIndexPath) -> String {
         return Constants.defaultCellIdentifier
     }
     
-    func configure(cell cell: UITableViewCell, forItem item: String, inView view: UITableView) -> UITableViewCell {
-        cell.textLabel?.text = item
+    func configure(cell cell: UITableViewCell, forItem item: Podcast, inView view: UITableView) -> UITableViewCell {
+        cell.textLabel?.text = item.title
         return cell
     }
 }
