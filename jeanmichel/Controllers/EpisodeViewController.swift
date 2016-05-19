@@ -13,17 +13,10 @@ class EpisodeViewController : UITableViewController {
     
     var dataSource : UITableViewDataSource!
     let station : Station
-    var podcasts = [Podcast]() {
-        didSet {
-            self.jukeBox = Jukebox(delegate: self, items: Podcast.getJukeBoxItemsForPodcasts(podcasts))
-        }
-    }
-    var jukeBox : Jukebox!
     
     init(station: Station) {
         self.station = station
         super.init(nibName: nil, bundle: nil)
-        jukeBox = Jukebox(delegate: self, items: [])
     }
     
     override func viewDidLoad() {
@@ -47,8 +40,11 @@ class EpisodeViewController : UITableViewController {
                 
             case .Value(let podcasts):
                 source.data = podcasts
-                self?.podcasts = podcasts
-                self?.playPodcastsAtIndex(0)
+                guard let master = strongSelf.navigationController as? MasterViewController else {
+                    return
+                }
+                master.setItems(podcasts)
+                master.play()
                 strongSelf.tableView.reloadData()
                 break
             case .Error(let error):
@@ -59,12 +55,11 @@ class EpisodeViewController : UITableViewController {
         
     }
     
-    func playPodcastsAtIndex(index: Int) {
-        jukeBox.playAtIndex(index)
-    }
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.playPodcastsAtIndex(indexPath.row)
+        guard let master = self.navigationController as? MasterViewController else {
+            return
+        }
+        master.play(indexPath.row)
     }
     
     
@@ -78,15 +73,3 @@ class EpisodeViewController : UITableViewController {
     
 }
 
-extension EpisodeViewController : JukeboxDelegate {
-    func jukeboxStateDidChange(jukebox : Jukebox) {
-        
-    }
-    func jukeboxPlaybackProgressDidChange(jukebox : Jukebox) {
-        
-    }
-    func jukeboxDidLoadItem(jukebox : Jukebox, item : JukeboxItem) {
-        
-    }
-
-}
