@@ -34,6 +34,10 @@
 		5BAC54EE1CEE6FA90068BECA /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54ED1CEE6FA90068BECA /* EpisodeViewController.swift */; };
 		5BAC54F01CEE7BB70068BECA /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54EF1CEE7BB70068BECA /* MasterViewController.swift */; };
 		5BAC54F21CEE7F8B0068BECA /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54F11CEE7F8B0068BECA /* AudioPlayer.swift */; };
+		5BAC54F51CEF087E0068BECA /* Playable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54F41CEF087E0068BECA /* Playable.swift */; };
+		5BFDBF8C1D073F420042949E /* ChannelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDBF8B1D073F420042949E /* ChannelTableViewCell.swift */; };
+		5BFDBF8E1D073FF30042949E /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDBF8D1D073FF30042949E /* Styles.swift */; };
+		5BFDBF911D08192E0042949E /* UIcolorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDBF901D08192E0042949E /* UIcolorExtensions.swift */; };
 		CD7B90E725843AE806E7F4C0 /* Pods_jeanmichel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 827D7768A15AFFFF07AF20BA /* Pods_jeanmichel.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +71,10 @@
 		5BAC54ED1CEE6FA90068BECA /* EpisodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		5BAC54EF1CEE7BB70068BECA /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		5BAC54F11CEE7F8B0068BECA /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioPlayer.swift; path = Utilities/AudioPlayer.swift; sourceTree = "<group>"; };
+		5BAC54F41CEF087E0068BECA /* Playable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playable.swift; path = Protocols/Playable.swift; sourceTree = "<group>"; };
+		5BFDBF8B1D073F420042949E /* ChannelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelTableViewCell.swift; sourceTree = "<group>"; };
+		5BFDBF8D1D073FF30042949E /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		5BFDBF901D08192E0042949E /* UIcolorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIcolorExtensions.swift; path = Extensions/UIcolorExtensions.swift; sourceTree = "<group>"; };
 		6151EB817A0A56E4929BC15E /* Pods-jeanmichel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jeanmichel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-jeanmichel/Pods-jeanmichel.debug.xcconfig"; sourceTree = "<group>"; };
 		827D7768A15AFFFF07AF20BA /* Pods_jeanmichel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_jeanmichel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1FE79C6C12FD9BD3B9039C4 /* Pods-jeanmichel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jeanmichel.release.xcconfig"; path = "Pods/Target Support Files/Pods-jeanmichel/Pods-jeanmichel.release.xcconfig"; sourceTree = "<group>"; };
@@ -105,6 +113,7 @@
 		5BAC54A71CEE4E680068BECA /* jeanmichel */ = {
 			isa = PBXGroup;
 			children = (
+				5BFDBF8F1D08191E0042949E /* Extensions */,
 				5BAC54A81CEE4E680068BECA /* AppDelegate.swift */,
 				5BAC54BC1CEE53D80068BECA /* Controllers */,
 				5BAC54BA1CEE53CB0068BECA /* Models */,
@@ -112,6 +121,7 @@
 				5BAC54C01CEE559E0068BECA /* External */,
 				5BAC54BD1CEE53F20068BECA /* Resources */,
 				5BAC54F31CEE7F970068BECA /* Utilities */,
+				5BAC54F61CEF08840068BECA /* Protocols */,
 			);
 			path = jeanmichel;
 			sourceTree = "<group>";
@@ -125,6 +135,7 @@
 				5BAC54E91CEE6EF70068BECA /* Station.swift */,
 				5BAC54E31CEE61E40068BECA /* PodcastDataSource.swift */,
 				5BAC54EB1CEE6F5C0068BECA /* StationDataSource.swift */,
+				5BFDBF8D1D073FF30042949E /* Styles.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -132,6 +143,7 @@
 		5BAC54BB1CEE53D20068BECA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5BFDBF8B1D073F420042949E /* ChannelTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -191,6 +203,22 @@
 				5BAC54F11CEE7F8B0068BECA /* AudioPlayer.swift */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		5BAC54F61CEF08840068BECA /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5BAC54F41CEF087E0068BECA /* Playable.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		5BFDBF8F1D08191E0042949E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5BFDBF901D08192E0042949E /* UIcolorExtensions.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		E817AC09F95ECA11AC598BA4 /* Pods */ = {
@@ -336,6 +364,7 @@
 				5BAC54D41CEE559E0068BECA /* CollectionViewDataSourceable.swift in Sources */,
 				5BAC54A91CEE4E680068BECA /* AppDelegate.swift in Sources */,
 				5BAC54D71CEE559E0068BECA /* ElementsContaining.swift in Sources */,
+				5BFDBF8C1D073F420042949E /* ChannelTableViewCell.swift in Sources */,
 				5BAC54F21CEE7F8B0068BECA /* AudioPlayer.swift in Sources */,
 				5BAC54D61CEE559E0068BECA /* DataContaining.swift in Sources */,
 				5BAC54EE1CEE6FA90068BECA /* EpisodeViewController.swift in Sources */,
@@ -345,6 +374,7 @@
 				5BAC54E61CEE62330068BECA /* Podcast.swift in Sources */,
 				5BAC54BF1CEE54B90068BECA /* StationTableViewController.swift in Sources */,
 				5BAC54E41CEE61E40068BECA /* PodcastDataSource.swift in Sources */,
+				5BFDBF8E1D073FF30042949E /* Styles.swift in Sources */,
 				5BAC54D31CEE559E0068BECA /* CollectionViewDataSource.swift in Sources */,
 				5BAC54E01CEE559E0068BECA /* TableViewDataSourceProxy.swift in Sources */,
 				5BAC54EA1CEE6EF70068BECA /* Station.swift in Sources */,
@@ -353,9 +383,11 @@
 				5BAC54DD1CEE559E0068BECA /* State.swift in Sources */,
 				5BAC54DA1CEE559E0068BECA /* Loadable.swift in Sources */,
 				5BAC54DB1CEE559E0068BECA /* Sectionable.swift in Sources */,
+				5BFDBF911D08192E0042949E /* UIcolorExtensions.swift in Sources */,
 				5BAC54DE1CEE559E0068BECA /* TableViewDataSource.swift in Sources */,
 				5BAC54DC1CEE559E0068BECA /* SectionType.swift in Sources */,
 				5BAC54EC1CEE6F5C0068BECA /* StationDataSource.swift in Sources */,
+				5BAC54F51CEF087E0068BECA /* Playable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
