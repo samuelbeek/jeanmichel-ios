@@ -9,7 +9,7 @@
 import Foundation
 import Jukebox
 
-struct Podcast {
+struct Podcast : Playable {
     let title : String
     let description : String
     let audioUrl : NSURL

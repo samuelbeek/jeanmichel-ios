@@ -30,7 +30,7 @@ class AudioPlayer : NSObject {
     }
     
     internal func play(index: Int? = 0) {
-        self.play(index)
+        // self.play(index)
     }
 
 }
@@ -45,5 +45,4 @@ extension AudioPlayer : JukeboxDelegate {
     func jukeboxDidLoadItem(jukebox : Jukebox, item : JukeboxItem) {
         
     }
-    
 }
