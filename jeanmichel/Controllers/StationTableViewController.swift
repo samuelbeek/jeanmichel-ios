@@ -11,7 +11,7 @@ import UIKit
 class StationTableViewController : UITableViewController {
     
     var dataSource : TableViewDataSourceProxy!
-    var stations = [Station(title: "science", endpoint: "27%2C11"), Station(title: "stories", endpoint: "27%2C11"), Station(title: "internet", endpoint: "27%2C11"), Station(title: "design", endpoint: "27%2C11")]
+    var stations = [Station(title: "science", endpoint: "27%2C11"), Station(title: "stories", endpoint: "27%2C11"), Station(title: "internet", endpoint: "27%2C11"), Station(title: "design", endpoint: "27%2C11"),Station(title: "design", endpoint: "27%2C11"),Station(title: "design", endpoint: "27%2C11"),Station(title: "design", endpoint: "27%2C11")]
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -26,9 +26,15 @@ class StationTableViewController : UITableViewController {
         let proxy = TableViewDataSourceProxy(dataSource: source)
         dataSource = proxy
         tableView.dataSource = dataSource
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
+        tableView.registerClass(ChannelTableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
         tableView.reloadData()
         tableView.delegate = self
+        
+        // NavigationController Styling
+        navigationController?.navigationBar.barTintColor = Styles.Colors.stationHeaderBackgroundColor
+        navigationController?.navigationBar.tintColor = .whiteColor()
+        navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: Styles.headerFont, NSForegroundColorAttributeName: UIColor.whiteColor()]
+
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -36,6 +42,10 @@ class StationTableViewController : UITableViewController {
              return
         }
         self.navigationController?.pushViewController(EpisodeViewController(station: station), animated: true)
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return Styles.stationCellHeight
     }
     
     

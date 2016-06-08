@@ -11,7 +11,6 @@ import Jukebox
 
 class MasterViewController : UINavigationController {
     
-    
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
     }
