@@ -34,7 +34,7 @@ class PlayerView : UIView {
         addSubview(previousButton)
 
         playButton = UIButton(type: .Custom)
-        playButton.setImage(UIImage(named: "buttonPlay"), forState: .Normal)
+        playButton.setImage(UIImage(named: "buttonPause"), forState: .Normal)
         addSubview(playButton)
 
         constrain(stationLabel, skipButton, previousButton, playButton) { station, skip, prev, play in
@@ -61,6 +61,15 @@ class PlayerView : UIView {
         }
         
     }
+    
+    func play() {
+        playButton.setImage(UIImage(named: "buttonPause"), forState: .Normal)
+    }
+    
+    func pause() {
+        playButton.setImage(UIImage(named: "buttonPlay"), forState: .Normal)
+    }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

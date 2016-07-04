@@ -19,14 +19,23 @@ class AudioPlayer : NSObject {
             audioPlayer = Jukebox(delegate: self, items: Podcast.getJukeBoxItemsForPodcasts(podcasts))
         }
     }
+    
+    internal var state : JukeboxState {
+        return audioPlayer.state
+    }
 
-    override init() {
+    private override init() {
         super.init()
         audioPlayer = Jukebox(delegate: self, items: [])
     }
     
+    
     internal func setItems(podcasts: [Podcast]) {
         self.podcasts = podcasts
+    }
+    
+    internal func pause() {
+        audioPlayer.pause()
     }
     
     internal func play(index: Int? = 0) {

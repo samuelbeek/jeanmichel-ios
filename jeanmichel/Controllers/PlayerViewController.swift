@@ -34,6 +34,10 @@ class PlayerViewController : UIViewController {
         let proxy = CollectionViewDataSourceProxy(dataSource: source)
         dataSource = proxy
         
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.translucent = true
+
         // layout stuff
         let layout: UICollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsetsZero
@@ -44,6 +48,7 @@ class PlayerViewController : UIViewController {
 
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.dataSource = dataSource
+        collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0) 
         collectionView.showsHorizontalScrollIndicator = false
         
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
@@ -53,6 +58,9 @@ class PlayerViewController : UIViewController {
         view.addSubview(collectionView)
         
         playerView = PlayerView(frame: view.bounds, station: self.station)
+        playerView.skipButton.addTarget(self, action: #selector(self.skip), forControlEvents: .TouchUpInside)
+        playerView.previousButton.addTarget(self, action: #selector(self.previous), forControlEvents: .TouchUpInside)
+        playerView.playButton.addTarget(self, action: #selector(self.playPause), forControlEvents: .TouchUpInside)
         view.addSubview(playerView)
         
         
@@ -81,7 +89,52 @@ class PlayerViewController : UIViewController {
     
     func setCurrentIndexPath(indexPath: NSIndexPath) {
         AudioPlayer.instance.play(indexPath.row)
+        play()
     }
+
+    func skip() {
+        for cell in self.collectionView.visibleCells() {
+            if let indexPath = self.collectionView.indexPathForCell(cell) {
+                let nextIndexPath = NSIndexPath(forItem: indexPath.item+1, inSection: indexPath.section)
+                if let _ = podcasts[safe: nextIndexPath.row] {
+                    self.collectionView.scrollToItemAtIndexPath(nextIndexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+                    setCurrentIndexPath(nextIndexPath)
+                }
+            }
+        }
+    }
+    
+    func playPause() {
+        if AudioPlayer.instance.state == .Playing {
+            pause()
+        } else {
+            play()
+        }
+    }
+   
+    func play() {
+        AudioPlayer.instance.play()
+        playerView.play()
+    }
+    
+    func pause() {
+        AudioPlayer.instance.pause()
+        playerView.pause()
+    }
+    
+    func previous() {
+        for cell in self.collectionView.visibleCells() {
+            if let indexPath = self.collectionView.indexPathForCell(cell) {
+                let nextIndexPath = NSIndexPath(forItem: indexPath.item-1, inSection: indexPath.section)
+                if let _ = podcasts[safe: nextIndexPath.row] {
+                    self.collectionView.scrollToItemAtIndexPath(nextIndexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+                    setCurrentIndexPath(nextIndexPath)
+                }
+            }
+        }
+    }
+    
+
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
