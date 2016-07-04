@@ -10,10 +10,16 @@ import Foundation
 import Jukebox
 
 struct Podcast : Playable {
+    
     let title : String
     let showTitle: String
     let description : String
     let audioUrl : NSURL
+    let duration : NSTimeInterval
+    
+    var durationString : String {
+        return "\(floor(duration/60).cleanValue):\((duration%60).cleanValue)"
+    }
     
     static func getUrlsForPodcasts(podcasts : [Podcast]) -> [NSURL] {
         return podcasts.map { podcast -> NSURL in

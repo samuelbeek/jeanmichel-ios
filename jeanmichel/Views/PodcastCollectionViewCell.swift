@@ -11,15 +11,17 @@ import Cartography
 
 class PodcastCollectionViewCell : UICollectionViewCell {
     
-    var titleLabel, showLabel : UILabel!
+    var titleLabel, showLabel, durationLabel : UILabel!
     var podcast : Podcast? {
         didSet {
             if let podcast = podcast {
                 titleLabel.text = podcast.title
                 showLabel.text = podcast.showTitle
+                durationLabel.text = podcast.durationString
             } else {
                 titleLabel.text = "no track"
                 showLabel.text = ""
+                durationLabel.text = ""
             }
         }
     }
@@ -40,8 +42,18 @@ class PodcastCollectionViewCell : UICollectionViewCell {
         showLabel.textAlignment = .Center
         addSubview(showLabel)
 
+        durationLabel = UILabel()
+        durationLabel.font = UIFont.systemFontOfSize(17, weight: UIFontWeightMedium)
+        durationLabel.textColor = .whiteColor()
+        durationLabel.textAlignment = .Center
+        addSubview(durationLabel)
+
         
-        constrain(titleLabel, showLabel) { title, show in
+        constrain(titleLabel, showLabel, durationLabel) { title, show, duration in
+            
+            duration.size == title.size
+            duration.centerX == duration.superview!.centerX
+            duration.top == title.bottom + 5
             
             show.size == title.size
             show.centerX == show.superview!.centerX

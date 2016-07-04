@@ -10,6 +10,7 @@
 		5B841B3B1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3A1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift */; };
 		5B841B3D1D2AE56B001A719A /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3C1D2AE56B001A719A /* PlayerView.swift */; };
 		5B841B3F1D2AEE66001A719A /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3E1D2AEE66001A719A /* PodcastCollectionViewCell.swift */; };
+		5B841B411D2AF432001A719A /* DoubleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B401D2AF432001A719A /* DoubleExtensions.swift */; };
 		5BAC54A91CEE4E680068BECA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54A81CEE4E680068BECA /* AppDelegate.swift */; };
 		5BAC54B01CEE4E680068BECA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BAC54AF1CEE4E680068BECA /* Assets.xcassets */; };
 		5BAC54B31CEE4E680068BECA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BAC54B11CEE4E680068BECA /* LaunchScreen.storyboard */; };
@@ -48,6 +49,7 @@
 		5B841B3A1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredCellCollectionViewLayout.swift; sourceTree = "<group>"; };
 		5B841B3C1D2AE56B001A719A /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		5B841B3E1D2AEE66001A719A /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
+		5B841B401D2AF432001A719A /* DoubleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DoubleExtensions.swift; path = Extensions/DoubleExtensions.swift; sourceTree = "<group>"; };
 		5BAC54A51CEE4E680068BECA /* jeanmichel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jeanmichel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BAC54A81CEE4E680068BECA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BAC54AF1CEE4E680068BECA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				5BFDBF901D08192E0042949E /* UIcolorExtensions.swift */,
+				5B841B401D2AF432001A719A /* DoubleExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 				5BAC54F21CEE7F8B0068BECA /* AudioPlayer.swift in Sources */,
 				5BAC54D61CEE559E0068BECA /* DataContaining.swift in Sources */,
 				5BAC54EE1CEE6FA90068BECA /* PlayerViewController.swift in Sources */,
+				5B841B411D2AF432001A719A /* DoubleExtensions.swift in Sources */,
 				5BAC54D51CEE559E0068BECA /* CollectionViewDataSourceProxy.swift in Sources */,
 				5BAC54F01CEE7BB70068BECA /* MasterViewController.swift in Sources */,
 				5BAC54D21CEE559E0068BECA /* CellProviding.swift in Sources */,
