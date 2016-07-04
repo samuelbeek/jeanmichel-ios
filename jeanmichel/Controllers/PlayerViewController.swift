@@ -9,28 +9,41 @@
 import UIKit
 import Jukebox
 
-class PlayerViewController : UITableViewController {
+class PlayerViewController : UIViewController {
     
-    var dataSource : UITableViewDataSource!
+    var dataSource : CollectionViewDataSourceProxy!
     let station : Station
+    var podcasts : [Podcast] = []
+    var collectionView : UICollectionView!
     
     init(station: Station) {
         self.station = station
+        
         super.init(nibName: nil, bundle: nil)
+        
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = station.title
         let source = PodcastDataSource()
-        let proxy = TableViewDataSourceProxy(dataSource: source)
+        let proxy = CollectionViewDataSourceProxy(dataSource: source)
         dataSource = proxy
-        tableView.dataSource = dataSource
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
-        tableView.reloadData()
-        tableView.delegate = self
         
-        API.getPodcasts("27%2C11") { [weak self] result in
+        // layout stuff
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 90, height: 90)
+
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView.dataSource = dataSource
+        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: Constants.defaultCellIdentifier)
+        collectionView.reloadData()
+        collectionView.delegate = self
+        self.view.addSubview(collectionView)
+        
+        API.getPodcasts(self.station) { [weak self] result in
             
             guard let strongSelf = self else {
                 return
@@ -39,10 +52,11 @@ class PlayerViewController : UITableViewController {
             switch result {
                 
             case .Value(let podcasts):
+                strongSelf.podcasts = podcasts
                 source.data = podcasts
                 AudioPlayer.instance.setItems(podcasts)
                 AudioPlayer.instance.play()
-                strongSelf.tableView.reloadData()
+                strongSelf.collectionView.reloadData()
                 break
             case .Error(let error):
                 print(error)
@@ -50,10 +64,6 @@ class PlayerViewController : UITableViewController {
             
         }
         
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        AudioPlayer.instance.play(indexPath.row)
     }
     
     
@@ -65,5 +75,12 @@ class PlayerViewController : UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+extension PlayerViewController : UICollectionViewDelegate {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print(podcasts[indexPath.row].title)
+        AudioPlayer.instance.play(indexPath.row)
+    }
 }
 

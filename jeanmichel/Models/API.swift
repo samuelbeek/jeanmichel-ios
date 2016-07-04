@@ -43,8 +43,10 @@ struct API {
         }
     }
     
-    static func getPodcasts(endpoint: String, callback: Result<[Podcast]> ->()) {
-        Alamofire.request(.GET, "\(baseUrl)/audiosearch/shows/episodes?shows=\(endpoint)", encoding: .JSON, parameters: nil).responseJSON {
+    static func getPodcasts(station: Station, callback: Result<[Podcast]> ->()) {
+        
+        
+        Alamofire.request(.GET, station.endpoint, encoding: .JSON, parameters: nil).responseJSON {
             response in
             
             switch response.result {
@@ -55,9 +57,7 @@ struct API {
                 for (_,episode):(String, JSON) in json {
                     guard let title = episode["title"].string,
                         let description = episode["description"].string,
-                        let audioFiles = episode["audio_files"].array,
-                        let urlArray = audioFiles[0]["url"].array,
-                        let urlString = urlArray[0].string,
+                        let urlString = episode["audioUrl"].string,
                         let url = NSURL(string: urlString) else {
                             debugPrint("object could not be parsed:", episode)
                             return

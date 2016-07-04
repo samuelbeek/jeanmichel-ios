@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PodcastDataSource: TableViewDataSourceable, DataContaining {
+class PodcastDataSource: CollectionViewDataSourceable, DataContaining {
     typealias Data = [Podcast]
     typealias Section = Data
     var data: Data?
@@ -17,8 +17,8 @@ class PodcastDataSource: TableViewDataSourceable, DataContaining {
         return Constants.defaultCellIdentifier
     }
     
-    func configure(cell cell: UITableViewCell, forItem item: Podcast, inView view: UITableView) -> UITableViewCell {
-        cell.textLabel?.text = item.title
+    func configure(cell cell: UICollectionViewCell, forItem item: Podcast, inView view: UICollectionView) -> UICollectionViewCell {
+        cell.contentView.backgroundColor = .greenColor()
         return cell
     }
 }

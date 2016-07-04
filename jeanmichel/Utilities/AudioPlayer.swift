@@ -30,7 +30,7 @@ class AudioPlayer : NSObject {
     }
     
     internal func play(index: Int? = 0) {
-        // self.play(index)
+        audioPlayer.playAtIndex(index ?? 0)
     }
 
 }

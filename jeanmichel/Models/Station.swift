@@ -13,6 +13,6 @@ struct Station {
     let title : String
     
     var endpoint : String {
-        return "\(API.baseUrl)"
+        return "\(API.baseUrl)/station/\(id)/podcasts"
     }
 }
