@@ -18,6 +18,7 @@ class PlayerViewController : UIViewController {
     var collectionView : UICollectionView!
     var playerView : PlayerView!
     
+    
     init(station: Station) {
         self.station = station
         
@@ -51,8 +52,7 @@ class PlayerViewController : UIViewController {
         collectionView.delegate = self
         view.addSubview(collectionView)
         
-        playerView = PlayerView(frame: view.bounds)
-        playerView.userInteractionEnabled = false
+        playerView = PlayerView(frame: view.bounds, station: self.station)
         view.addSubview(playerView)
         
         
