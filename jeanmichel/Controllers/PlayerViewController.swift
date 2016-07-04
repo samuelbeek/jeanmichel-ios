@@ -8,6 +8,7 @@
 
 import UIKit
 import Jukebox
+import Cartography
 
 class PlayerViewController : UIViewController {
     
@@ -15,6 +16,7 @@ class PlayerViewController : UIViewController {
     let station : Station
     var podcasts : [Podcast] = []
     var collectionView : UICollectionView!
+    var playerView : PlayerView!
     
     init(station: Station) {
         self.station = station
@@ -46,6 +48,11 @@ class PlayerViewController : UIViewController {
         collectionView.delegate = self
         view.addSubview(collectionView)
         
+        playerView = PlayerView(frame: view.bounds)
+        playerView.userInteractionEnabled = false
+        view.addSubview(playerView)
+        
+        
         API.getPodcasts(self.station) { [weak self] result in
             
             guard let strongSelf = self else {
@@ -69,6 +76,10 @@ class PlayerViewController : UIViewController {
         
     }
     
+    func setCurrentIndexPath(indexPath: NSIndexPath) {
+        AudioPlayer.instance.play(indexPath.row)
+        playerView.podcast = podcasts[indexPath.row]
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -83,7 +94,16 @@ class PlayerViewController : UIViewController {
 extension PlayerViewController : UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(podcasts[indexPath.row].title)
-        AudioPlayer.instance.play(indexPath.row)
+    }
+    
+
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        for cell in self.collectionView.visibleCells() {
+            if let indexPath = self.collectionView.indexPathForCell(cell) {
+                setCurrentIndexPath(indexPath)
+            }
+        }
     }
 }
 
