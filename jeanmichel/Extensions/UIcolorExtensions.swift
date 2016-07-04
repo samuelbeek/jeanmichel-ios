@@ -20,4 +20,12 @@ extension UIColor {
     convenience init(hex: Int) {
         self.init(red:(hex >> 16) & 0xff, green:(hex >> 8) & 0xff, blue:hex & 0xff)
     }
+    
+    static func randomColor(alpha: CGFloat?) -> UIColor {
+        let red:CGFloat = CGFloat(drand48())
+        let green:CGFloat = CGFloat(drand48())
+        let blue:CGFloat = CGFloat(drand48())
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha ?? 1.0)
+    }
+    
 }
