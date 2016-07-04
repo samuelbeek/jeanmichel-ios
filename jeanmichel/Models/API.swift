@@ -58,11 +58,12 @@ struct API {
                     guard let title = episode["title"].string,
                         let description = episode["description"].string,
                         let urlString = episode["audioUrl"].string,
+                        let showTitle = episode["_creator"]["title"].string,
                         let url = NSURL(string: urlString) else {
                             debugPrint("object could not be parsed:", episode)
                             return
                     }
-                    let podcast = Podcast(title: title, description: description, audioUrl: url)
+                    let podcast = Podcast(title: title, showTitle: showTitle, description: description, audioUrl: url)
                     podcasts.append(podcast)
                 }
                 callback(.Value(podcasts))

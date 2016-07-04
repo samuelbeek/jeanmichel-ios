@@ -11,32 +11,10 @@ import Cartography
 
 class PlayerView : UIView {
     
-    var titleLabel : UILabel!
-    var podcast : Podcast? {
-        didSet {
-            if let podast = podcast {
-                titleLabel.text = podast.title
-            } else {
-                titleLabel.text = "no track"
-            }
-        }
-    }
     
     override init(frame: CGRect) {
         
         super.init(frame: frame)
-        
-        titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFontOfSize(17, weight: UIFontWeightMedium)
-        titleLabel.textColor = .whiteColor()
-        titleLabel.textAlignment = .Center
-        addSubview(titleLabel)
-        
-        constrain(titleLabel) { title in
-            title.width == title.superview!.width - 100
-            title.height == 24
-            title.center == title.superview!.center
-        }
         
     }
     

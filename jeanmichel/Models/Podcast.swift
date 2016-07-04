@@ -11,6 +11,7 @@ import Jukebox
 
 struct Podcast : Playable {
     let title : String
+    let showTitle: String
     let description : String
     let audioUrl : NSURL
     

@@ -38,12 +38,15 @@ class PlayerViewController : UIViewController {
         layout.sectionInset = UIEdgeInsetsZero
         layout.itemSize = view.bounds.size
         layout.scrollDirection = .Horizontal
-        
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.dataSource = dataSource
         collectionView.showsHorizontalScrollIndicator = false
+        
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: Constants.defaultCellIdentifier)
+        collectionView.registerClass(PodcastCollectionViewCell.self, forCellWithReuseIdentifier: Constants.defaultCellIdentifier)
         collectionView.reloadData()
         collectionView.delegate = self
         view.addSubview(collectionView)
@@ -78,7 +81,6 @@ class PlayerViewController : UIViewController {
     
     func setCurrentIndexPath(indexPath: NSIndexPath) {
         AudioPlayer.instance.play(indexPath.row)
-        playerView.podcast = podcasts[indexPath.row]
     }
     
     override func viewDidAppear(animated: Bool) {
