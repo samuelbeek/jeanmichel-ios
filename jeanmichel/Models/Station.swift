@@ -9,6 +9,10 @@
 import Foundation
 
 struct Station {
+    let id: String
     let title : String
-    let endpoint : String
+    
+    var endpoint : String {
+        return "\(API.baseUrl)"
+    }
 }

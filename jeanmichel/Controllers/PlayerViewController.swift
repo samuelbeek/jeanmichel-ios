@@ -9,7 +9,7 @@
 import UIKit
 import Jukebox
 
-class EpisodeViewController : UITableViewController {
+class PlayerViewController : UITableViewController {
     
     var dataSource : UITableViewDataSource!
     let station : Station

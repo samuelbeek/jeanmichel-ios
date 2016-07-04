@@ -19,6 +19,30 @@ struct API {
     
     static let baseUrl = "http://localhost:3000"
     
+    static func getStations(callback: Result<[Station]> ->()) {
+        Alamofire.request(.GET, "\(baseUrl)/station/", encoding: .JSON, parameters: nil).responseJSON { response in
+            switch response.result {
+                
+            case .Success(let data):
+                let json = JSON(data)
+                var stations = [Station]()
+                for (_,subJSON):(String, JSON) in json {
+                    guard let title = subJSON["title"].string,
+                    let id = subJSON["_id"].string else {
+                            debugPrint("object could not be parsed:", subJSON)
+                            return
+                    }
+                    let station = Station(id: id, title: title)
+                    stations.append(station)
+                }
+                callback(.Value(stations))
+                break
+            case .Failure(let error):
+                callback(.Error(error))
+            }
+        }
+    }
+    
     static func getPodcasts(endpoint: String, callback: Result<[Podcast]> ->()) {
         Alamofire.request(.GET, "\(baseUrl)/audiosearch/shows/episodes?shows=\(endpoint)", encoding: .JSON, parameters: nil).responseJSON {
             response in
@@ -44,7 +68,6 @@ struct API {
                 callback(.Value(podcasts))
                 break
             case .Failure(let error):
-                print(error)
                 callback(.Error(error))
             }
         }

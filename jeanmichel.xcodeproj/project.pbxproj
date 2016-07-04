@@ -31,7 +31,7 @@
 		5BAC54E81CEE63470068BECA /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54E71CEE63470068BECA /* API.swift */; };
 		5BAC54EA1CEE6EF70068BECA /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54E91CEE6EF70068BECA /* Station.swift */; };
 		5BAC54EC1CEE6F5C0068BECA /* StationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54EB1CEE6F5C0068BECA /* StationDataSource.swift */; };
-		5BAC54EE1CEE6FA90068BECA /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54ED1CEE6FA90068BECA /* EpisodeViewController.swift */; };
+		5BAC54EE1CEE6FA90068BECA /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54ED1CEE6FA90068BECA /* PlayerViewController.swift */; };
 		5BAC54F01CEE7BB70068BECA /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54EF1CEE7BB70068BECA /* MasterViewController.swift */; };
 		5BAC54F21CEE7F8B0068BECA /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54F11CEE7F8B0068BECA /* AudioPlayer.swift */; };
 		5BAC54F51CEF087E0068BECA /* Playable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54F41CEF087E0068BECA /* Playable.swift */; };
@@ -68,7 +68,7 @@
 		5BAC54E71CEE63470068BECA /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		5BAC54E91CEE6EF70068BECA /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		5BAC54EB1CEE6F5C0068BECA /* StationDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationDataSource.swift; sourceTree = "<group>"; };
-		5BAC54ED1CEE6FA90068BECA /* EpisodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
+		5BAC54ED1CEE6FA90068BECA /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		5BAC54EF1CEE7BB70068BECA /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		5BAC54F11CEE7F8B0068BECA /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioPlayer.swift; path = Utilities/AudioPlayer.swift; sourceTree = "<group>"; };
 		5BAC54F41CEF087E0068BECA /* Playable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playable.swift; path = Protocols/Playable.swift; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				5BAC54BE1CEE54B90068BECA /* StationTableViewController.swift */,
-				5BAC54ED1CEE6FA90068BECA /* EpisodeViewController.swift */,
+				5BAC54ED1CEE6FA90068BECA /* PlayerViewController.swift */,
 				5BAC54EF1CEE7BB70068BECA /* MasterViewController.swift */,
 			);
 			path = Controllers;
@@ -367,7 +367,7 @@
 				5BFDBF8C1D073F420042949E /* ChannelTableViewCell.swift in Sources */,
 				5BAC54F21CEE7F8B0068BECA /* AudioPlayer.swift in Sources */,
 				5BAC54D61CEE559E0068BECA /* DataContaining.swift in Sources */,
-				5BAC54EE1CEE6FA90068BECA /* EpisodeViewController.swift in Sources */,
+				5BAC54EE1CEE6FA90068BECA /* PlayerViewController.swift in Sources */,
 				5BAC54D51CEE559E0068BECA /* CollectionViewDataSourceProxy.swift in Sources */,
 				5BAC54F01CEE7BB70068BECA /* MasterViewController.swift in Sources */,
 				5BAC54D21CEE559E0068BECA /* CellProviding.swift in Sources */,
