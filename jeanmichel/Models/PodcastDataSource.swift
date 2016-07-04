@@ -18,7 +18,7 @@ class PodcastDataSource: CollectionViewDataSourceable, DataContaining {
     }
     
     func configure(cell cell: UICollectionViewCell, forItem item: Podcast, inView view: UICollectionView) -> UICollectionViewCell {
-        cell.contentView.backgroundColor = .greenColor()
+        cell.contentView.backgroundColor = UIColor.randomColor(1)
         return cell
     }
 }

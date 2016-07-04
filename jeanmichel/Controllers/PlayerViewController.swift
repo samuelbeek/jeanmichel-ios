@@ -32,16 +32,19 @@ class PlayerViewController : UIViewController {
         dataSource = proxy
         
         // layout stuff
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 90, height: 90)
-
+        let layout: UICollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsetsZero
+        layout.itemSize = view.bounds.size
+        layout.scrollDirection = .Horizontal
+        
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.dataSource = dataSource
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: Constants.defaultCellIdentifier)
         collectionView.reloadData()
         collectionView.delegate = self
-        self.view.addSubview(collectionView)
+        view.addSubview(collectionView)
         
         API.getPodcasts(self.station) { [weak self] result in
             
