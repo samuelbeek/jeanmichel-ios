@@ -56,7 +56,7 @@ class PlayerView : UIView {
             station.width == station.superview!.width - 100
             station.height == 50
             station.centerX == station.superview!.centerX
-            station.top == station.superview!.centerY + 40
+            station.top == station.superview!.centerY + 60
             
         }
         

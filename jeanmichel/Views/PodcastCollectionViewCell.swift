@@ -62,7 +62,7 @@ class PodcastCollectionViewCell : UICollectionViewCell {
             title.width == title.superview!.width - 100
             title.height == 24
             title.centerX == title.superview!.centerX
-            title.bottom == title.superview!.bottom - 80
+            title.bottom == title.superview!.bottom - 50
         }
         
 

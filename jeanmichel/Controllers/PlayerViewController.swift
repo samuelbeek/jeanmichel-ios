@@ -48,7 +48,7 @@ class PlayerViewController : UIViewController {
 
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.dataSource = dataSource
-        collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0) 
+        collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
         collectionView.showsHorizontalScrollIndicator = false
         
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
