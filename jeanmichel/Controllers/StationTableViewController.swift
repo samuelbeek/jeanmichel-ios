@@ -17,6 +17,15 @@ class StationTableViewController : UITableViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.barTintColor = Styles.Colors.stationHeaderBackgroundColor
+        navigationController?.navigationBar.tintColor = .whiteColor()
+        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: Styles.headerFont, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        AudioPlayer.instance.pause()
+    }
+    
     override func viewDidLoad() {
         self.title = "stations"
 
@@ -29,12 +38,6 @@ class StationTableViewController : UITableViewController {
         tableView.reloadData()
         tableView.delegate = self
         
-        // NavigationController Styling
-        navigationController?.navigationBar.barTintColor = Styles.Colors.stationHeaderBackgroundColor
-        navigationController?.navigationBar.tintColor = .whiteColor()
-        navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: Styles.headerFont, NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
-    
         
         // bind data
         API.getStations() { [weak self] result in

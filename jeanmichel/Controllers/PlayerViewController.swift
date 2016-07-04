@@ -27,6 +27,13 @@ class PlayerViewController : UIViewController {
 
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = .clearColor()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = station.title
@@ -34,9 +41,8 @@ class PlayerViewController : UIViewController {
         let proxy = CollectionViewDataSourceProxy(dataSource: source)
         dataSource = proxy
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+
 
         // layout stuff
         let layout: UICollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
