@@ -42,7 +42,7 @@ class PlayerView : UIView {
             play.width == 100
             play.height == play.width
             play.centerX == play.superview!.centerX
-            play.top == station.bottom + 40
+            play.top == station.bottom + 20
             
             skip.width == 22
             skip.height == 19
