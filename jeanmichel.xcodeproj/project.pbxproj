@@ -39,6 +39,7 @@
 		5BAC54F01CEE7BB70068BECA /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54EF1CEE7BB70068BECA /* MasterViewController.swift */; };
 		5BAC54F21CEE7F8B0068BECA /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54F11CEE7F8B0068BECA /* AudioPlayer.swift */; };
 		5BAC54F51CEF087E0068BECA /* Playable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54F41CEF087E0068BECA /* Playable.swift */; };
+		5BF4B20C1D37F55300D6C8E9 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF4B20B1D37F55300D6C8E9 /* ArrayExtensions.swift */; };
 		5BFDBF8C1D073F420042949E /* ChannelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDBF8B1D073F420042949E /* ChannelTableViewCell.swift */; };
 		5BFDBF8E1D073FF30042949E /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDBF8D1D073FF30042949E /* Styles.swift */; };
 		5BFDBF911D08192E0042949E /* UIcolorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDBF901D08192E0042949E /* UIcolorExtensions.swift */; };
@@ -80,6 +81,7 @@
 		5BAC54EF1CEE7BB70068BECA /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		5BAC54F11CEE7F8B0068BECA /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioPlayer.swift; path = Utilities/AudioPlayer.swift; sourceTree = "<group>"; };
 		5BAC54F41CEF087E0068BECA /* Playable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playable.swift; path = Protocols/Playable.swift; sourceTree = "<group>"; };
+		5BF4B20B1D37F55300D6C8E9 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayExtensions.swift; path = Extensions/ArrayExtensions.swift; sourceTree = "<group>"; };
 		5BFDBF8B1D073F420042949E /* ChannelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelTableViewCell.swift; sourceTree = "<group>"; };
 		5BFDBF8D1D073FF30042949E /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		5BFDBF901D08192E0042949E /* UIcolorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIcolorExtensions.swift; path = Extensions/UIcolorExtensions.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 			children = (
 				5BFDBF901D08192E0042949E /* UIcolorExtensions.swift */,
 				5B841B401D2AF432001A719A /* DoubleExtensions.swift */,
+				5BF4B20B1D37F55300D6C8E9 /* ArrayExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				5BAC54D61CEE559E0068BECA /* DataContaining.swift in Sources */,
 				5BAC54EE1CEE6FA90068BECA /* PlayerViewController.swift in Sources */,
 				5B841B411D2AF432001A719A /* DoubleExtensions.swift in Sources */,
+				5BF4B20C1D37F55300D6C8E9 /* ArrayExtensions.swift in Sources */,
 				5BAC54D51CEE559E0068BECA /* CollectionViewDataSourceProxy.swift in Sources */,
 				5BAC54F01CEE7BB70068BECA /* MasterViewController.swift in Sources */,
 				5BAC54D21CEE559E0068BECA /* CellProviding.swift in Sources */,

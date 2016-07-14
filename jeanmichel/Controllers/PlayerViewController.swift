@@ -79,7 +79,7 @@ class PlayerViewController : UIViewController {
             switch result {
                 
             case .Value(let podcasts):
-                strongSelf.podcasts = podcasts
+                strongSelf.podcasts = podcasts.shuffle()
                 source.data = podcasts
                 AudioPlayer.instance.setItems(podcasts)
                 AudioPlayer.instance.play()

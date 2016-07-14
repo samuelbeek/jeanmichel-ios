@@ -17,7 +17,7 @@ enum Result<A> {
 
 struct API {
     
-    static let baseUrl = "http://localhost:3000"
+    static let baseUrl = Constants.production ? "http://jeanmichel-backend.herokuapp.com" : "http://localhost:3000"
     
     static func getStations(callback: Result<[Station]> ->()) {
         Alamofire.request(.GET, "\(baseUrl)/station/", encoding: .JSON, parameters: nil).responseJSON { response in

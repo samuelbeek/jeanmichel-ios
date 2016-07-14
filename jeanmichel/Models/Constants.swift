@@ -10,5 +10,6 @@ import Foundation
 
 // It's an enum so that you can't initialize it. 
 enum Constants {
+    static let production : Bool = true
     static let defaultCellIdentifier = "cell"
 }
