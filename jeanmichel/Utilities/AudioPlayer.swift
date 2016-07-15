@@ -20,7 +20,7 @@ class AudioPlayer : NSObject {
         }
     }
     
-    internal var state : JukeboxState {
+    internal var state : Jukebox.State {
         return audioPlayer.state
     }
 
@@ -38,20 +38,27 @@ class AudioPlayer : NSObject {
         audioPlayer.pause()
     }
     
-    internal func play(index: Int? = 0) {
-        audioPlayer.playAtIndex(index ?? 0)
+    internal func play(index: Int? = nil) {
+        if let i = index {
+            audioPlayer.play(atIndex: i)
+        } else {
+            audioPlayer.play()
+        }
     }
 
 }
 
 extension AudioPlayer : JukeboxDelegate {
-    func jukeboxStateDidChange(jukebox : Jukebox) {
+    func jukeboxStateDidChange(state : Jukebox) {
         
     }
     func jukeboxPlaybackProgressDidChange(jukebox : Jukebox) {
         
     }
     func jukeboxDidLoadItem(jukebox : Jukebox, item : JukeboxItem) {
+        
+    }
+    func jukeboxDidUpdateMetadata(jukebox : Jukebox, forItem: JukeboxItem) {
         
     }
 }
