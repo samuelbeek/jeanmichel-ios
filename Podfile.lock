@@ -1,7 +1,7 @@
 PODS:
-  - Alamofire (3.4.0)
+  - Alamofire (3.4.1)
   - Cartography (0.6.0)
-  - Jukebox (0.1.1)
+  - Jukebox (0.1.3)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
@@ -11,9 +11,9 @@ DEPENDENCIES:
   - SwiftyJSON (~> 2.3)
 
 SPEC CHECKSUMS:
-  Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
   Cartography: 70af183a248547694a8cfaa6b989cb7e04589985
-  Jukebox: 8d26135016a69ca3f0581a6b42755f0fcb9202b0
+  Jukebox: 76fedd2bc60f9d8122c3fbee5ebec6209ef6f739
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
 PODFILE CHECKSUM: 9b73e4963a97314ee5bd179790a7c3d4025c25ff
