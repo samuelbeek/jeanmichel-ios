@@ -79,8 +79,8 @@ class PlayerViewController : UIViewController {
             switch result {
                 
             case .Value(let podcasts):
-                strongSelf.podcasts = podcasts.shuffle()
-                source.data = podcasts
+                strongSelf.podcasts =  podcasts.shuffle()
+                source.data = strongSelf.podcasts
                 AudioPlayer.instance.setItems(podcasts)
                 AudioPlayer.instance.play()
                 strongSelf.collectionView.reloadData()
@@ -102,7 +102,7 @@ class PlayerViewController : UIViewController {
         for cell in self.collectionView.visibleCells() {
             if let indexPath = self.collectionView.indexPathForCell(cell) {
                 let nextIndexPath = NSIndexPath(forItem: indexPath.item+1, inSection: indexPath.section)
-                if let _ = podcasts[safe: nextIndexPath.row] {
+                if let podcast = podcasts[safe: nextIndexPath.row] {
                     self.collectionView.scrollToItemAtIndexPath(nextIndexPath, atScrollPosition: .CenteredHorizontally, animated: true)
                     setCurrentIndexPath(nextIndexPath)
                 }
