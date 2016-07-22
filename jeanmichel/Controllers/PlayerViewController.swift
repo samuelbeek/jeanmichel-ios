@@ -21,10 +21,11 @@ class PlayerViewController : UIViewController {
     
     init(station: Station) {
         self.station = station
-        
         super.init(nibName: nil, bundle: nil)
-        
-
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().addObserverForName(JukeBoxNotificationError, object: <#T##AnyObject?#>, queue: <#T##NSOperationQueue?#>, usingBlock: <#T##(NSNotification) -> Void#>)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -102,7 +103,7 @@ class PlayerViewController : UIViewController {
         for cell in self.collectionView.visibleCells() {
             if let indexPath = self.collectionView.indexPathForCell(cell) {
                 let nextIndexPath = NSIndexPath(forItem: indexPath.item+1, inSection: indexPath.section)
-                if let podcast = podcasts[safe: nextIndexPath.row] {
+                if let _ = podcasts[safe: nextIndexPath.row] {
                     self.collectionView.scrollToItemAtIndexPath(nextIndexPath, atScrollPosition: .CenteredHorizontally, animated: true)
                     setCurrentIndexPath(nextIndexPath)
                 }
@@ -149,6 +150,9 @@ class PlayerViewController : UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    
     
 }
 
