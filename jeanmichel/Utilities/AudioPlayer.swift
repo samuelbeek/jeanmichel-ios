@@ -13,6 +13,10 @@ class AudioPlayer : NSObject {
     
     static let instance = AudioPlayer()
     
+    internal var currentUrl : NSURL? {
+        return audioPlayer.currentItem?.URL
+    }
+    
     private var audioPlayer : Jukebox!
     private var podcasts = [Podcast]() {
         didSet {
