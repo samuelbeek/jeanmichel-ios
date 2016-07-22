@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Jukebox:
-    :commit: 0c31386c44ca16d24af31fedfb0b63907229396a
+    :commit: 16b8dae0be3ca29c262a93e945ac15456d10b096
     :git: https://github.com/samuelbeek/Jukebox.git
 
 SPEC CHECKSUMS:
