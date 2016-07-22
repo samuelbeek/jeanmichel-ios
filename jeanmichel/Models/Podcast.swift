@@ -18,7 +18,12 @@ struct Podcast : Playable {
     let duration : NSTimeInterval
     
     var durationString : String {
-        return "\(floor(duration/60).cleanValue):\((duration%60).cleanValue)"
+        let minutes = floor(duration/60).cleanValue
+        var seconds = (duration%60).cleanValue
+        if seconds.characters.count == 1 {
+            seconds = "0\(seconds)"
+        }
+        return "\(minutes):\(seconds)"
     }
     
     static func getUrlsForPodcasts(podcasts : [Podcast]) -> [NSURL] {

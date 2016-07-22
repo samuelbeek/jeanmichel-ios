@@ -25,7 +25,7 @@ class PlayerViewController : UIViewController {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().addObserverForName(JukeBoxNotificationError, object: <#T##AnyObject?#>, queue: <#T##NSOperationQueue?#>, usingBlock: <#T##(NSNotification) -> Void#>)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -44,6 +44,25 @@ class PlayerViewController : UIViewController {
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
 
+        NSNotificationCenter.defaultCenter().addObserverForName(JukeBoxNotificationError, object: nil, queue: nil, usingBlock: { [unowned self] notification in
+            
+            guard let userInfo = notification.userInfo, let message = userInfo[JukeBoxKeyErrorMessage] as? String, let code : Int = userInfo[JukeBoxKeyErrorCode] as? Int else {
+                return
+            }
+            
+            print(message)
+            
+            if code == -1100 {
+                self.showSkipAlert()
+            }
+            
+            if let url : String = userInfo[JukeBoxKeyAssetURL] as? String,
+                let assetUrl = NSURL(string: url),
+                let currentUrl = AudioPlayer.instance.currentUrl where currentUrl == assetUrl {
+                self.showSkipAlert()
+            }
+            
+        })
 
         // layout stuff
         let layout: UICollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
@@ -82,7 +101,7 @@ class PlayerViewController : UIViewController {
             case .Value(let podcasts):
                 strongSelf.podcasts =  podcasts.shuffle()
                 source.data = strongSelf.podcasts
-                AudioPlayer.instance.setItems(podcasts)
+                AudioPlayer.instance.setItems(strongSelf.podcasts)
                 AudioPlayer.instance.play()
                 strongSelf.collectionView.reloadData()
                 break
@@ -141,7 +160,15 @@ class PlayerViewController : UIViewController {
         }
     }
     
-
+    func showSkipAlert() {
+        AudioPlayer.instance.pause()
+        self.showAlert(String.localize("Can't be played"),
+                       message: String.localize("This podcast can't be played. Sorry! Is it OK if we skip to the next one?"),
+                       button: String.localize("Skip"),
+                       handler: { [unowned self] _ in
+                        self.skip()
+            })
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)

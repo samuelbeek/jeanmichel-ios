@@ -16,13 +16,19 @@ extension UIViewController {
      - parameter message: What it says
      - parameter button:  What the button says, defaults to OK
      */
-    func showAlert(title: String, message: String, button: String = "OK") {
-        let alert = UIAlertView()
-        alert.title = title
-        alert.message = message
-        alert.addButtonWithTitle(button)
-        alert.show()
+    func showAlert(title: String, message: String, button: String = "OK", handler: ((UIAlertAction) -> Void)? = nil)  {
+        if let _ = self.presentingViewController as? UIAlertController {
+            return
+        }
+        
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let OKAction = UIAlertAction(title: button, style: .Default, handler: handler)
+        alertController.addAction(OKAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
+    
+
     
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
