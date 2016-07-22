@@ -5,7 +5,7 @@ use_frameworks!
 
 target 'jeanmichel' do
   pod 'Alamofire', '~> 3.4'
-  pod 'Jukebox', '~> 0.1.0'
+  pod 'Jukebox', :git => 'https://github.com/samuelbeek/Jukebox.git'
   pod 'SwiftyJSON', '~> 2.3'
   pod 'Cartography'
 end

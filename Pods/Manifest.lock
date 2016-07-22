@@ -7,8 +7,17 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.4)
   - Cartography
-  - Jukebox (~> 0.1.0)
+  - Jukebox (from `https://github.com/samuelbeek/Jukebox.git`)
   - SwiftyJSON (~> 2.3)
+
+EXTERNAL SOURCES:
+  Jukebox:
+    :git: https://github.com/samuelbeek/Jukebox.git
+
+CHECKOUT OPTIONS:
+  Jukebox:
+    :commit: 0c31386c44ca16d24af31fedfb0b63907229396a
+    :git: https://github.com/samuelbeek/Jukebox.git
 
 SPEC CHECKSUMS:
   Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
@@ -16,6 +25,6 @@ SPEC CHECKSUMS:
   Jukebox: 76fedd2bc60f9d8122c3fbee5ebec6209ef6f739
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 9b73e4963a97314ee5bd179790a7c3d4025c25ff
+PODFILE CHECKSUM: 94874af65145ffc15157255068aa0e4f47b7f955
 
 COCOAPODS: 1.0.0
