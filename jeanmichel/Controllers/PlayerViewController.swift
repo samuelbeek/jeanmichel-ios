@@ -18,7 +18,6 @@ class PlayerViewController : UIViewController {
     var collectionView : UICollectionView!
     var playerView : PlayerView!
     
-    
     init(station: Station) {
         self.station = station
         super.init(nibName: nil, bundle: nil)
@@ -44,26 +43,12 @@ class PlayerViewController : UIViewController {
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
 
-        NSNotificationCenter.defaultCenter().addObserverForName(JukeBoxNotificationError, object: nil, queue: nil, usingBlock: { [unowned self] notification in
-            
-            guard let userInfo = notification.userInfo, let message = userInfo[JukeBoxKeyErrorMessage] as? String, let code : Int = userInfo[JukeBoxKeyErrorCode] as? Int else {
-                return
+        NSNotificationCenter.defaultCenter().addObserverForName(JukeBoxNotificationError, object: nil, queue: nil, usingBlock: { [weak self] notification in
+            if let strongSelf = self {
+                strongSelf.handleErrorNotification(notification)
+            } else {
+                print("self doesn't exist anymore")
             }
-            
-            print(message)
-            
-            
-            
-            if code == -1100 {
-                self.showSkipAlert()
-            }
-            
-            if let url : String = userInfo[JukeBoxKeyAssetURL] as? String,
-                let assetUrl = NSURL(string: url),
-                let currentUrl = AudioPlayer.instance.currentUrl where currentUrl == assetUrl {
-                self.showSkipAlert()
-            }
-            
         })
 
         // layout stuff
@@ -162,8 +147,36 @@ class PlayerViewController : UIViewController {
         }
     }
     
+    // MARK : Notification 
+    
+    func handleErrorNotification(notification: NSNotification) {
+        guard let userInfo = notification.userInfo, let message = userInfo[JukeBoxKeyErrorMessage] as? String, let code : Int = userInfo[JukeBoxKeyErrorCode] as? Int else {
+            return
+        }
+        
+        print("ERROR with code: \(code) on current url:", message)
+        
+        if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
+            if let currentUrl = AudioPlayer.instance.currentUrl where url == currentUrl {
+                self.showSkipAlert()
+            } else {
+                for podcast in podcasts {
+                    if podcast.audioUrl == url {
+                        if let index = podcasts.indexOf(podcast) {
+                            self.podcasts.removeObject(podcast)
+                            print(index)
+                        }
+                    }
+                }
+            }
+        }
+        
+
+    }
+    
+    
     func showSkipAlert() {
-        AudioPlayer.instance.stop()
+        AudioPlayer.instance.pause()
         self.showAlert(String.localize("Can't be played"),
                        message: String.localize("This podcast can't be played. Sorry! Is it OK if we skip to the next one?"),
                        button: String.localize("Skip"),
