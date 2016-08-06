@@ -9,7 +9,7 @@
 import Foundation
 import Jukebox
 
-struct Podcast : Playable {
+struct Podcast : Playable, Equatable {
     
     let title : String
     let showTitle: String
@@ -37,4 +37,10 @@ struct Podcast : Playable {
             return JukeboxItem(URL: url)
         }
     }
+    
  }
+
+func ==(lhs: Podcast, rhs: Podcast) -> Bool {
+    return lhs.title == rhs.title && lhs.audioUrl == rhs.audioUrl
+}
+
