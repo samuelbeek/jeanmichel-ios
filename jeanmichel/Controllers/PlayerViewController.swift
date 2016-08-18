@@ -163,7 +163,7 @@ class PlayerViewController : UIViewController {
     }
     
     func showSkipAlert() {
-        AudioPlayer.instance.stop()
+        AudioPlayer.instance.pause()
         self.showAlert(String.localize("Can't be played"),
                        message: String.localize("This podcast can't be played. Sorry! Is it OK if we skip to the next one?"),
                        button: String.localize("Skip"),
