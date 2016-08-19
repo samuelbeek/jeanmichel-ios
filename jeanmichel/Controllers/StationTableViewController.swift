@@ -22,6 +22,7 @@ class StationTableViewController : UITableViewController {
         navigationController?.navigationBar.barTintColor = Styles.Colors.stationHeaderBackgroundColor
         navigationController?.navigationBar.tintColor = .whiteColor()
         self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: Styles.Fonts.headerFont, NSForegroundColorAttributeName: Styles.Colors.stationHeaderTextColor]
         AudioPlayer.instance.pause()
     }

@@ -42,8 +42,6 @@ class PlayerViewController : UIViewController {
         let proxy = CollectionViewDataSourceProxy(dataSource: source)
         dataSource = proxy
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-
         NSNotificationCenter.defaultCenter().addObserverForName(JukeBoxNotificationError, object: nil, queue: nil, usingBlock: { [unowned self] notification in
             
             guard let userInfo = notification.userInfo, let message = userInfo[JukeBoxKeyErrorMessage] as? String, let code : Int = userInfo[JukeBoxKeyErrorCode] as? Int else {
