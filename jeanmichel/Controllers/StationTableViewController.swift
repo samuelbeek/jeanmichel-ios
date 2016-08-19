@@ -22,12 +22,12 @@ class StationTableViewController : UITableViewController {
         navigationController?.navigationBar.barTintColor = Styles.Colors.stationHeaderBackgroundColor
         navigationController?.navigationBar.tintColor = .whiteColor()
         self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
-        navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: Styles.headerFont, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: Styles.Fonts.headerFont, NSForegroundColorAttributeName: Styles.Colors.stationHeaderTextColor]
         AudioPlayer.instance.pause()
     }
     
     override func viewDidLoad() {
-        self.title = "stations"
+        self.title = "On the Air"
 
         super.viewDidLoad()
         let source = StationDataSource()
