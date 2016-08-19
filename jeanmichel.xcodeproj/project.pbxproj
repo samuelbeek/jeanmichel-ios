@@ -272,6 +272,8 @@
 				5BAC54A31CEE4E680068BECA /* Resources */,
 				ADCC4F335CD8DEE439188D3B /* 📦 Embed Pods Frameworks */,
 				EA7A2ED4AC2FEE494C0D6AFF /* 📦 Copy Pods Resources */,
+				5B1981371D676A50009C7BB3 /* Automatic Build Number */,
+				5B1981381D676A72009C7BB3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -328,6 +330,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5B1981371D676A50009C7BB3 /* Automatic Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Automatic Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh \"${SRCROOT}/Scripts/update_build_number.sh\"";
+		};
+		5B1981381D676A72009C7BB3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
 		ADCC4F335CD8DEE439188D3B /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -526,7 +555,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = jeanmichel/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = smb.jeanmichel;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teamsamdy.jeanmichel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -538,7 +567,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = jeanmichel/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = smb.jeanmichel;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teamsamdy.jeanmichel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
