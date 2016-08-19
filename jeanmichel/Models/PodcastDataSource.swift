@@ -20,7 +20,9 @@ class PodcastDataSource: CollectionViewDataSourceable, DataContaining {
     func configure(cell cell: UICollectionViewCell,  forItem item: Podcast, inView view: UICollectionView) -> UICollectionViewCell {
         if let cell = cell as? PodcastCollectionViewCell {
             cell.podcast = item
-            cell.contentView.backgroundColor = UIColor.randomColor(1)
+            if let image = UIImage(named: "bg-design-\(Int(arc4random_uniform(4))+1)") {
+                cell.backgroundImageView.image = image
+            }
         }
         return cell
     }

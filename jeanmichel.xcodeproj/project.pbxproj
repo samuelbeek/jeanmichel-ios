@@ -127,8 +127,8 @@
 		5BAC54A71CEE4E680068BECA /* jeanmichel */ = {
 			isa = PBXGroup;
 			children = (
-				5BFDBF8F1D08191E0042949E /* Extensions */,
 				5BAC54A81CEE4E680068BECA /* AppDelegate.swift */,
+				5BFDBF8F1D08191E0042949E /* Extensions */,
 				5BAC54BC1CEE53D80068BECA /* Controllers */,
 				5BAC54BA1CEE53CB0068BECA /* Models */,
 				5BAC54BB1CEE53D20068BECA /* Views */,

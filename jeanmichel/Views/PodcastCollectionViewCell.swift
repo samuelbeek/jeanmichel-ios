@@ -12,6 +12,7 @@ import Cartography
 class PodcastCollectionViewCell : UICollectionViewCell {
     
     var titleLabel, showLabel, durationLabel : UILabel!
+    var backgroundImageView : UIImageView!
     var podcast : Podcast? {
         didSet {
             if let podcast = podcast {
@@ -30,6 +31,10 @@ class PodcastCollectionViewCell : UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        backgroundImageView = UIImageView()
+        backgroundImageView.contentMode = .ScaleToFill
+        addSubview(backgroundImageView)
+
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFontOfSize(17, weight: UIFontWeightMedium)
         titleLabel.textColor = .whiteColor()
@@ -47,9 +52,8 @@ class PodcastCollectionViewCell : UICollectionViewCell {
         durationLabel.textColor = .whiteColor()
         durationLabel.textAlignment = .Center
         addSubview(durationLabel)
-
         
-        constrain(titleLabel, showLabel, durationLabel) { title, show, duration in
+        constrain(titleLabel, showLabel, durationLabel, backgroundImageView) { title, show, duration, bg in
             
             duration.size == title.size
             duration.centerX == duration.superview!.centerX
@@ -63,6 +67,9 @@ class PodcastCollectionViewCell : UICollectionViewCell {
             title.height == 24
             title.centerX == title.superview!.centerX
             title.bottom == title.superview!.bottom - 45
+            
+            bg.size == bg.superview!.size
+            bg.center == bg.superview!.center
         }
         
 
