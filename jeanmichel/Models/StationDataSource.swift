@@ -18,7 +18,7 @@ class StationDataSource: TableViewDataSourceable, DataContaining {
     }
     
     func configure(cell cell: UITableViewCell, forItem item: Station, inView view: UITableView) -> UITableViewCell {
-        cell.textLabel?.text = item.title
+        cell.textLabel?.text = item.title.lowercaseString
         return cell
     }
 }
