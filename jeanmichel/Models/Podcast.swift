@@ -16,6 +16,7 @@ struct Podcast : Playable {
     let description : String
     let audioUrl : NSURL
     let duration : NSTimeInterval
+    let station : String
     
     var durationString : String {
         let minutes = floor(duration/60).cleanValue
