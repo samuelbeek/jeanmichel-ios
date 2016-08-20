@@ -12,7 +12,6 @@ import Cartography
 
 class PlayerViewController : UIViewController {
     
-    var dataSource : CollectionViewDataSourceProxy!
     let station : Station
     var podcasts : [Podcast] = []
     var collectionView : UICollectionView!
@@ -37,10 +36,7 @@ class PlayerViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = station.title
-        let source = PodcastDataSource()
-        let proxy = CollectionViewDataSourceProxy(dataSource: source)
-        dataSource = proxy
-        
+
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
 
         NSNotificationCenter.defaultCenter().addObserverForName(JukeBoxNotificationError, object: nil, queue: nil, usingBlock: { [weak self] notification in
@@ -60,7 +56,7 @@ class PlayerViewController : UIViewController {
         layout.minimumLineSpacing = 0
 
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
-        collectionView.dataSource = dataSource
+        collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
         collectionView.showsHorizontalScrollIndicator = false
         
@@ -76,7 +72,11 @@ class PlayerViewController : UIViewController {
         playerView.playButton.addTarget(self, action: #selector(self.playPause), forControlEvents: .TouchUpInside)
         view.addSubview(playerView)
         
-        
+        fetchData()
+    }
+    
+    
+    func fetchData() {
         API.getPodcasts(self.station) { [weak self] result in
             
             guard let strongSelf = self else {
@@ -87,7 +87,6 @@ class PlayerViewController : UIViewController {
                 
             case .Value(let podcasts):
                 strongSelf.podcasts =  podcasts.shuffle()
-                source.data = strongSelf.podcasts
                 AudioPlayer.instance.setItems(strongSelf.podcasts)
                 AudioPlayer.instance.play()
                 strongSelf.collectionView.reloadData()
@@ -97,8 +96,8 @@ class PlayerViewController : UIViewController {
             }
             
         }
-        
     }
+    
     
     func setCurrentIndexPath(indexPath: NSIndexPath) {
         AudioPlayer.instance.play(indexPath.row)
@@ -148,7 +147,6 @@ class PlayerViewController : UIViewController {
     }
     
     // MARK : Notification 
-    
     func handleErrorNotification(notification: NSNotification) {
         guard let userInfo = notification.userInfo, let message = userInfo[JukeBoxKeyErrorMessage] as? String, let code : Int = userInfo[JukeBoxKeyErrorCode] as? Int else {
             return
@@ -170,10 +168,7 @@ class PlayerViewController : UIViewController {
                 }
             }
         }
-        
-
     }
-    
     
     func showSkipAlert() {
         AudioPlayer.instance.pause()
@@ -192,9 +187,32 @@ class PlayerViewController : UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+}
+
+extension PlayerViewController : UICollectionViewDataSource {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.defaultCellIdentifier, forIndexPath: indexPath) as? PodcastCollectionViewCell, let podcast = podcasts[safe: indexPath.row] else {
+            return UICollectionViewCell()
+        }
+        
+        cell.podcast = podcast
+        if let image = UIImage(named: "bg-\(podcast.station)-\(Int(arc4random_uniform(4))+1)") {
+            cell.backgroundImageView.image = image
+        } else {
+            cell.backgroundColor = UIColor.randomColor(0.5)
+        }
+        return cell
+        
+    }
     
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
     
-    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return podcasts.count
+    }
     
 }
 
@@ -202,8 +220,6 @@ extension PlayerViewController : UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(podcasts[indexPath.row].title)
     }
-    
-
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         for cell in self.collectionView.visibleCells() {

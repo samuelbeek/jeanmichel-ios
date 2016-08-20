@@ -64,7 +64,7 @@ struct API {
                             debugPrint("object could not be parsed:", episode)
                             return
                     }
-                    let podcast = Podcast(title: title, showTitle: showTitle, description: description, audioUrl: url, duration: duration)
+                    let podcast = Podcast(title: title, showTitle: showTitle, description: description, audioUrl: url, duration: duration, station: station.title.lowercaseString)
                     podcasts.append(podcast)
                 }
                 callback(.Value(podcasts))

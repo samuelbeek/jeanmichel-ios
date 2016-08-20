@@ -18,13 +18,6 @@ class PlayerView : UIView {
         
         super.init(frame: frame)
         
-        stationLabel = UILabel()
-        stationLabel.font = UIFont.systemFontOfSize(46)
-        stationLabel.textColor = .whiteColor()
-        stationLabel.textAlignment = .Center
-        stationLabel.text = station.title
-        addSubview(stationLabel)
-        
         skipButton = UIButton(type: .Custom)
         skipButton.setImage(UIImage(named: "buttonSkip"), forState: .Normal)
         addSubview(skipButton)
@@ -37,12 +30,12 @@ class PlayerView : UIView {
         playButton.setImage(UIImage(named: "buttonPause"), forState: .Normal)
         addSubview(playButton)
 
-        constrain(stationLabel, skipButton, previousButton, playButton) { station, skip, prev, play in
+        constrain(skipButton, previousButton, playButton) {skip, prev, play in
             
             play.width == 100
             play.height == play.width
             play.centerX == play.superview!.centerX
-            play.top == station.bottom + 20
+            play.bottom == play.superview!.bottom - 120
             
             skip.width == 22
             skip.height == 19
@@ -53,10 +46,6 @@ class PlayerView : UIView {
             prev.bottom == skip.bottom
             prev.left == prev.superview!.left + 50
             
-            station.width == station.superview!.width - 100
-            station.height == 50
-            station.centerX == station.superview!.centerX
-            station.top == station.superview!.centerY + 60
             
         }
         

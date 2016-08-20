@@ -9,10 +9,20 @@
 import UIKit
 
 enum Styles {
-    static let stationFont = UIFont.boldSystemFontOfSize(24)
-    static let headerFont = UIFont.boldSystemFontOfSize(26)
-    static let stationCellHeight : CGFloat = 80
+    static let stationCellHeight : CGFloat = 92
     enum Colors {
-        static let stationHeaderBackgroundColor = UIColor(hex: 0xFACEC3)
+        static let stationHeaderBackgroundColor = Styles.Colors.lightPinkColor
+        static let stationHeaderTextColor = Styles.Colors.whiteColor
+        static let stationTextColor = Styles.Colors.darkBlueColor
+        
+        // colors themselves
+        static let darkBlueColor = UIColor(hex: 0x071689)
+        static let lightPinkColor = UIColor(hex: 0xFACEC3)
+        static let whiteColor = UIColor.whiteColor()
+
+    }
+    enum Fonts {
+        static let stationFont = UIFont.systemFontOfSize(24, weight: UIFontWeightHeavy)
+        static let headerFont = UIFont.systemFontOfSize(26, weight: UIFontWeightHeavy)
     }
 }

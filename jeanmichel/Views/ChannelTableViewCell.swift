@@ -11,8 +11,8 @@ import UIKit
 class ChannelTableViewCell : UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        textLabel?.font  = Styles.stationFont
-        textLabel?.textColor = .blackColor()
+        textLabel?.font  = Styles.Fonts.stationFont
+        textLabel?.textColor = Styles.Colors.stationTextColor
     }
     
     required init?(coder aDecoder: NSCoder) {
