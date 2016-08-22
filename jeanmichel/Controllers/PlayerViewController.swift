@@ -156,14 +156,22 @@ class PlayerViewController : UIViewController {
         
         if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
             if let currentUrl = AudioPlayer.instance.currentUrl where url == currentUrl {
-                self.showSkipAlert()
+                showSkipAlert()
             } else {
                 for podcast in podcasts {
-                    if podcast.audioUrl == url {
-                        if let index = podcasts.indexOf(podcast) {
-                            self.podcasts.removeObject(podcast)
-                            print(index)
+                    if let index = podcasts.indexOf(podcast) where podcast.audioUrl == url {
+
+                        let indexPath = NSIndexPath(forRow: index, inSection: 1)
+                        if collectionView(collectionView, cellForItemAtIndexPath: indexPath) != nil {
+                            
                         }
+                        collectionView.performBatchUpdates({
+                            self.podcasts.removeObject(podcast)
+                            self.collectionView.deleteItemsAtIndexPaths([indexPath])
+                            }, completion: { _ in
+                            print("Error:", podcast.title, "wouldn't play, we removed the cell at indexPath:", indexPath)
+                        })
+
                     }
                 }
             }
