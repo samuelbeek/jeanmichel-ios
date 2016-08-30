@@ -156,26 +156,30 @@ class PlayerViewController : UIViewController {
         
         if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
             if let currentUrl = AudioPlayer.instance.currentUrl where url == currentUrl {
+                // show an alert if we're on the current page
                 showSkipAlert()
-            } else {
-                for podcast in podcasts {
-                    if let index = podcasts.indexOf(podcast) where podcast.audioUrl == url {
-
-                        let indexPath = NSIndexPath(forRow: index, inSection: 1)
-                        if collectionView(collectionView, cellForItemAtIndexPath: indexPath) != nil {
-                            
-                        }
-                        collectionView.performBatchUpdates({
-                            self.podcasts.removeObject(podcast)
-                            self.collectionView.deleteItemsAtIndexPaths([indexPath])
-                            }, completion: { _ in
-                            print("Error:", podcast.title, "wouldn't play, we removed the cell at indexPath:", indexPath)
-                        })
-
-                    }
-                }
+            } else if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.indexOf(podcast) {
+                
+                let indexPath = NSIndexPath(forRow: index, inSection: 0)
+                collectionView.performBatchUpdates({
+                    self.podcasts.removeObject(podcast)
+                    self.collectionView.deleteItemsAtIndexPaths([indexPath])
+                    }, completion: { _ in
+                        print("Error:", podcast.title, "wouldn't play, we removed the cell at indexPath:", indexPath)
+                })
+                
             }
         }
+    }
+    
+    /// Returns podcast object that's in the current scrope with the same url, if it's there
+    func getPodcastWithAudioUrl(audioUrl: NSURL) -> Podcast? {
+        for podcast in podcasts {
+            if podcast.audioUrl == audioUrl {
+                return podcast
+            }
+        }
+        return nil
     }
     
     func showSkipAlert() {
