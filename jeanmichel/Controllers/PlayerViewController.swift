@@ -12,10 +12,10 @@ import Cartography
 
 class PlayerViewController : UIViewController {
     
-    let station : Station
-    var podcasts : [Podcast] = []
-    var collectionView : UICollectionView!
-    var playerView : PlayerView!
+    private let station : Station
+    private var podcasts : [Podcast] = []
+    private var collectionView : UICollectionView!
+    private var playerView : PlayerView!
     
     init(station: Station) {
         self.station = station
@@ -28,9 +28,9 @@ class PlayerViewController : UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.backgroundColor = .clearColor()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.backgroundColor = .clearColor()
     }
     
     override func viewDidLoad() {
@@ -87,8 +87,7 @@ class PlayerViewController : UIViewController {
                 
             case .Value(let podcasts):
                 strongSelf.podcasts =  podcasts.shuffle()
-                AudioPlayer.instance.setItems(strongSelf.podcasts)
-                AudioPlayer.instance.play()
+                strongSelf.reloadPlayer()
                 strongSelf.collectionView.reloadData()
                 break
             case .Error(let error):
@@ -102,6 +101,12 @@ class PlayerViewController : UIViewController {
     func setCurrentIndexPath(indexPath: NSIndexPath) {
         AudioPlayer.instance.play(indexPath.row)
         play()
+    }
+    
+    func reloadPlayer() {
+        // TODO: make sure this won't affect the current playing item 
+        AudioPlayer.instance.setItems(self.podcasts)
+        AudioPlayer.instance.play()
     }
 
     func skip() {
@@ -159,10 +164,12 @@ class PlayerViewController : UIViewController {
                 // show an alert if we're on the current page
                 showSkipAlert()
             } else if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.indexOf(podcast) {
-                
-                let indexPath = NSIndexPath(forRow: index, inSection: 0)
+                let indexPath = NSIndexPath(forRow: index, inSection: 0) // note: this has to be section 0
                 collectionView.performBatchUpdates({
                     self.podcasts.removeObject(podcast)
+                    
+                    // after the podcasts have been updated, reload the player and collectionView
+                    self.reloadPlayer()
                     self.collectionView.deleteItemsAtIndexPaths([indexPath])
                     }, completion: { _ in
                         print("Error:", podcast.title, "wouldn't play, we removed the cell at indexPath:", indexPath)
