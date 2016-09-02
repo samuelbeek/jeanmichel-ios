@@ -20,6 +20,8 @@ class AudioPlayer : NSObject {
     private var audioPlayer : Jukebox!
     private var podcasts = [Podcast]() {
         didSet {
+            audioPlayer.stop()
+            audioPlayer = nil
             audioPlayer = Jukebox(delegate: self, items: Podcast.getJukeBoxItemsForPodcasts(podcasts))
         }
     }
@@ -44,10 +46,16 @@ class AudioPlayer : NSObject {
     
     internal func play(index: Int? = nil) {
         if let i = index {
+            audioPlayer.stop()
             audioPlayer.play(atIndex: i)
         } else {
+            audioPlayer.stop()
             audioPlayer.play()
         }
+    }
+    
+    internal func stop() {
+        audioPlayer.stop()
     }
 
 }

@@ -16,6 +16,8 @@ class PlayerViewController : UIViewController {
     private var podcasts : [Podcast] = []
     private var collectionView : UICollectionView!
     private var playerView : PlayerView!
+    private var hasPlayed = false
+    private var currentIndexPath : NSIndexPath?
     
     init(station: Station) {
         self.station = station
@@ -86,7 +88,7 @@ class PlayerViewController : UIViewController {
             switch result {
                 
             case .Value(let podcasts):
-                strongSelf.podcasts =  podcasts.shuffle()
+                strongSelf.podcasts = podcasts.shuffle()
                 strongSelf.reloadPlayer()
                 strongSelf.collectionView.reloadData()
                 break
@@ -99,14 +101,22 @@ class PlayerViewController : UIViewController {
     
     
     func setCurrentIndexPath(indexPath: NSIndexPath) {
-        AudioPlayer.instance.play(indexPath.row)
-        play()
+        currentIndexPath = indexPath
+        self.play(index: indexPath.row)
     }
     
     func reloadPlayer() {
         // TODO: make sure this won't affect the current playing item 
+        let shouldPlay = (AudioPlayer.instance.state == .Playing || !hasPlayed)
         AudioPlayer.instance.setItems(self.podcasts)
-        AudioPlayer.instance.play()
+        if shouldPlay {
+            if let indexPath = currentIndexPath {
+                AudioPlayer.instance.play(indexPath.row)
+            } else {
+                AudioPlayer.instance.play()
+            }
+            hasPlayed = true
+        }
     }
 
     func skip() {
@@ -129,8 +139,9 @@ class PlayerViewController : UIViewController {
         }
     }
    
-    func play() {
-        AudioPlayer.instance.play()
+    func play(index index: Int? = 0) {
+        AudioPlayer.instance.stop()
+        AudioPlayer.instance.play(index)
         playerView.play()
     }
     
@@ -163,6 +174,7 @@ class PlayerViewController : UIViewController {
             if let currentUrl = AudioPlayer.instance.currentUrl where url == currentUrl {
                 // show an alert if we're on the current page
                 showSkipAlert()
+                
             } else if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.indexOf(podcast) {
                 let indexPath = NSIndexPath(forRow: index, inSection: 0) // note: this has to be section 0
                 collectionView.performBatchUpdates({
