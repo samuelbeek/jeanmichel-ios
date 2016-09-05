@@ -88,6 +88,7 @@ class PlayerViewController : UIViewController {
                 self?.podcasts =  podcasts.shuffle()
                 self?.reloadPlayer()
                 self?.collectionView.reloadData()
+                self?.play()
                 break
             case .Error(let error):
                 print(error)
@@ -105,6 +106,7 @@ class PlayerViewController : UIViewController {
     func reloadPlayer() {
         // TODO: make sure this won't affect the current playing item 
         let shouldPlay = (AudioPlayer.instance.state == .Playing || !hasPlayed)
+        
         AudioPlayer.instance.setItems(self.podcasts)
         if shouldPlay {
             if let indexPath = currentIndexPath {
@@ -136,8 +138,7 @@ class PlayerViewController : UIViewController {
         }
     }
    
-    func play(index index: Int? = 0) {
-        AudioPlayer.instance.stop()
+    func play(index index: Int? = nil) {
         AudioPlayer.instance.play(index)
         playerView.play()
     }
@@ -181,7 +182,7 @@ class PlayerViewController : UIViewController {
                     self.reloadPlayer()
                     self.collectionView.deleteItemsAtIndexPaths([indexPath])
                     }, completion: { _ in
-                        print("Error:", podcast.title, "wouldn't play, we removed the cell at indexPath:", indexPath)
+                        printError(0, message: "\(podcast.title) wouldn't play, we removed the cell at indexPath: \(indexPath.description))")
                 })
                 
             }
