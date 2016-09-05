@@ -16,7 +16,6 @@ class PlayerViewController : UIViewController {
     private var podcasts : [Podcast] = []
     private var collectionView : UICollectionView!
     private var playerView : PlayerView!
-    private var hasPlayed = false
     private var currentIndexPath : NSIndexPath?
     
     init(station: Station) {
@@ -85,7 +84,8 @@ class PlayerViewController : UIViewController {
             
             switch result {
             case .Value(let podcasts):
-                self?.podcasts =  podcasts.shuffle()
+                self?.podcasts = podcasts.shuffle()
+                self?.collectionView.reloadData()
                 self?.reloadPlayer()
                 self?.play()
                 break
@@ -104,12 +104,7 @@ class PlayerViewController : UIViewController {
     
     func reloadPlayer() {
         // TODO: make sure we have the correct time?
-        let shouldPlay = !hasPlayed
         AudioPlayer.instance.setItems(self.podcasts)
-        if shouldPlay {
-            AudioPlayer.instance.play()
-            hasPlayed = true
-        }
     }
 
     func skip() {
@@ -119,6 +114,7 @@ class PlayerViewController : UIViewController {
                 if let _ = podcasts[safe: nextIndexPath.row] {
                     self.collectionView.scrollToItemAtIndexPath(nextIndexPath, atScrollPosition: .CenteredHorizontally, animated: true)
                     setCurrentIndexPath(nextIndexPath)
+                    self.play()
                 }
             }
         }
@@ -165,21 +161,29 @@ class PlayerViewController : UIViewController {
         if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
             if let currentUrl = AudioPlayer.instance.currentUrl where url == currentUrl {
                 // show an alert if we're on the current page
-                showSkipAlert()
+                showSkipAlert(url)
                 
-            } else if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.indexOf(podcast) {
-                let indexPath = NSIndexPath(forRow: index, inSection: 0) // note: this has to be section 0
-                collectionView.performBatchUpdates({
-                    self.podcasts.removeObject(podcast)
-                    
-                    // after the podcasts have been updated, reload the player and collectionView
-                    self.reloadPlayer()
-                    self.collectionView.deleteItemsAtIndexPaths([indexPath])
-                    }, completion: { _ in
-                        printError(0, message: "\(podcast.title) wouldn't play, we removed the cell at indexPath: \(indexPath.description))")
-                })
-                
+            } else {
+                removePodcastWithUrl(url)
             }
+        }
+    }
+    
+    func removePodcastWithUrl(url: NSURL) {
+        if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.indexOf(podcast) {
+            let indexPath = NSIndexPath(forRow: index, inSection: 0) // note: this has to be section 0
+            collectionView.performBatchUpdates({
+                self.podcasts.removeObject(podcast)
+                
+                // after the podcasts have been updated, reload the player and collectionView
+                self.reloadPlayer()
+                self.collectionView.deleteItemsAtIndexPaths([indexPath])
+                }, completion: { _ in
+                    printError(0, message: "\(podcast.title) wouldn't play, we removed the cell at indexPath: \(indexPath.description))")
+                    self.play()
+
+            })
+            
         }
     }
     
@@ -193,13 +197,13 @@ class PlayerViewController : UIViewController {
         return nil
     }
     
-    func showSkipAlert() {
-        AudioPlayer.instance.pause()
+    func showSkipAlert(url: NSURL) {
+        skip()
         self.showAlert(String.localize("Can't be played"),
                        message: String.localize("This podcast can't be played. Sorry! Is it OK if we skip to the next one?"),
                        button: String.localize("Skip"),
                        handler: { [unowned self] _ in
-                        self.skip()
+                        self.removePodcastWithUrl(url)
             })
     }
     
