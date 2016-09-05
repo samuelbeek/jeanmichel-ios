@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B28BB511D7DA7110072B8B0 /* PrintExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B28BB501D7DA7110072B8B0 /* PrintExtensions.swift */; };
 		5B841B3B1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3A1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift */; };
 		5B841B3D1D2AE56B001A719A /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3C1D2AE56B001A719A /* PlayerView.swift */; };
 		5B841B3F1D2AEE66001A719A /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3E1D2AEE66001A719A /* PodcastCollectionViewCell.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B28BB501D7DA7110072B8B0 /* PrintExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrintExtensions.swift; path = Extensions/PrintExtensions.swift; sourceTree = "<group>"; };
 		5B841B3A1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredCellCollectionViewLayout.swift; sourceTree = "<group>"; };
 		5B841B3C1D2AE56B001A719A /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		5B841B3E1D2AEE66001A719A /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				5BF4B20B1D37F55300D6C8E9 /* ArrayExtensions.swift */,
 				5BD4B6A81D42668C00A7A19F /* UIViewControllerExtensions.swift */,
 				5BD4B6AA1D42671600A7A19F /* StringExtensions.swift */,
+				5B28BB501D7DA7110072B8B0 /* PrintExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				5BAC54D61CEE559E0068BECA /* DataContaining.swift in Sources */,
 				5BAC54EE1CEE6FA90068BECA /* PlayerViewController.swift in Sources */,
 				5B841B411D2AF432001A719A /* DoubleExtensions.swift in Sources */,
+				5B28BB511D7DA7110072B8B0 /* PrintExtensions.swift in Sources */,
 				5BF4B20C1D37F55300D6C8E9 /* ArrayExtensions.swift in Sources */,
 				5BD4B6AB1D42671600A7A19F /* StringExtensions.swift in Sources */,
 				5BAC54D51CEE559E0068BECA /* CollectionViewDataSourceProxy.swift in Sources */,

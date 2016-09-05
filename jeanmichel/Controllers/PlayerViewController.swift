@@ -39,6 +39,7 @@ class PlayerViewController : UIViewController {
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
 
+        // If there's an error, deal with it
         NSNotificationCenter.defaultCenter().addObserverForName(JukeBoxNotificationError, object: nil, queue: nil, usingBlock: { [weak self] notification in
             if let strongSelf = self {
                 strongSelf.handleErrorNotification(notification)
@@ -47,7 +48,7 @@ class PlayerViewController : UIViewController {
             }
         })
 
-        // layout stuff
+        // CollectionViewLayout
         let layout: UICollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsetsZero
         layout.itemSize = view.bounds.size
@@ -55,17 +56,18 @@ class PlayerViewController : UIViewController {
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
 
+        // CollectionView
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
         collectionView.showsHorizontalScrollIndicator = false
-        
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         collectionView.registerClass(PodcastCollectionViewCell.self, forCellWithReuseIdentifier: Constants.defaultCellIdentifier)
         collectionView.reloadData()
         collectionView.delegate = self
         view.addSubview(collectionView)
         
+        // PlayerView (the controls form the player aren't part of the cells)
         playerView = PlayerView(frame: view.bounds, station: self.station)
         playerView.skipButton.addTarget(self, action: #selector(self.skip), forControlEvents: .TouchUpInside)
         playerView.previousButton.addTarget(self, action: #selector(self.previous), forControlEvents: .TouchUpInside)
@@ -79,16 +81,11 @@ class PlayerViewController : UIViewController {
     func fetchData() {
         API.getPodcasts(self.station) { [weak self] result in
             
-            guard let strongSelf = self else {
-                return
-            }
-            
             switch result {
-                
             case .Value(let podcasts):
-                strongSelf.podcasts =  podcasts.shuffle()
-                strongSelf.reloadPlayer()
-                strongSelf.collectionView.reloadData()
+                self?.podcasts =  podcasts.shuffle()
+                self?.reloadPlayer()
+                self?.collectionView.reloadData()
                 break
             case .Error(let error):
                 print(error)
@@ -157,7 +154,7 @@ class PlayerViewController : UIViewController {
             return
         }
         
-        print("ERROR with code: \(code) on current url:", message)
+        printError(code, message: message)
         
         if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
             if let currentUrl = AudioPlayer.instance.currentUrl where url == currentUrl {
