@@ -55,7 +55,7 @@ struct API {
                 let json = JSON(data)
                 var podcasts = [Podcast]()
                 for (_,episode):(String, JSON) in json {
-                    guard let title = episode["title"].string,
+                    guard let titleString = episode["title"].string,
                         let description = episode["description"].string,
                         let urlString = episode["audioUrl"].string,
                         let showTitle = episode["_creator"]["title"].string,
@@ -64,6 +64,9 @@ struct API {
                             debugPrint("object could not be parsed:", episode)
                             return
                     }
+                    
+                    let title = titleString.stringByReplacingOccurrencesOfString(showTitle, withString: "")
+                    
                     let podcast = Podcast(title: title, showTitle: showTitle, description: description, audioUrl: url, duration: duration, station: station.title.lowercaseString)
                     podcasts.append(podcast)
                 }
