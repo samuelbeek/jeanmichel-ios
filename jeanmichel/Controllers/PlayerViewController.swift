@@ -164,7 +164,6 @@ class PlayerViewController : UIViewController {
         if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
             if let currentUrl = AudioPlayer.instance.currentUrl where url == currentUrl {
                 // show an alert if we're on the current page
-                removePodcastWithUrl(url)
                 showSkipAlert(url)
                 
             } else {
@@ -173,12 +172,14 @@ class PlayerViewController : UIViewController {
         }
     }
     
-    func removePodcastWithUrl(url: NSURL) {
+    func removePodcastWithUrl(url: NSURL, skip: Bool = false) {
         if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.indexOf(podcast) {
             let indexPath = NSIndexPath(forRow: index, inSection: 0) // note: this has to be section 0
             collectionView.performBatchUpdates({
+                if skip {
+                    self.skip()
+                }
                 self.podcasts.removeObject(podcast)
-                
                 // after the podcasts have been updated, reload the player and collectionView
                 self.reloadPlayer()
                 self.collectionView.deleteItemsAtIndexPaths([indexPath])
@@ -206,7 +207,7 @@ class PlayerViewController : UIViewController {
                        message: String.localize("This podcast can't be played. Sorry! Is it OK if we skip to the next one?"),
                        button: String.localize("Skip"),
                        handler: { [unowned self] _ in
-                        self.skip()
+                        self.removePodcastWithUrl(url, skip: true)
             })
     }
     

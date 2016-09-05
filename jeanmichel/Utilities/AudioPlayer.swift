@@ -78,13 +78,19 @@ class AudioPlayer : NSObject {
 
 extension AudioPlayer : JukeboxDelegate {
     func jukeboxStateDidChange(state : Jukebox) {
+        
+        if state.state == .Loading {
+           UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        } else {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }
+        
     }
     
     func jukeboxPlaybackProgressDidChange(jukebox : Jukebox) {
         if let delegate = delegate, let currentItem = jukebox.currentItem, currentTime = currentItem.currentTime, duration = currentItem.meta.duration {
             let progress = (currentTime/duration)*100
             delegate.progressDidChange(progress)
-            print("update progress", progress)
         }
     }
     
