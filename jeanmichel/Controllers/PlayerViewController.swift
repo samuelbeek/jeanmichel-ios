@@ -87,7 +87,6 @@ class PlayerViewController : UIViewController {
             case .Value(let podcasts):
                 self?.podcasts =  podcasts.shuffle()
                 self?.reloadPlayer()
-                self?.collectionView.reloadData()
                 self?.play()
                 break
             case .Error(let error):
@@ -104,16 +103,11 @@ class PlayerViewController : UIViewController {
     }
     
     func reloadPlayer() {
-        // TODO: make sure this won't affect the current playing item 
-        let shouldPlay = (AudioPlayer.instance.state == .Playing || !hasPlayed)
-        
+        // TODO: make sure we have the correct time?
+        let shouldPlay = !hasPlayed
         AudioPlayer.instance.setItems(self.podcasts)
         if shouldPlay {
-            if let indexPath = currentIndexPath {
-                AudioPlayer.instance.play(indexPath.row)
-            } else {
-                AudioPlayer.instance.play()
-            }
+            AudioPlayer.instance.play()
             hasPlayed = true
         }
     }

@@ -11,7 +11,7 @@ import UIKit
 
 class AudioPlayer : NSObject {
     
-    static let instance = AudioPlayer()
+    internal static let instance = AudioPlayer()
     
     internal var currentUrl : NSURL? {
         return audioPlayer.currentItem?.URL
@@ -20,14 +20,13 @@ class AudioPlayer : NSObject {
     private var audioPlayer : Jukebox!
     private var podcasts = [Podcast]() {
         didSet {
-            
             var playIndex : Int? = nil
             if (isPlaying) {
                 playIndex = self.audioPlayer.playIndex
             }
             
             audioPlayer.stop()
-            audioPlayer = nil
+            audioPlayer = nil // We have to make audioPlayer nil before we create a new one
             audioPlayer = Jukebox(delegate: self, items: Podcast.getJukeBoxItemsForPodcasts(podcasts))
             if let index = playIndex {
                 audioPlayer.play(atIndex: index)
@@ -36,7 +35,7 @@ class AudioPlayer : NSObject {
     }
     
     internal var isPlaying : Bool {
-        return audioPlayer.state == Jukebox.State.Playing
+        return audioPlayer.state == .Playing || audioPlayer.state == .Loading
     }
     
     internal var state : Jukebox.State {
@@ -73,18 +72,15 @@ class AudioPlayer : NSObject {
 
 extension AudioPlayer : JukeboxDelegate {
     func jukeboxStateDidChange(state : Jukebox) {
-        print("jukeBoxDidChange")
     }
     
     func jukeboxPlaybackProgressDidChange(jukebox : Jukebox) {
-        print("jukeBoxPlaybackPRogressDidChange")
     }
     
     func jukeboxDidLoadItem(jukebox : Jukebox, item : JukeboxItem) {
-        print("jukeBoxDidLoad")
     }
     
     func jukeboxDidUpdateMetadata(jukebox : Jukebox, forItem: JukeboxItem) {
-        print("jukeBoxDidUpdateMetaData")
     }
+    
 }
