@@ -69,6 +69,7 @@ class PlayerViewController : UIViewController {
         collectionView.registerClass(PodcastCollectionViewCell.self, forCellWithReuseIdentifier: Constants.defaultCellIdentifier)
         collectionView.reloadData()
         collectionView.delegate = self
+        collectionView.backgroundColor = .whiteColor()
         view.addSubview(collectionView)
         
         // PlayerView (the controls form the player aren't part of the cells)
@@ -83,6 +84,8 @@ class PlayerViewController : UIViewController {
     
     
     func fetchData() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
         API.getPodcasts(self.station) { [weak self] result in
             
             switch result {

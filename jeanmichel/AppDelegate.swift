@@ -48,6 +48,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    override func remoteControlReceivedWithEvent(event: UIEvent?) {
+        if event?.type == .RemoteControl {
+            switch event!.subtype {
+            case .RemoteControlPlay :
+                AudioPlayer.instance.play()
+            case .RemoteControlPause :
+                AudioPlayer.instance.pause()
+            case .RemoteControlNextTrack :
+                AudioPlayer.instance.playNext()
+            case .RemoteControlPreviousTrack:
+                AudioPlayer.instance.playPrevious()
+            case .RemoteControlTogglePlayPause:
+                if AudioPlayer.instance.state == .Playing {
+                    AudioPlayer.instance.pause()
+                } else {
+                    AudioPlayer.instance.play()
+                }
+            default:
+                break
+            }
+        }
+    }
 
 }
 

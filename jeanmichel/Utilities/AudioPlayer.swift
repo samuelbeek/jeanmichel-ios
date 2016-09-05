@@ -73,6 +73,15 @@ class AudioPlayer : NSObject {
     internal func stop() {
         audioPlayer.stop()
     }
+    
+    internal func playNext() {
+        audioPlayer.playNext()
+    }
+    
+    internal func playPrevious() {
+        audioPlayer.playPrevious()
+    }
+    
 
 }
 
