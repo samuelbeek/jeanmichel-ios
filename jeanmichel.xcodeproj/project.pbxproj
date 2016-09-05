@@ -55,7 +55,7 @@
 		5B841B3C1D2AE56B001A719A /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		5B841B3E1D2AEE66001A719A /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
 		5B841B401D2AF432001A719A /* DoubleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DoubleExtensions.swift; path = Extensions/DoubleExtensions.swift; sourceTree = "<group>"; };
-		5BAC54A51CEE4E680068BECA /* jeanmichel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jeanmichel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BAC54A51CEE4E680068BECA /* On The Air.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Air.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BAC54A81CEE4E680068BECA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BAC54AF1CEE4E680068BECA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5BAC54B21CEE4E680068BECA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -121,7 +121,7 @@
 		5BAC54A61CEE4E680068BECA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5BAC54A51CEE4E680068BECA /* jeanmichel.app */,
+				5BAC54A51CEE4E680068BECA /* On The Air.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -282,7 +282,7 @@
 			);
 			name = jeanmichel;
 			productName = jeanmichel;
-			productReference = 5BAC54A51CEE4E680068BECA /* jeanmichel.app */;
+			productReference = 5BAC54A51CEE4E680068BECA /* On The Air.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -531,7 +531,7 @@
 				INFOPLIST_FILE = jeanmichel/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamsamdy.jeanmichel;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "On The Air";
 			};
 			name = Debug;
 		};
@@ -543,7 +543,7 @@
 				INFOPLIST_FILE = jeanmichel/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamsamdy.jeanmichel;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "On The Air";
 			};
 			name = Release;
 		};
