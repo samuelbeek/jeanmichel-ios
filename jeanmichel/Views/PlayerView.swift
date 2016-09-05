@@ -64,7 +64,6 @@ class PlayerView : UIView {
             prev.bottom == skip.bottom
             prev.left == prev.superview!.left + 50
             
-            
         }
         
     }

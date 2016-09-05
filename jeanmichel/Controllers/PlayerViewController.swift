@@ -164,6 +164,7 @@ class PlayerViewController : UIViewController {
         if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
             if let currentUrl = AudioPlayer.instance.currentUrl where url == currentUrl {
                 // show an alert if we're on the current page
+                removePodcastWithUrl(url)
                 showSkipAlert(url)
                 
             } else {
@@ -201,12 +202,11 @@ class PlayerViewController : UIViewController {
     }
     
     func showSkipAlert(url: NSURL) {
-        skip()
         self.showAlert(String.localize("Can't be played"),
                        message: String.localize("This podcast can't be played. Sorry! Is it OK if we skip to the next one?"),
                        button: String.localize("Skip"),
                        handler: { [unowned self] _ in
-                        self.removePodcastWithUrl(url)
+                        self.skip()
             })
     }
     
