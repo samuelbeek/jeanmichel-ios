@@ -24,17 +24,21 @@ class AudioPlayer : NSObject {
     private var audioPlayer : Jukebox!
     private var podcasts = [Podcast]() {
         didSet {
-            var playIndex : Int? = nil
-            if (isPlaying) {
-                playIndex = self.audioPlayer.playIndex
-            }
-            
-            audioPlayer.stop()
-            audioPlayer = nil // We have to make audioPlayer nil before we create a new one
-            audioPlayer = Jukebox(delegate: self, items: Podcast.getJukeBoxItemsForPodcasts(podcasts))
-            if let index = playIndex {
-                audioPlayer.play(atIndex: index)
-            }
+            dispatch_async(dispatch_get_main_queue(),{
+                var playIndex : Int? = nil
+                if (self.isPlaying) {
+                    playIndex = self.audioPlayer.playIndex
+                }
+    
+                self.audioPlayer.stop()
+                self.audioPlayer = nil // We have to make audioPlayer nil before we create a new one
+                self.audioPlayer = Jukebox(delegate: self, items: Podcast.getJukeBoxItemsForPodcasts(self.podcasts))
+                
+                if let index = playIndex {
+                    self.audioPlayer.play(atIndex: index)
+                }
+
+            })
         }
     }
     
@@ -82,7 +86,16 @@ class AudioPlayer : NSObject {
         audioPlayer.playPrevious()
     }
     
-
+    /// Starts listening to remote events (controls on the lock screen)
+    internal func startRemote() {
+        UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+    }
+    
+    /// Stops listening to remote events
+    internal func stopRemote() {
+        UIApplication.sharedApplication().endReceivingRemoteControlEvents()
+    }
+    
 }
 
 extension AudioPlayer : JukeboxDelegate {

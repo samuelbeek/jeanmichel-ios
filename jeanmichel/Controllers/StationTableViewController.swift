@@ -25,6 +25,7 @@ class StationTableViewController : UITableViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: Styles.Fonts.headerFont, NSForegroundColorAttributeName: Styles.Colors.stationHeaderTextColor]
         AudioPlayer.instance.pause()
+        AudioPlayer.instance.stopRemote()
     }
     
     override func viewDidLoad() {

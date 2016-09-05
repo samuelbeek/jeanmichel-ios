@@ -35,6 +35,7 @@ class PlayerViewController : UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clearColor()
+        AudioPlayer.instance.startRemote()
     }
     
     override func viewDidLoad() {
@@ -179,13 +180,13 @@ class PlayerViewController : UIViewController {
         if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.indexOf(podcast) {
             let indexPath = NSIndexPath(forRow: index, inSection: 0) // note: this has to be section 0
             collectionView.performBatchUpdates({
-                if skip {
-                    self.skip()
-                }
                 self.podcasts.removeObject(podcast)
                 // after the podcasts have been updated, reload the player and collectionView
                 self.reloadPlayer()
                 self.collectionView.deleteItemsAtIndexPaths([indexPath])
+                if skip {
+                    self.skip()
+                }
                 }, completion: { _ in
                     printError(0, message: "\(podcast.title) wouldn't play, we removed the cell at indexPath: \(indexPath.description))")
                     self.play()
