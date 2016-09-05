@@ -169,7 +169,6 @@ class PlayerViewController : UIViewController {
             if let currentUrl = AudioPlayer.instance.currentUrl where url == currentUrl {
                 // show an alert if we're on the current page
                 showSkipAlert(url)
-                
             } else {
                 removePodcastWithUrl(url)
             }
@@ -185,7 +184,7 @@ class PlayerViewController : UIViewController {
                 self.reloadPlayer()
                 self.collectionView.deleteItemsAtIndexPaths([indexPath])
                 if skip {
-                    self.skip()
+                    AudioPlayer.instance.playNext()
                 }
                 }, completion: { _ in
                     printError(0, message: "\(podcast.title) wouldn't play, we removed the cell at indexPath: \(indexPath.description))")
@@ -259,7 +258,7 @@ extension PlayerViewController : UICollectionViewDataSource {
 
 extension PlayerViewController : UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print(podcasts[indexPath.row].title)
+        self.play()
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {

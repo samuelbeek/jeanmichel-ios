@@ -24,28 +24,36 @@ class AudioPlayer : NSObject {
     private var audioPlayer : Jukebox!
     private var podcasts = [Podcast]() {
         didSet {
-            dispatch_async(dispatch_get_main_queue(),{
-                var playIndex : Int? = nil
-                if (self.isPlaying) {
-                    playIndex = self.audioPlayer.playIndex
-                }
-    
-                self.audioPlayer.stop()
-                self.audioPlayer = nil // We have to make audioPlayer nil before we create a new one
+            
+            // init an audioPlayer if there's no items
+            if audioPlayer.queuedItems.count <= 0 {
                 self.audioPlayer = Jukebox(delegate: self, items: Podcast.getJukeBoxItemsForPodcasts(self.podcasts))
-                
-                if let index = playIndex {
-                    self.audioPlayer.play(atIndex: index)
+            } else {
+                // remove diff
+                for oldPodcast in oldValue {
+                    if !podcasts.contains(oldPodcast) {
+                        self.audioPlayer.removeItems(withURL: oldPodcast.audioUrl)
+                    }
                 }
+                
+                // add diff
+                for newPodcast in podcasts {
+                    if !oldValue.contains(newPodcast) {
+                        self.audioPlayer.append(item: newPodcast.getJukeBoxItemForPodcast(), loadingAssets: true)
+                    }
+                }
+            }
+            
 
-            })
         }
     }
     
+    /// Return if player is playing
     internal var isPlaying : Bool {
-        return audioPlayer.state == .Playing || audioPlayer.state == .Loading
+        return audioPlayer.state == .Playing
     }
     
+    /// Return players state
     internal var state : Jukebox.State {
         return audioPlayer.state
     }
@@ -57,15 +65,17 @@ class AudioPlayer : NSObject {
         audioPlayer = Jukebox(delegate: self, items: [])
     }
     
-    
+    /// Change content
     internal func setItems(podcasts: [Podcast]) {
         self.podcasts = podcasts
     }
     
+    /// Pause index
     internal func pause() {
         audioPlayer.pause()
     }
     
+    /// Play at index
     internal func play(index: Int? = nil) {
         if let i = index where index != audioPlayer.playIndex{
             audioPlayer.play(atIndex: i)
@@ -74,14 +84,17 @@ class AudioPlayer : NSObject {
         }
     }
     
+    /// Stop playback
     internal func stop() {
         audioPlayer.stop()
     }
     
+    /// Play next track
     internal func playNext() {
         audioPlayer.playNext()
     }
     
+    /// Play previous track
     internal func playPrevious() {
         audioPlayer.playPrevious()
     }

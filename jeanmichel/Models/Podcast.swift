@@ -27,18 +27,15 @@ struct Podcast : Playable, Equatable {
         return "\(minutes):\(seconds)"
     }
     
-    static func getUrlsForPodcasts(podcasts : [Podcast]) -> [NSURL] {
-        return podcasts.map { podcast -> NSURL in
-            return podcast.audioUrl
-        }
-    }
-    
     static func getJukeBoxItemsForPodcasts(podcasts : [Podcast]) -> [JukeboxItem] {
-        return getUrlsForPodcasts(podcasts).map { url -> JukeboxItem in
-            return JukeboxItem(URL: url)
+        return podcasts.map { podcast -> JukeboxItem in
+            return podcast.getJukeBoxItemForPodcast()
         }
     }
     
+    func getJukeBoxItemForPodcast() -> JukeboxItem {
+        return JukeboxItem(URL: audioUrl, localTitle: title)
+    }
  }
 
 func ==(lhs: Podcast, rhs: Podcast) -> Bool {
