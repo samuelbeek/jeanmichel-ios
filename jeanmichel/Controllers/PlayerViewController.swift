@@ -222,7 +222,7 @@ class PlayerViewController : UIViewController {
 
 extension PlayerViewController : AudioPlayerDelegate {
     func progressDidChange(progress: Double) {
-        debugPrint(progress)
+        playerView.updateProgress(progress)
     }
 }
 

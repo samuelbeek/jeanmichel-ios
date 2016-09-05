@@ -5,6 +5,7 @@ use_frameworks!
 
 target 'jeanmichel' do
   pod 'Alamofire', '~> 3.4'
+  pod 'CircleProgressView', :git => 'https://github.com/CardinalNow/iOS-CircleProgressView.git'
   pod 'Jukebox', :git => 'https://github.com/samuelbeek/Jukebox.git'
   pod 'SwiftyJSON', '~> 2.3'
   pod 'Cartography'

@@ -1,20 +1,27 @@
 PODS:
   - Alamofire (3.4.0)
   - Cartography (0.6.0)
+  - CircleProgressView (1.0.11)
   - Jukebox (0.1.3)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
   - Alamofire (~> 3.4)
   - Cartography
+  - CircleProgressView (from `https://github.com/CardinalNow/iOS-CircleProgressView.git`)
   - Jukebox (from `https://github.com/samuelbeek/Jukebox.git`)
   - SwiftyJSON (~> 2.3)
 
 EXTERNAL SOURCES:
+  CircleProgressView:
+    :git: https://github.com/CardinalNow/iOS-CircleProgressView.git
   Jukebox:
     :git: https://github.com/samuelbeek/Jukebox.git
 
 CHECKOUT OPTIONS:
+  CircleProgressView:
+    :commit: 51cbf218c4b417aed925d0d30e0c03dbff9b98cd
+    :git: https://github.com/CardinalNow/iOS-CircleProgressView.git
   Jukebox:
     :commit: 16b8dae0be3ca29c262a93e945ac15456d10b096
     :git: https://github.com/samuelbeek/Jukebox.git
@@ -22,9 +29,10 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
   Cartography: 70af183a248547694a8cfaa6b989cb7e04589985
+  CircleProgressView: 3e7e26454ad9a93e310fe9cd612af6d779deb0c1
   Jukebox: 76fedd2bc60f9d8122c3fbee5ebec6209ef6f739
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 94874af65145ffc15157255068aa0e4f47b7f955
+PODFILE CHECKSUM: 340d4e98197a20b224ac29f35e455e46357d5c71
 
 COCOAPODS: 1.0.0
