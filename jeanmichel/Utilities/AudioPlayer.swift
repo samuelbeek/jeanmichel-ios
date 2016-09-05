@@ -9,6 +9,10 @@
 import Jukebox
 import UIKit
 
+protocol AudioPlayerDelegate : class {
+    func progressDidChange(progress: Double)
+}
+
 class AudioPlayer : NSObject {
     
     internal static let instance = AudioPlayer()
@@ -41,6 +45,8 @@ class AudioPlayer : NSObject {
     internal var state : Jukebox.State {
         return audioPlayer.state
     }
+    
+    internal weak var delegate : AudioPlayerDelegate?
 
     private override init() {
         super.init()
@@ -75,6 +81,11 @@ extension AudioPlayer : JukeboxDelegate {
     }
     
     func jukeboxPlaybackProgressDidChange(jukebox : Jukebox) {
+        if let delegate = delegate, let currentItem = jukebox.currentItem, currentTime = currentItem.currentTime, duration = currentItem.meta.duration {
+            let progress = (currentTime/duration)*100
+            delegate.progressDidChange(progress)
+            print("update progress", progress)
+        }
     }
     
     func jukeboxDidLoadItem(jukebox : Jukebox, item : JukeboxItem) {

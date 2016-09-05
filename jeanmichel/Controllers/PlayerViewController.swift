@@ -25,6 +25,9 @@ class PlayerViewController : UIViewController {
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        collectionView.delegate = nil
+        collectionView.dataSource = nil
+        AudioPlayer.instance.delegate = nil
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -99,12 +102,12 @@ class PlayerViewController : UIViewController {
     
     func setCurrentIndexPath(indexPath: NSIndexPath) {
         currentIndexPath = indexPath
-        self.play(index: indexPath.row)
+        play(index: indexPath.row)
     }
     
     func reloadPlayer() {
-        // TODO: make sure we have the correct time?
         AudioPlayer.instance.setItems(self.podcasts)
+        AudioPlayer.instance.delegate = self
     }
 
     func skip() {
@@ -215,6 +218,12 @@ class PlayerViewController : UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+}
+
+extension PlayerViewController : AudioPlayerDelegate {
+    func progressDidChange(progress: Double) {
+        debugPrint(progress)
+    }
 }
 
 extension PlayerViewController : UICollectionViewDataSource {
