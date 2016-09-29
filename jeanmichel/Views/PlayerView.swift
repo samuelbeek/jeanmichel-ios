@@ -8,12 +8,12 @@
 
 import UIKit
 import Cartography
-import CircleProgressView
+import RPCircularProgress
 
 class PlayerView : UIView {
     
     fileprivate var stationLabel : UILabel!
-    fileprivate var progressView : CircleProgressView!
+    fileprivate var progressView : RPCircularProgress!
     internal var skipButton, previousButton, playButton : UIButton!
     internal override var backgroundColor: UIColor? {
         didSet {
@@ -33,22 +33,18 @@ class PlayerView : UIView {
         previousButton.setImage(UIImage(named: "buttonPrevious"), for: UIControlState())
         addSubview(previousButton)
 
-        progressView = CircleProgressView(frame: CGRect(x: 0,y: 0,width: 136,height: 136))
-        progressView.trackWidth = 18
-        progressView.trackBackgroundColor = .clear 
-        progressView.centerImage = UIImage()
-        progressView.centerFillColor = .clear 
-        progressView.trackBackgroundColor = .clear 
-        progressView.trackFillColor = UIColor.black.withAlphaComponent(0.14)
+        progressView = RPCircularProgress()
+        progressView.progressTintColor = .white
+        progressView.roundedCorners = false
         addSubview(progressView)
-
+        
         playButton = UIButton(type: .custom)
         playButton.setImage(UIImage(named: "buttonPause"), for: UIControlState())
         addSubview(playButton)
         
         updateProgress(0)
         
-        constrain(skipButton, previousButton, playButton) {skip, prev, play in
+        constrain(skipButton, previousButton, playButton, progressView) {skip, prev, play, progress in
             
             play.width == 100
             play.height == play.width
@@ -64,6 +60,10 @@ class PlayerView : UIView {
             prev.bottom == skip.bottom
             prev.left == prev.superview!.left + 50
             
+            progress.height == 136
+            progress.width == 136
+            progress.center == play.center
+
         }
         
     }
@@ -77,7 +77,7 @@ class PlayerView : UIView {
     }
     
     func updateProgress(_ progress: Double) {
-        self.progressView.setProgress(progress/100, animated: true)
+        self.progressView.updateProgress(CGFloat(progress/100))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -86,9 +86,6 @@ class PlayerView : UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        progressView.center = playButton.center
-        progressView.backgroundColor = .clear 
-        progressView.centerImage = UIImage()
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
