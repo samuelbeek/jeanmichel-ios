@@ -41,7 +41,8 @@ class PlayerViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = station.title
-
+        view.backgroundColor = Styles.Colors.lightPinkColor
+        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         // If there's an error, deal with it
@@ -60,17 +61,25 @@ class PlayerViewController : UIViewController {
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-
+        
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
+        
+        constrain(activityIndicator) { spinner in
+            spinner.center == spinner.superview!.center
+        }
+        
         // CollectionView
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.dataSource = self
-        collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
+        collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         collectionView.register(PodcastCollectionViewCell.self, forCellWithReuseIdentifier: Constants.defaultCellIdentifier)
         collectionView.reloadData()
         collectionView.delegate = self
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         view.addSubview(collectionView)
         
         // PlayerView (the controls form the player aren't part of the cells)
