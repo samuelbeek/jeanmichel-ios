@@ -10,8 +10,7 @@ import UIKit
 
 class StationTableViewController : UITableViewController {
     
-    var dataSource : TableViewDataSourceProxy!
-    var stations : [Station]  = []
+    var stations = [Station]()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -33,10 +32,7 @@ class StationTableViewController : UITableViewController {
         self.title = "On the Air"
 
         super.viewDidLoad()
-        let source = StationDataSource()
-        let proxy = TableViewDataSourceProxy(dataSource: source)
-        dataSource = proxy
-        tableView.dataSource = dataSource
+        tableView.dataSource = self
         tableView.register(ChannelTableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
         tableView.reloadData()
         tableView.delegate = self
@@ -52,7 +48,6 @@ class StationTableViewController : UITableViewController {
             switch result {
             case .value(let stations):
                 strongSelf.stations = stations
-                source.data = stations
                 strongSelf.tableView.reloadData()
             case .error(let error):
                 print(error.debugDescription)
@@ -78,6 +73,33 @@ class StationTableViewController : UITableViewController {
     }
     
 }
+
+// MARK: TableViewDelegate
+extension StationTableViewController {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return stations.count
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: Constants.defaultCellIdentifier) as? ChannelTableViewCell {
+            cell.textLabel?.text = stations[indexPath.row].title.lowercased()
+            return cell
+        }
+        return UITableViewCell()
+    }
+    
+
+}
+
+
 extension Array {
     subscript (safe index: Int) -> Element? {
         return indices ~= index ? self[index] : nil

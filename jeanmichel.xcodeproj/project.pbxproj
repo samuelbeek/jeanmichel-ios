@@ -16,26 +16,10 @@
 		5BAC54B01CEE4E680068BECA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BAC54AF1CEE4E680068BECA /* Assets.xcassets */; };
 		5BAC54B31CEE4E680068BECA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BAC54B11CEE4E680068BECA /* LaunchScreen.storyboard */; };
 		5BAC54BF1CEE54B90068BECA /* StationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54BE1CEE54B90068BECA /* StationTableViewController.swift */; };
-		5BAC54D21CEE559E0068BECA /* CellProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54C21CEE559E0068BECA /* CellProviding.swift */; };
-		5BAC54D31CEE559E0068BECA /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54C31CEE559E0068BECA /* CollectionViewDataSource.swift */; };
-		5BAC54D41CEE559E0068BECA /* CollectionViewDataSourceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54C41CEE559E0068BECA /* CollectionViewDataSourceable.swift */; };
-		5BAC54D51CEE559E0068BECA /* CollectionViewDataSourceProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54C51CEE559E0068BECA /* CollectionViewDataSourceProxy.swift */; };
-		5BAC54D61CEE559E0068BECA /* DataContaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54C61CEE559E0068BECA /* DataContaining.swift */; };
-		5BAC54D71CEE559E0068BECA /* ElementsContaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54C81CEE559E0068BECA /* ElementsContaining.swift */; };
-		5BAC54D81CEE559E0068BECA /* EmptyCheckable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54C91CEE559E0068BECA /* EmptyCheckable.swift */; };
-		5BAC54DA1CEE559E0068BECA /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54CB1CEE559E0068BECA /* Loadable.swift */; };
-		5BAC54DB1CEE559E0068BECA /* Sectionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54CC1CEE559E0068BECA /* Sectionable.swift */; };
-		5BAC54DC1CEE559E0068BECA /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54CD1CEE559E0068BECA /* SectionType.swift */; };
-		5BAC54DD1CEE559E0068BECA /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54CE1CEE559E0068BECA /* State.swift */; };
-		5BAC54DE1CEE559E0068BECA /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54CF1CEE559E0068BECA /* TableViewDataSource.swift */; };
-		5BAC54DF1CEE559E0068BECA /* TableViewDataSourceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54D01CEE559E0068BECA /* TableViewDataSourceable.swift */; };
-		5BAC54E01CEE559E0068BECA /* TableViewDataSourceProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54D11CEE559E0068BECA /* TableViewDataSourceProxy.swift */; };
 		5BAC54E21CEE56590068BECA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54E11CEE56590068BECA /* Constants.swift */; };
-		5BAC54E41CEE61E40068BECA /* PodcastDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54E31CEE61E40068BECA /* PodcastDataSource.swift */; };
 		5BAC54E61CEE62330068BECA /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54E51CEE62330068BECA /* Podcast.swift */; };
 		5BAC54E81CEE63470068BECA /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54E71CEE63470068BECA /* API.swift */; };
 		5BAC54EA1CEE6EF70068BECA /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54E91CEE6EF70068BECA /* Station.swift */; };
-		5BAC54EC1CEE6F5C0068BECA /* StationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54EB1CEE6F5C0068BECA /* StationDataSource.swift */; };
 		5BAC54EE1CEE6FA90068BECA /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54ED1CEE6FA90068BECA /* PlayerViewController.swift */; };
 		5BAC54F01CEE7BB70068BECA /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54EF1CEE7BB70068BECA /* MasterViewController.swift */; };
 		5BAC54F21CEE7F8B0068BECA /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC54F11CEE7F8B0068BECA /* AudioPlayer.swift */; };
@@ -61,26 +45,10 @@
 		5BAC54B21CEE4E680068BECA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5BAC54B41CEE4E680068BECA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BAC54BE1CEE54B90068BECA /* StationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationTableViewController.swift; sourceTree = "<group>"; };
-		5BAC54C21CEE559E0068BECA /* CellProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CellProviding.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54C31CEE559E0068BECA /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CollectionViewDataSource.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54C41CEE559E0068BECA /* CollectionViewDataSourceable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CollectionViewDataSourceable.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54C51CEE559E0068BECA /* CollectionViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CollectionViewDataSourceProxy.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54C61CEE559E0068BECA /* DataContaining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DataContaining.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54C81CEE559E0068BECA /* ElementsContaining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ElementsContaining.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54C91CEE559E0068BECA /* EmptyCheckable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyCheckable.swift; sourceTree = "<group>"; };
-		5BAC54CB1CEE559E0068BECA /* Loadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
-		5BAC54CC1CEE559E0068BECA /* Sectionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Sectionable.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54CD1CEE559E0068BECA /* SectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SectionType.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54CE1CEE559E0068BECA /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = State.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54CF1CEE559E0068BECA /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TableViewDataSource.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54D01CEE559E0068BECA /* TableViewDataSourceable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TableViewDataSourceable.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5BAC54D11CEE559E0068BECA /* TableViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TableViewDataSourceProxy.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5BAC54E11CEE56590068BECA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		5BAC54E31CEE61E40068BECA /* PodcastDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastDataSource.swift; sourceTree = "<group>"; };
 		5BAC54E51CEE62330068BECA /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		5BAC54E71CEE63470068BECA /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		5BAC54E91CEE6EF70068BECA /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
-		5BAC54EB1CEE6F5C0068BECA /* StationDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationDataSource.swift; sourceTree = "<group>"; };
 		5BAC54ED1CEE6FA90068BECA /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		5BAC54EF1CEE7BB70068BECA /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		5BAC54F11CEE7F8B0068BECA /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioPlayer.swift; path = Utilities/AudioPlayer.swift; sourceTree = "<group>"; };
@@ -149,8 +117,6 @@
 				5BAC54E11CEE56590068BECA /* Constants.swift */,
 				5BAC54E51CEE62330068BECA /* Podcast.swift */,
 				5BAC54E91CEE6EF70068BECA /* Station.swift */,
-				5BAC54E31CEE61E40068BECA /* PodcastDataSource.swift */,
-				5BAC54EB1CEE6F5C0068BECA /* StationDataSource.swift */,
 				5BFDBF8D1D073FF30042949E /* Styles.swift */,
 			);
 			path = Models;
@@ -190,30 +156,8 @@
 		5BAC54C01CEE559E0068BECA /* External */ = {
 			isa = PBXGroup;
 			children = (
-				5BAC54C11CEE559E0068BECA /* DataSourceable */,
 			);
 			path = External;
-			sourceTree = "<group>";
-		};
-		5BAC54C11CEE559E0068BECA /* DataSourceable */ = {
-			isa = PBXGroup;
-			children = (
-				5BAC54C21CEE559E0068BECA /* CellProviding.swift */,
-				5BAC54C31CEE559E0068BECA /* CollectionViewDataSource.swift */,
-				5BAC54C41CEE559E0068BECA /* CollectionViewDataSourceable.swift */,
-				5BAC54C51CEE559E0068BECA /* CollectionViewDataSourceProxy.swift */,
-				5BAC54C61CEE559E0068BECA /* DataContaining.swift */,
-				5BAC54C81CEE559E0068BECA /* ElementsContaining.swift */,
-				5BAC54C91CEE559E0068BECA /* EmptyCheckable.swift */,
-				5BAC54CB1CEE559E0068BECA /* Loadable.swift */,
-				5BAC54CC1CEE559E0068BECA /* Sectionable.swift */,
-				5BAC54CD1CEE559E0068BECA /* SectionType.swift */,
-				5BAC54CE1CEE559E0068BECA /* State.swift */,
-				5BAC54CF1CEE559E0068BECA /* TableViewDataSource.swift */,
-				5BAC54D01CEE559E0068BECA /* TableViewDataSourceable.swift */,
-				5BAC54D11CEE559E0068BECA /* TableViewDataSourceProxy.swift */,
-			);
-			path = DataSourceable;
 			sourceTree = "<group>";
 		};
 		5BAC54F31CEE7F970068BECA /* Utilities */ = {
@@ -384,42 +328,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BAC54DF1CEE559E0068BECA /* TableViewDataSourceable.swift in Sources */,
 				5B841B3D1D2AE56B001A719A /* PlayerView.swift in Sources */,
 				5BAC54E21CEE56590068BECA /* Constants.swift in Sources */,
-				5BAC54D41CEE559E0068BECA /* CollectionViewDataSourceable.swift in Sources */,
 				5BAC54A91CEE4E680068BECA /* AppDelegate.swift in Sources */,
-				5BAC54D71CEE559E0068BECA /* ElementsContaining.swift in Sources */,
 				5BFDBF8C1D073F420042949E /* ChannelTableViewCell.swift in Sources */,
 				5BAC54F21CEE7F8B0068BECA /* AudioPlayer.swift in Sources */,
-				5BAC54D61CEE559E0068BECA /* DataContaining.swift in Sources */,
 				5BAC54EE1CEE6FA90068BECA /* PlayerViewController.swift in Sources */,
 				5B841B411D2AF432001A719A /* DoubleExtensions.swift in Sources */,
 				5B28BB511D7DA7110072B8B0 /* PrintExtensions.swift in Sources */,
 				5BF4B20C1D37F55300D6C8E9 /* ArrayExtensions.swift in Sources */,
 				5BD4B6AB1D42671600A7A19F /* StringExtensions.swift in Sources */,
-				5BAC54D51CEE559E0068BECA /* CollectionViewDataSourceProxy.swift in Sources */,
 				5BAC54F01CEE7BB70068BECA /* MasterViewController.swift in Sources */,
-				5BAC54D21CEE559E0068BECA /* CellProviding.swift in Sources */,
 				5BAC54E61CEE62330068BECA /* Podcast.swift in Sources */,
 				5BAC54BF1CEE54B90068BECA /* StationTableViewController.swift in Sources */,
 				5B841B3F1D2AEE66001A719A /* PodcastCollectionViewCell.swift in Sources */,
-				5BAC54E41CEE61E40068BECA /* PodcastDataSource.swift in Sources */,
 				5BFDBF8E1D073FF30042949E /* Styles.swift in Sources */,
 				5B841B3B1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift in Sources */,
-				5BAC54D31CEE559E0068BECA /* CollectionViewDataSource.swift in Sources */,
-				5BAC54E01CEE559E0068BECA /* TableViewDataSourceProxy.swift in Sources */,
 				5BAC54EA1CEE6EF70068BECA /* Station.swift in Sources */,
-				5BAC54D81CEE559E0068BECA /* EmptyCheckable.swift in Sources */,
 				5BAC54E81CEE63470068BECA /* API.swift in Sources */,
-				5BAC54DD1CEE559E0068BECA /* State.swift in Sources */,
 				5BD4B6A91D42668C00A7A19F /* UIViewControllerExtensions.swift in Sources */,
-				5BAC54DA1CEE559E0068BECA /* Loadable.swift in Sources */,
-				5BAC54DB1CEE559E0068BECA /* Sectionable.swift in Sources */,
 				5BFDBF911D08192E0042949E /* UIcolorExtensions.swift in Sources */,
-				5BAC54DE1CEE559E0068BECA /* TableViewDataSource.swift in Sources */,
-				5BAC54DC1CEE559E0068BECA /* SectionType.swift in Sources */,
-				5BAC54EC1CEE6F5C0068BECA /* StationDataSource.swift in Sources */,
 				5BAC54F51CEF087E0068BECA /* Playable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
