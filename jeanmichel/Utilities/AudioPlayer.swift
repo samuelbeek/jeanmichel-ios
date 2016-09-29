@@ -11,7 +11,9 @@ import UIKit
 
 protocol AudioPlayerDelegate : class {
     func progressDidChange(_ progress: Double)
+    func stateDidChange(state: Jukebox.State)
 }
+
 
 class AudioPlayer : NSObject {
     
@@ -113,6 +115,8 @@ class AudioPlayer : NSObject {
 
 extension AudioPlayer : JukeboxDelegate {
     func jukeboxStateDidChange(_ state : Jukebox) {
+        
+       delegate?.stateDidChange(state: state.state)
         
         if state.state == .loading {
            UIApplication.shared.isNetworkActivityIndicatorVisible = true

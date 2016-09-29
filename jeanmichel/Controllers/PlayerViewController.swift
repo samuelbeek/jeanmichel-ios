@@ -47,12 +47,23 @@ class PlayerViewController : UIViewController {
 
         // If there's an error, deal with it
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: JukeBoxNotificationError), object: nil, queue: nil, using: { [weak self] notification in
-            if let strongSelf = self {
-                strongSelf.handleErrorNotification(notification)
-            } else {
-                print("self doesn't exist anymore")
+            
+            guard let strongSelf = self else {
+                return print("self doesn't exist anymore")
             }
+            
+            strongSelf.handleErrorNotification(notification)
         })
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil, using: { [weak self]  _ in
+            guard let strongSelf = self else {
+                return print("self doesn't exist anymore")
+            }
+            
+            strongSelf.skip()
+        })
+
+
 
         // CollectionViewLayout
         let layout: UICollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
@@ -112,10 +123,19 @@ class PlayerViewController : UIViewController {
         }
     }
     
+    func setCurrentPage() {
+        for cell in self.collectionView.visibleCells {
+            if let indexPath = self.collectionView.indexPath(for: cell) {
+                setCurrentIndexPath(indexPath)
+            }
+        }
+    }
     
     func setCurrentIndexPath(_ indexPath: IndexPath) {
-        currentIndexPath = indexPath
-        play(index: (indexPath as NSIndexPath).row)
+        if currentIndexPath != indexPath {
+            currentIndexPath = indexPath
+            play(index: (indexPath as NSIndexPath).row)
+        }
     }
     
     func reloadPlayer() {
@@ -129,8 +149,6 @@ class PlayerViewController : UIViewController {
                 let nextIndexPath = IndexPath(item: (indexPath as NSIndexPath).item+1, section: (indexPath as NSIndexPath).section)
                 if let _ = podcasts[safe: (nextIndexPath as NSIndexPath).row] {
                     self.collectionView.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
-                    setCurrentIndexPath(nextIndexPath)
-                    self.play()
                 }
             }
         }
@@ -235,7 +253,28 @@ class PlayerViewController : UIViewController {
 
 extension PlayerViewController : AudioPlayerDelegate {
     func progressDidChange(_ progress: Double) {
-        playerView.updateProgress(progress)
+        if AudioPlayer.instance.state != Jukebox.State.loading {
+            playerView.updateProgress(progress)
+        }
+    }
+    
+    func stateDidChange(state: Jukebox.State) {
+        
+        let shouldLoad = (state == .loading)
+        playerView.setLoading(shouldLoad)
+        
+        switch state {
+        case .loading:
+            print("loading")
+        case .ready:
+            print("ready")
+        case .playing:
+            print("playing")
+        case .paused:
+            print("paused")
+        case .failed:
+            print("failed")
+        }
     }
 }
 
@@ -271,11 +310,11 @@ extension PlayerViewController : UICollectionViewDelegate {
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        for cell in self.collectionView.visibleCells {
-            if let indexPath = self.collectionView.indexPath(for: cell) {
-                setCurrentIndexPath(indexPath)
-            }
-        }
+        setCurrentPage()
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        setCurrentPage()
     }
 }
 

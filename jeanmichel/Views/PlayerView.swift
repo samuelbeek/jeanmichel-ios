@@ -35,6 +35,7 @@ class PlayerView : UIView {
 
         progressView = RPCircularProgress()
         progressView.progressTintColor = .white
+        progressView.indeterminateProgress = 0.3
         progressView.roundedCorners = false
         addSubview(progressView)
         
@@ -74,6 +75,14 @@ class PlayerView : UIView {
     
     func pause() {
         playButton.setImage(UIImage(named: "buttonPlay"), for: UIControlState())
+    }
+    
+    func setLoading(_ loading: Bool) {
+        if loading {
+            updateProgress(10)
+        }
+        self.progressView.indeterminateDuration = 3
+        self.progressView.enableIndeterminate(loading, completion: nil)
     }
     
     func updateProgress(_ progress: Double) {
