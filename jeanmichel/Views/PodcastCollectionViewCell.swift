@@ -32,25 +32,25 @@ class PodcastCollectionViewCell : UICollectionViewCell {
         super.init(frame: frame)
         
         backgroundImageView = UIImageView()
-        backgroundImageView.contentMode = .ScaleToFill
+        backgroundImageView.contentMode = .scaleToFill
         addSubview(backgroundImageView)
 
         titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFontOfSize(17, weight: UIFontWeightMedium)
-        titleLabel.textColor = .whiteColor()
-        titleLabel.textAlignment = .Center
+        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        titleLabel.textColor = .white
+        titleLabel.textAlignment = .center
         addSubview(titleLabel)
         
         showLabel = UILabel()
-        showLabel.font = UIFont.systemFontOfSize(17, weight: UIFontWeightMedium)
-        showLabel.textColor = .whiteColor()
-        showLabel.textAlignment = .Center
+        showLabel.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        showLabel.textColor = .white
+        showLabel.textAlignment = .center
         addSubview(showLabel)
 
         durationLabel = UILabel()
-        durationLabel.font = UIFont.systemFontOfSize(17, weight: UIFontWeightMedium)
-        durationLabel.textColor = .whiteColor()
-        durationLabel.textAlignment = .Center
+        durationLabel.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        durationLabel.textColor = .white
+        durationLabel.textAlignment = .center
         addSubview(durationLabel)
         
         constrain(titleLabel, showLabel, durationLabel, backgroundImageView) { title, show, duration, bg in

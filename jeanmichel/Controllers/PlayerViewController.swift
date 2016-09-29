@@ -12,11 +12,11 @@ import Cartography
 
 class PlayerViewController : UIViewController {
     
-    private let station : Station
-    private var podcasts : [Podcast] = []
-    private var collectionView : UICollectionView!
-    private var playerView : PlayerView!
-    private var currentIndexPath : NSIndexPath?
+    fileprivate let station : Station
+    fileprivate var podcasts : [Podcast] = []
+    fileprivate var collectionView : UICollectionView!
+    fileprivate var playerView : PlayerView!
+    fileprivate var currentIndexPath : IndexPath?
     
     init(station: Station) {
         self.station = station
@@ -24,17 +24,17 @@ class PlayerViewController : UIViewController {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
         collectionView.delegate = nil
         collectionView.dataSource = nil
         AudioPlayer.instance.delegate = nil
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.backgroundColor = .clearColor()
+        navigationController?.navigationBar.backgroundColor = .clear
         AudioPlayer.instance.startRemote()
     }
     
@@ -42,10 +42,10 @@ class PlayerViewController : UIViewController {
         super.viewDidLoad()
         self.title = station.title
 
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         // If there's an error, deal with it
-        NSNotificationCenter.defaultCenter().addObserverForName(JukeBoxNotificationError, object: nil, queue: nil, usingBlock: { [weak self] notification in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: JukeBoxNotificationError), object: nil, queue: nil, using: { [weak self] notification in
             if let strongSelf = self {
                 strongSelf.handleErrorNotification(notification)
             } else {
@@ -55,9 +55,9 @@ class PlayerViewController : UIViewController {
 
         // CollectionViewLayout
         let layout: UICollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsetsZero
+        layout.sectionInset = UIEdgeInsets.zero
         layout.itemSize = view.bounds.size
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
 
@@ -67,17 +67,17 @@ class PlayerViewController : UIViewController {
         collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-        collectionView.registerClass(PodcastCollectionViewCell.self, forCellWithReuseIdentifier: Constants.defaultCellIdentifier)
+        collectionView.register(PodcastCollectionViewCell.self, forCellWithReuseIdentifier: Constants.defaultCellIdentifier)
         collectionView.reloadData()
         collectionView.delegate = self
-        collectionView.backgroundColor = .whiteColor()
+        collectionView.backgroundColor = .white
         view.addSubview(collectionView)
         
         // PlayerView (the controls form the player aren't part of the cells)
         playerView = PlayerView(frame: view.bounds, station: self.station)
-        playerView.skipButton.addTarget(self, action: #selector(self.skip), forControlEvents: .TouchUpInside)
-        playerView.previousButton.addTarget(self, action: #selector(self.previous), forControlEvents: .TouchUpInside)
-        playerView.playButton.addTarget(self, action: #selector(self.playPause), forControlEvents: .TouchUpInside)
+        playerView.skipButton.addTarget(self, action: #selector(self.skip), for: .touchUpInside)
+        playerView.previousButton.addTarget(self, action: #selector(self.previous), for: .touchUpInside)
+        playerView.playButton.addTarget(self, action: #selector(self.playPause), for: .touchUpInside)
         view.addSubview(playerView)
         
         fetchData()
@@ -85,18 +85,18 @@ class PlayerViewController : UIViewController {
     
     
     func fetchData() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         API.getPodcasts(self.station) { [weak self] result in
             
             switch result {
-            case .Value(let podcasts):
-                self?.podcasts = podcasts.shuffle()
+            case .value(let podcasts):
+                self?.podcasts = podcasts.shuffled()
                 self?.collectionView.reloadData()
                 self?.reloadPlayer()
                 self?.play()
                 break
-            case .Error(let error):
+            case .error(let error):
                 print(error)
             }
             
@@ -104,9 +104,9 @@ class PlayerViewController : UIViewController {
     }
     
     
-    func setCurrentIndexPath(indexPath: NSIndexPath) {
+    func setCurrentIndexPath(_ indexPath: IndexPath) {
         currentIndexPath = indexPath
-        play(index: indexPath.row)
+        play(index: (indexPath as NSIndexPath).row)
     }
     
     func reloadPlayer() {
@@ -115,11 +115,11 @@ class PlayerViewController : UIViewController {
     }
 
     func skip() {
-        for cell in self.collectionView.visibleCells() {
-            if let indexPath = self.collectionView.indexPathForCell(cell) {
-                let nextIndexPath = NSIndexPath(forItem: indexPath.item+1, inSection: indexPath.section)
-                if let _ = podcasts[safe: nextIndexPath.row] {
-                    self.collectionView.scrollToItemAtIndexPath(nextIndexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+        for cell in self.collectionView.visibleCells {
+            if let indexPath = self.collectionView.indexPath(for: cell) {
+                let nextIndexPath = IndexPath(item: (indexPath as NSIndexPath).item+1, section: (indexPath as NSIndexPath).section)
+                if let _ = podcasts[safe: (nextIndexPath as NSIndexPath).row] {
+                    self.collectionView.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
                     setCurrentIndexPath(nextIndexPath)
                     self.play()
                 }
@@ -128,14 +128,14 @@ class PlayerViewController : UIViewController {
     }
     
     func playPause() {
-        if AudioPlayer.instance.state == .Playing {
+        if AudioPlayer.instance.state == .playing {
             pause()
         } else {
             play()
         }
     }
    
-    func play(index index: Int? = nil) {
+    func play(index: Int? = nil) {
         AudioPlayer.instance.play(index)
         playerView.play()
     }
@@ -146,11 +146,11 @@ class PlayerViewController : UIViewController {
     }
     
     func previous() {
-        for cell in self.collectionView.visibleCells() {
-            if let indexPath = self.collectionView.indexPathForCell(cell) {
-                let nextIndexPath = NSIndexPath(forItem: indexPath.item-1, inSection: indexPath.section)
-                if let _ = podcasts[safe: nextIndexPath.row] {
-                    self.collectionView.scrollToItemAtIndexPath(nextIndexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+        for cell in self.collectionView.visibleCells {
+            if let indexPath = self.collectionView.indexPath(for: cell) {
+                let nextIndexPath = IndexPath(item: (indexPath as NSIndexPath).item-1, section: (indexPath as NSIndexPath).section)
+                if let _ = podcasts[safe: (nextIndexPath as NSIndexPath).row] {
+                    self.collectionView.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
                     setCurrentIndexPath(nextIndexPath)
                 }
             }
@@ -158,31 +158,31 @@ class PlayerViewController : UIViewController {
     }
     
     // MARK : Notification 
-    func handleErrorNotification(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, let message = userInfo[JukeBoxKeyErrorMessage] as? String, let code : Int = userInfo[JukeBoxKeyErrorCode] as? Int else {
+    func handleErrorNotification(_ notification: Notification) {
+        guard let userInfo = (notification as NSNotification).userInfo, let message = userInfo[JukeBoxKeyErrorMessage] as? String, let code : Int = userInfo[JukeBoxKeyErrorCode] as? Int else {
             return
         }
         
         printError(code, message: message)
         
         if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
-            if let currentUrl = AudioPlayer.instance.currentUrl where url == currentUrl {
+            if let currentUrl = AudioPlayer.instance.currentUrl , url as URL == currentUrl {
                 // show an alert if we're on the current page
-                showSkipAlert(url)
+                showSkipAlert(url as URL)
             } else {
-                removePodcastWithUrl(url)
+                removePodcastWithUrl(url as URL)
             }
         }
     }
     
-    func removePodcastWithUrl(url: NSURL, skip: Bool = false) {
-        if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.indexOf(podcast) {
-            let indexPath = NSIndexPath(forRow: index, inSection: 0) // note: this has to be section 0
+    func removePodcastWithUrl(_ url: URL, skip: Bool = false) {
+        if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.index(of: podcast) {
+            let indexPath = IndexPath(row: index, section: 0) // note: this has to be section 0
             collectionView.performBatchUpdates({
                 self.podcasts.removeObject(podcast)
                 // after the podcasts have been updated, reload the player and collectionView
                 self.reloadPlayer()
-                self.collectionView.deleteItemsAtIndexPaths([indexPath])
+                self.collectionView.deleteItems(at: [indexPath])
                 if skip {
                     AudioPlayer.instance.playNext()
                 }
@@ -196,25 +196,25 @@ class PlayerViewController : UIViewController {
     }
     
     /// Returns podcast object that's in the current scrope with the same url, if it's there
-    func getPodcastWithAudioUrl(audioUrl: NSURL) -> Podcast? {
+    func getPodcastWithAudioUrl(_ audioUrl: URL) -> Podcast? {
         for podcast in podcasts {
-            if podcast.audioUrl == audioUrl {
+            if podcast.audioUrl as URL == audioUrl {
                 return podcast
             }
         }
         return nil
     }
     
-    func showSkipAlert(url: NSURL) {
-        self.showAlert(String.localize("Can't be played"),
-                       message: String.localize("This podcast can't be played. Sorry! Is it OK if we skip to the next one?"),
-                       button: String.localize("Skip"),
+    func showSkipAlert(_ url: URL) {
+        self.showAlert(String.localized("Can't be played"),
+                       message:  String.localized("This podcast can't be played. Sorry! Is it OK if we skip to the next one?"),
+                       button:  String.localized("Skip"),
                        handler: { [unowned self] _ in
                         self.removePodcastWithUrl(url, skip: true)
             })
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
@@ -225,14 +225,14 @@ class PlayerViewController : UIViewController {
 }
 
 extension PlayerViewController : AudioPlayerDelegate {
-    func progressDidChange(progress: Double) {
+    func progressDidChange(_ progress: Double) {
         playerView.updateProgress(progress)
     }
 }
 
 extension PlayerViewController : UICollectionViewDataSource {
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.defaultCellIdentifier, forIndexPath: indexPath) as? PodcastCollectionViewCell, let podcast = podcasts[safe: indexPath.row] else {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.defaultCellIdentifier, for: indexPath) as? PodcastCollectionViewCell, let podcast = podcasts[safe: (indexPath as NSIndexPath).row] else {
             return UICollectionViewCell()
         }
         
@@ -240,30 +240,30 @@ extension PlayerViewController : UICollectionViewDataSource {
         if let image = UIImage(named: "bg-\(podcast.station)-\(Int(arc4random_uniform(4))+1)") {
             cell.backgroundImageView.image = image
         } else {
-            cell.backgroundColor = UIColor.randomColor(0.5)
+            cell.backgroundColor = UIColor.random(0.5)
         }
         return cell
         
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return podcasts.count
     }
     
 }
 
 extension PlayerViewController : UICollectionViewDelegate {
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.play()
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        for cell in self.collectionView.visibleCells() {
-            if let indexPath = self.collectionView.indexPathForCell(cell) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        for cell in self.collectionView.visibleCells {
+            if let indexPath = self.collectionView.indexPath(for: cell) {
                 setCurrentIndexPath(indexPath)
             }
         }

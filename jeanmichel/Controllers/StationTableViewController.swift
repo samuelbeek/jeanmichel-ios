@@ -17,12 +17,12 @@ class StationTableViewController : UITableViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barTintColor = Styles.Colors.stationHeaderBackgroundColor
-        navigationController?.navigationBar.tintColor = .whiteColor()
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: Styles.Fonts.headerFont, NSForegroundColorAttributeName: Styles.Colors.stationHeaderTextColor]
         
         AudioPlayer.instance.pause()
@@ -37,7 +37,7 @@ class StationTableViewController : UITableViewController {
         let proxy = TableViewDataSourceProxy(dataSource: source)
         dataSource = proxy
         tableView.dataSource = dataSource
-        tableView.registerClass(ChannelTableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
+        tableView.register(ChannelTableViewCell.self, forCellReuseIdentifier: Constants.defaultCellIdentifier)
         tableView.reloadData()
         tableView.delegate = self
         
@@ -50,25 +50,25 @@ class StationTableViewController : UITableViewController {
             }
             
             switch result {
-            case .Value(let stations):
+            case .value(let stations):
                 strongSelf.stations = stations
                 source.data = stations
                 strongSelf.tableView.reloadData()
-            case .Error(let error):
+            case .error(let error):
                 print(error.debugDescription)
             }
             
         }
 }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let station = stations[safe: indexPath.row] else {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let station = stations[safe: (indexPath as NSIndexPath).row] else {
              return
         }
         self.navigationController?.pushViewController(PlayerViewController(station: station), animated: true)
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Styles.stationCellHeight
     }
     

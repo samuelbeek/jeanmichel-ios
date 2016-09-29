@@ -14,20 +14,20 @@ struct Podcast : Playable, Equatable {
     let title : String
     let showTitle: String
     let description : String
-    let audioUrl : NSURL
-    let duration : NSTimeInterval
+    let audioUrl : URL
+    let duration : TimeInterval
     let station : String
     
     var durationString : String {
         let minutes = floor(duration/60).cleanValue
-        var seconds = (duration%60).cleanValue
+        var seconds = (duration.truncatingRemainder(dividingBy: 60)).cleanValue
         if seconds.characters.count == 1 {
             seconds = "0\(seconds)"
         }
         return "\(minutes):\(seconds)"
     }
     
-    static func getJukeBoxItemsForPodcasts(podcasts : [Podcast]) -> [JukeboxItem] {
+    static func getJukeBoxItemsForPodcasts(_ podcasts : [Podcast]) -> [JukeboxItem] {
         return podcasts.map { podcast -> JukeboxItem in
             return podcast.getJukeBoxItemForPodcast()
         }

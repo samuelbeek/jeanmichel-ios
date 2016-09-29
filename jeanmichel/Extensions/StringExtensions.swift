@@ -10,9 +10,9 @@ import UIKit
 
 extension String {
     
-    /// Use: String.localize("Open the gate")
-    static func localize(key: String) -> String {
-        return NSLocalizedString(key, comment: "") ?? key
+    /// Use:  String.localized("Open the gate")
+    static func localized(_ key: String) -> String {
+        return NSLocalizedString(key, comment: "")
     }
     
 }

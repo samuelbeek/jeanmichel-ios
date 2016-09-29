@@ -9,5 +9,5 @@
 import Foundation
 
 protocol Playable {
-    var audioUrl : NSURL {get}
+    var audioUrl : URL {get}
 }

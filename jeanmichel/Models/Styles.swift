@@ -18,11 +18,11 @@ enum Styles {
         // colors themselves
         static let darkBlueColor = UIColor(hex: 0x071689)
         static let lightPinkColor = UIColor(hex: 0xFACEC3)
-        static let whiteColor = UIColor.whiteColor()
+        static let whiteColor = UIColor.white
 
     }
     enum Fonts {
-        static let stationFont = UIFont.systemFontOfSize(24, weight: UIFontWeightHeavy)
-        static let headerFont = UIFont.systemFontOfSize(26, weight: UIFontWeightHeavy)
+        static let stationFont = UIFont.systemFont(ofSize: 24, weight: UIFontWeightHeavy)
+        static let headerFont = UIFont.systemFont(ofSize: 26, weight: UIFontWeightHeavy)
     }
 }

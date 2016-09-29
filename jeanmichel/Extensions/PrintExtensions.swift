@@ -9,7 +9,7 @@
 import Foundation
 
 /// Prints formatted error
-func printError(code: Any, message: Any) {
+func printError(_ code: Any, message: Any) {
     print("❌ - ERROR with code: \(code) and message: \(message)")
 }
 

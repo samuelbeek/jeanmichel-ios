@@ -15,7 +15,7 @@ import UIKit
  protocol SectionCreating: Sectionable {
     associatedtype Data
     var data: Data? { get }
-    func createSections(data: Data) -> [Section]
+    func createSections(_ data: Data) -> [Section]
 }
 
  extension Sectionable {
@@ -34,8 +34,8 @@ import UIKit
         return section(atIndex: sectionIndex)?.numberOfItems ?? 0
     }
 
-    func item(atIndexPath indexPath: NSIndexPath) -> Section.Data.Element? {
-        return section(atIndex: indexPath.section)?.item(atIndex: indexPath.row)
+    func item(atIndexPath indexPath: IndexPath) -> Section.Data.Element? {
+        return section(atIndex: (indexPath as NSIndexPath).section)?.item(atIndex: (indexPath as NSIndexPath).row)
     }
     
     func sectionHeader(atIndex index: Int) -> String? {

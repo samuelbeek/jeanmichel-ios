@@ -12,6 +12,6 @@ protocol CellProviding {
     associatedtype ItemType
     associatedtype CellType
     associatedtype ViewType
-    func reuseIdentifier(forIndexPath indexPath: NSIndexPath) -> String
-    func configure(cell cell: CellType, forItem item: ItemType, inView view: ViewType) -> CellType
+    func reuseIdentifier(forIndexPath indexPath: IndexPath) -> String
+    func configure(cell: CellType, forItem item: ItemType, inView view: ViewType) -> CellType
 }

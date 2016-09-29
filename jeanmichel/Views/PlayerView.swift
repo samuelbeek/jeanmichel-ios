@@ -12,8 +12,8 @@ import CircleProgressView
 
 class PlayerView : UIView {
     
-    private var stationLabel : UILabel!
-    private var progressView : CircleProgressView!
+    fileprivate var stationLabel : UILabel!
+    fileprivate var progressView : CircleProgressView!
     internal var skipButton, previousButton, playButton : UIButton!
     internal override var backgroundColor: UIColor? {
         didSet {
@@ -25,25 +25,25 @@ class PlayerView : UIView {
         
         super.init(frame: frame)
         
-        skipButton = UIButton(type: .Custom)
-        skipButton.setImage(UIImage(named: "buttonSkip"), forState: .Normal)
+        skipButton = UIButton(type: .custom)
+        skipButton.setImage(UIImage(named: "buttonSkip"), for: UIControlState())
         addSubview(skipButton)
         
-        previousButton = UIButton(type: .Custom)
-        previousButton.setImage(UIImage(named: "buttonPrevious"), forState: .Normal)
+        previousButton = UIButton(type: .custom)
+        previousButton.setImage(UIImage(named: "buttonPrevious"), for: UIControlState())
         addSubview(previousButton)
 
-        progressView = CircleProgressView(frame: CGRectMake(0,0,136,136))
+        progressView = CircleProgressView(frame: CGRect(x: 0,y: 0,width: 136,height: 136))
         progressView.trackWidth = 18
-        progressView.trackBackgroundColor = .clearColor()
+        progressView.trackBackgroundColor = .clear 
         progressView.centerImage = UIImage()
-        progressView.centerFillColor = .clearColor()
-        progressView.trackBackgroundColor = .clearColor()
-        progressView.trackFillColor = UIColor.blackColor().colorWithAlphaComponent(0.14)
+        progressView.centerFillColor = .clear 
+        progressView.trackBackgroundColor = .clear 
+        progressView.trackFillColor = UIColor.black.withAlphaComponent(0.14)
         addSubview(progressView)
 
-        playButton = UIButton(type: .Custom)
-        playButton.setImage(UIImage(named: "buttonPause"), forState: .Normal)
+        playButton = UIButton(type: .custom)
+        playButton.setImage(UIImage(named: "buttonPause"), for: UIControlState())
         addSubview(playButton)
         
         updateProgress(0)
@@ -69,14 +69,14 @@ class PlayerView : UIView {
     }
     
     func play() {
-        playButton.setImage(UIImage(named: "buttonPause"), forState: .Normal)
+        playButton.setImage(UIImage(named: "buttonPause"), for: UIControlState())
     }
     
     func pause() {
-        playButton.setImage(UIImage(named: "buttonPlay"), forState: .Normal)
+        playButton.setImage(UIImage(named: "buttonPlay"), for: UIControlState())
     }
     
-    func updateProgress(progress: Double) {
+    func updateProgress(_ progress: Double) {
         self.progressView.setProgress(progress/100, animated: true)
     }
     
@@ -87,13 +87,13 @@ class PlayerView : UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         progressView.center = playButton.center
-        progressView.backgroundColor = .clearColor()
+        progressView.backgroundColor = .clear 
         progressView.centerImage = UIImage()
     }
     
-    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         for subview in subviews as [UIView] {
-            if !subview.hidden && subview.alpha > 0 && subview.userInteractionEnabled && subview.pointInside(convertPoint(point, toView: subview), withEvent: event) {
+            if !subview.isHidden && subview.alpha > 0 && subview.isUserInteractionEnabled && subview.point(inside: convert(point, to: subview), with: event) {
                 return true
             }
         }

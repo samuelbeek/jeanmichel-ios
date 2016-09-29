@@ -16,16 +16,16 @@ extension UIViewController {
      - parameter message: What it says
      - parameter button:  What the button says, defaults to OK
      */
-    func showAlert(title: String, message: String, button: String = "OK", handler: ((UIAlertAction) -> Void)? = nil)  {
+    func showAlert(_ title: String, message: String, button: String = "OK", handler: ((UIAlertAction) -> Void)? = nil)  {
         if let _ = self.presentingViewController as? UIAlertController {
             return
         }
         
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let OKAction = UIAlertAction(title: button, style: .Default, handler: handler)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: button, style: .default, handler: handler)
         alertController.addAction(OKAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
 

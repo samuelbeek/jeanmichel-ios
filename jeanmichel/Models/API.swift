@@ -11,19 +11,20 @@ import Alamofire
 import SwiftyJSON
 
 enum Result<A> {
-    case Error(NSError)
-    case Value(A)
+    case error(NSError)
+    case value(A)
 }
 
 struct API {
     
     static let baseUrl = Constants.production ? "http://jeanmichel-backend.herokuapp.com" : "http://localhost:3000"
     
-    static func getStations(callback: Result<[Station]> ->()) {
-        Alamofire.request(.GET, "\(baseUrl)/station/", encoding: .JSON, parameters: nil).responseJSON { response in
+    static func getStations(_ callback: @escaping (Result<[Station]>) ->()) {
+        
+        Alamofire.request("\(baseUrl)/station/").responseJSON { response in
             switch response.result {
                 
-            case .Success(let data):
+            case .success(let data):
                 let json = JSON(data)
                 var stations = [Station]()
                 for (_,subJSON):(String, JSON) in json {
@@ -35,23 +36,23 @@ struct API {
                     let station = Station(id: id, title: title)
                     stations.append(station)
                 }
-                callback(.Value(stations))
+                callback(.value(stations))
                 break
-            case .Failure(let error):
-                callback(.Error(error))
+            case .failure(let error):
+                callback(.error(error as NSError))
             }
         }
     }
     
-    static func getPodcasts(station: Station, callback: Result<[Podcast]> ->()) {
+    static func getPodcasts(_ station: Station, callback: @escaping (Result<[Podcast]>) ->()) {
         
         
-        Alamofire.request(.GET, station.endpoint, encoding: .JSON, parameters: nil).responseJSON {
+        Alamofire.request(station.endpoint).responseJSON {
             response in
             
             switch response.result {
                 
-            case .Success(let data):
+            case .success(let data):
                 let json = JSON(data)
                 var podcasts = [Podcast]()
                 for (_,episode):(String, JSON) in json {
@@ -65,15 +66,15 @@ struct API {
                             return
                     }
                     
-                    let title = titleString.stringByReplacingOccurrencesOfString(showTitle, withString: "")
+                    let title = titleString.replacingOccurrences(of: showTitle, with:"")
                     
-                    let podcast = Podcast(title: title, showTitle: showTitle, description: description, audioUrl: url, duration: duration, station: station.title.lowercaseString)
+                    let podcast = Podcast(title: title, showTitle: showTitle, description: description, audioUrl: url as URL, duration: duration, station: station.title.lowercased())
                     podcasts.append(podcast)
                 }
-                callback(.Value(podcasts))
+                callback(.value(podcasts))
                 break
-            case .Failure(let error):
-                callback(.Error(error))
+            case .failure(let error):
+                callback(.error(error as NSError))
             }
         }
 

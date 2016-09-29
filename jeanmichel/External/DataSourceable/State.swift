@@ -7,37 +7,37 @@
 //
 
  enum State<D : EmptyCheckable,E> {
-    case Empty
-    case Loading(D?)
-    case Ready(D)
-    case Error(E,D?)
+    case empty
+    case loading(D?)
+    case ready(D)
+    case error(E,D?)
     
      func toLoading() -> State {
         switch self {
-        case .Ready(let oldData):
-            return .Loading(oldData)
+        case .ready(let oldData):
+            return .loading(oldData)
         default:
-            return .Loading(nil)
+            return .loading(nil)
         }
     }
     
-     func toError(error:E) -> State {
+     func toError(_ error:E) -> State {
         switch self {
-        case .Loading(let oldData):
-            return .Error(error,oldData)
+        case .loading(let oldData):
+            return .error(error,oldData)
         default:
-            assert(false, "Invalid state transition to .Error from other than .Loading")
+            assert(false, "Invalid state transition to .error from other than .Loading")
             return self
         }
     }
     
-     func toReady(data: D) -> State {
+     func toReady(_ data: D) -> State {
         switch self {
-        case .Loading:
+        case .loading:
             if data.isEmpty {
-                return .Empty
+                return .empty
             } else {
-                return .Ready(data)
+                return .ready(data)
             }
         default:
             assert(false, "Invalid state transition to .Ready from other than .Loading")
@@ -47,20 +47,20 @@
     
      var data: D? {
         switch self {
-        case .Empty:
+        case .empty:
             return nil
-        case .Ready(let data):
+        case .ready(let data):
             return data
-        case .Loading(let data):
+        case .loading(let data):
             return data
-        case .Error(_, let data):
+        case .error(_, let data):
             return data
         }
     }
     
      var error: E? {
         switch self {
-        case .Error(let error, _):
+        case .error(let error, _):
             return error
         default:
             return nil

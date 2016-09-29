@@ -14,23 +14,23 @@ class TableViewDataSourceProxy: NSObject, UITableViewDataSource {
         self.dataSource = dataSource
     }
     
-     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.tableView(tableView, numberOfRowsInSection: section)
     }
     
-     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return dataSource.tableView(tableView, cellForRowAtIndexPath: indexPath)
     }
     
-     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+     func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.numberOfSectionsInTableView(tableView)
     }
     
-     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return dataSource.tableView(tableView, titleForHeaderInSection: section)
     }
     
-     func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return dataSource.tableView(tableView, titleForFooterInSection: section)
     }
 }

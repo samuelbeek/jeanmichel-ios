@@ -10,19 +10,19 @@ import Jukebox
 import UIKit
 
 protocol AudioPlayerDelegate : class {
-    func progressDidChange(progress: Double)
+    func progressDidChange(_ progress: Double)
 }
 
 class AudioPlayer : NSObject {
     
     internal static let instance = AudioPlayer()
     
-    internal var currentUrl : NSURL? {
+    internal var currentUrl : URL? {
         return audioPlayer.currentItem?.URL
     }
     
-    private var audioPlayer : Jukebox!
-    private var podcasts = [Podcast]() {
+    fileprivate var audioPlayer : Jukebox!
+    fileprivate var podcasts = [Podcast]() {
         didSet {
             
             // init an audioPlayer if there's no items
@@ -50,7 +50,7 @@ class AudioPlayer : NSObject {
     
     /// Return if player is playing
     internal var isPlaying : Bool {
-        return audioPlayer.state == .Playing
+        return audioPlayer.state == .playing
     }
     
     /// Return players state
@@ -60,13 +60,13 @@ class AudioPlayer : NSObject {
     
     internal weak var delegate : AudioPlayerDelegate?
 
-    private override init() {
+    fileprivate override init() {
         super.init()
         audioPlayer = Jukebox(delegate: self, items: [])
     }
     
     /// Change content
-    internal func setItems(podcasts: [Podcast]) {
+    internal func setItems(_ podcasts: [Podcast]) {
         self.podcasts = podcasts
     }
     
@@ -76,8 +76,8 @@ class AudioPlayer : NSObject {
     }
     
     /// Play at index
-    internal func play(index: Int? = nil) {
-        if let i = index where index != audioPlayer.playIndex{
+    internal func play(_ index: Int? = nil) {
+        if let i = index , index != audioPlayer.playIndex{
             audioPlayer.play(atIndex: i)
         } else {
             audioPlayer.play()
@@ -101,38 +101,38 @@ class AudioPlayer : NSObject {
     
     /// Starts listening to remote events (controls on the lock screen)
     internal func startRemote() {
-        UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+        UIApplication.shared.beginReceivingRemoteControlEvents()
     }
     
     /// Stops listening to remote events
     internal func stopRemote() {
-        UIApplication.sharedApplication().endReceivingRemoteControlEvents()
+        UIApplication.shared.endReceivingRemoteControlEvents()
     }
     
 }
 
 extension AudioPlayer : JukeboxDelegate {
-    func jukeboxStateDidChange(state : Jukebox) {
+    func jukeboxStateDidChange(_ state : Jukebox) {
         
-        if state.state == .Loading {
-           UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        if state.state == .loading {
+           UIApplication.shared.isNetworkActivityIndicatorVisible = true
         } else {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
         
     }
     
-    func jukeboxPlaybackProgressDidChange(jukebox : Jukebox) {
-        if let delegate = delegate, let currentItem = jukebox.currentItem, currentTime = currentItem.currentTime, duration = currentItem.meta.duration {
+    func jukeboxPlaybackProgressDidChange(_ jukebox : Jukebox) {
+        if let delegate = delegate, let currentItem = jukebox.currentItem, let currentTime = currentItem.currentTime, let duration = currentItem.meta.duration {
             let progress = (currentTime/duration)*100
             delegate.progressDidChange(progress)
         }
     }
     
-    func jukeboxDidLoadItem(jukebox : Jukebox, item : JukeboxItem) {
+    func jukeboxDidLoadItem(_ jukebox : Jukebox, item : JukeboxItem) {
     }
     
-    func jukeboxDidUpdateMetadata(jukebox : Jukebox, forItem: JukeboxItem) {
+    func jukeboxDidUpdateMetadata(_ jukebox : Jukebox, forItem: JukeboxItem) {
     }
     
 }

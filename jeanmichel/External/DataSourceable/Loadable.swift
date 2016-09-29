@@ -8,12 +8,12 @@
 
  protocol Loadable: class {
     associatedtype Data : EmptyCheckable
-    var state: State<Data,ErrorType> { get set }
-    func loadData(completion: (Data) -> Void) throws
+    var state: State<Data,Error> { get set }
+    func loadData(_ completion: (Data) -> Void) throws
 }
 
  extension Loadable {
-    func reload(completion: () -> Void) {
+    func reload(_ completion: () -> Void) {
         state = state.toLoading()
         do {
             try loadData { data in
