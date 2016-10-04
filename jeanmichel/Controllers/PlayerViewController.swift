@@ -186,7 +186,9 @@ class PlayerViewController : UIViewController {
     
     // MARK : Notification 
     func handleErrorNotification(_ notification: Notification) {
+        
         guard let userInfo = (notification as NSNotification).userInfo, let message = userInfo[JukeBoxKeyErrorMessage] as? String, let code : Int = userInfo[JukeBoxKeyErrorCode] as? Int else {
+            printError(999, message: "received error that could not be parsed \(notification)")
             return
         }
         
@@ -270,8 +272,10 @@ extension PlayerViewController : AudioPlayerDelegate {
             print("ready")
         case .playing:
             print("playing")
+            playerView.play()
         case .paused:
             print("paused")
+            playerView.pause()
         case .failed:
             print("failed")
         }
