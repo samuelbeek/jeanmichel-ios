@@ -50,7 +50,7 @@ class StationTableViewController : UITableViewController {
                 strongSelf.stations = stations
                 strongSelf.tableView.reloadData()
             case .error(let error):
-                print(error.debugDescription)
+                printError(error.code, message: error.debugDescription)
             }
             
         }

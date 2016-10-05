@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Jukebox
 
 class MasterViewController : UINavigationController {
     

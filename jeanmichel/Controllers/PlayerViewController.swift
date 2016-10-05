@@ -21,6 +21,7 @@ class PlayerViewController : UIViewController {
     init(station: Station) {
         self.station = station
         super.init(nibName: nil, bundle: nil)
+        AudioPlayer.instance.delegate = self
     }
     
     deinit {
@@ -29,6 +30,8 @@ class PlayerViewController : UIViewController {
         collectionView.dataSource = nil
         AudioPlayer.instance.delegate = nil
     }
+    
+    // MARK: View LifeCycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -49,7 +52,7 @@ class PlayerViewController : UIViewController {
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: JukeBoxNotificationError), object: nil, queue: nil, using: { [weak self] notification in
             
             guard let strongSelf = self else {
-                return print("self doesn't exist anymore")
+                return printError(001, message: "self doesn't exist anymore")
             }
             
             strongSelf.handleErrorNotification(notification)
@@ -57,7 +60,7 @@ class PlayerViewController : UIViewController {
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil, using: { [weak self]  _ in
             guard let strongSelf = self else {
-                return print("self doesn't exist anymore")
+                return printError(001, message: "self doesn't exist anymore")
             }
             
             strongSelf.skip()
@@ -103,6 +106,7 @@ class PlayerViewController : UIViewController {
         fetchData()
     }
     
+    // MARK : Fetch Data
     
     func fetchData() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -123,6 +127,8 @@ class PlayerViewController : UIViewController {
         }
     }
     
+    // MARK: Handle paging and what to play
+    
     func setCurrentPage() {
         for cell in self.collectionView.visibleCells {
             if let indexPath = self.collectionView.indexPath(for: cell) {
@@ -130,6 +136,7 @@ class PlayerViewController : UIViewController {
             }
         }
     }
+    
     
     func setCurrentIndexPath(_ indexPath: IndexPath) {
         if currentIndexPath != indexPath {
@@ -140,19 +147,9 @@ class PlayerViewController : UIViewController {
     
     func reloadPlayer() {
         AudioPlayer.instance.setItems(self.podcasts)
-        AudioPlayer.instance.delegate = self
     }
-
-    func skip() {
-        for cell in self.collectionView.visibleCells {
-            if let indexPath = self.collectionView.indexPath(for: cell) {
-                let nextIndexPath = IndexPath(item: (indexPath as NSIndexPath).item+1, section: (indexPath as NSIndexPath).section)
-                if let _ = podcasts[safe: (nextIndexPath as NSIndexPath).row] {
-                    self.collectionView.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
-                }
-            }
-        }
-    }
+    
+    // MARK: Play and pause
     
     func playPause() {
         if AudioPlayer.instance.state == .playing {
@@ -172,17 +169,30 @@ class PlayerViewController : UIViewController {
         playerView.pause()
     }
     
+    // MARK: Next and Previous
+    
     func previous() {
         for cell in self.collectionView.visibleCells {
             if let indexPath = self.collectionView.indexPath(for: cell) {
                 let nextIndexPath = IndexPath(item: (indexPath as NSIndexPath).item-1, section: (indexPath as NSIndexPath).section)
                 if let _ = podcasts[safe: (nextIndexPath as NSIndexPath).row] {
                     self.collectionView.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
-                    setCurrentIndexPath(nextIndexPath)
                 }
             }
         }
     }
+    
+    func skip() {
+        for cell in self.collectionView.visibleCells {
+            if let indexPath = self.collectionView.indexPath(for: cell) {
+                let nextIndexPath = IndexPath(item: (indexPath as NSIndexPath).item+1, section: (indexPath as NSIndexPath).section)
+                if let _ = podcasts[safe: (nextIndexPath as NSIndexPath).row] {
+                    self.collectionView.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
+                }
+            }
+        }
+    }
+
     
     // MARK : Notification 
     func handleErrorNotification(_ notification: Notification) {
@@ -212,13 +222,11 @@ class PlayerViewController : UIViewController {
                 // after the podcasts have been updated, reload the player and collectionView
                 self.reloadPlayer()
                 self.collectionView.deleteItems(at: [indexPath])
-                if skip {
-                    AudioPlayer.instance.playNext()
-                }
+                self.collectionView.reloadData()
                 }, completion: { _ in
                     printError(0, message: "\(podcast.title) wouldn't play, we removed the cell at indexPath: \(indexPath.description))")
-                    self.play()
-
+                    self.setCurrentPage()
+                    
             })
             
         }
@@ -296,7 +304,7 @@ extension PlayerViewController : UICollectionViewDataSource {
 
 extension PlayerViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.play()
+
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

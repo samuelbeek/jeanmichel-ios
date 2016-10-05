@@ -31,7 +31,7 @@ class AudioPlayer : NSObject {
             if audioPlayer.queuedItems.count <= 0 {
                 self.audioPlayer = Jukebox(delegate: self, items: Podcast.getJukeBoxItemsForPodcasts(self.podcasts))
             } else {
-                // remove diff
+                
                 for oldPodcast in oldValue {
                     if !podcasts.contains(oldPodcast) {
                         self.audioPlayer.removeItems(withURL: oldPodcast.audioUrl)
