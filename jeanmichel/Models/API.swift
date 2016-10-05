@@ -30,7 +30,7 @@ struct API {
                 for (_,subJSON):(String, JSON) in json {
                     guard let title = subJSON["title"].string,
                     let id = subJSON["_id"].string else {
-                            debugPrint("object could not be parsed:", subJSON)
+                            printError(100, message: "object could not be parsed: \(subJSON)")
                             return
                     }
                     let station = Station(id: id, title: title)
@@ -45,7 +45,6 @@ struct API {
     }
     
     static func getPodcasts(_ station: Station, callback: @escaping (Result<[Podcast]>) ->()) {
-        
         
         Alamofire.request(station.endpoint).responseJSON {
             response in
@@ -62,7 +61,7 @@ struct API {
                         let showTitle = episode["_creator"]["title"].string,
                         let duration = episode["duration"].double,
                         let url = NSURL(string: urlString) else {
-                            debugPrint("object could not be parsed:", episode)
+                            printError(100, message: "object could not be parsed: \(episode)")
                             return
                     }
                     

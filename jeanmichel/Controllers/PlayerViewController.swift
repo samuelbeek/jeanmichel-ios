@@ -262,23 +262,9 @@ extension PlayerViewController : AudioPlayerDelegate {
     
     func stateDidChange(state: Jukebox.State) {
         
-        let shouldLoad = (state == .loading)
-        playerView.setLoading(shouldLoad)
+        debugPrint(state.description)
+        playerView.updateState(state)
         
-        switch state {
-        case .loading:
-            print("loading")
-        case .ready:
-            print("ready")
-        case .playing:
-            print("playing")
-            playerView.play()
-        case .paused:
-            print("paused")
-            playerView.pause()
-        case .failed:
-            print("failed")
-        }
     }
 }
 

@@ -9,6 +9,7 @@
 import UIKit
 import Cartography
 import RPCircularProgress
+import Jukebox
 
 class PlayerView : UIView {
     
@@ -20,6 +21,8 @@ class PlayerView : UIView {
             progressView.backgroundColor = backgroundColor
         }
     }
+    
+    // MARK: Lifecycle
     
     init(frame: CGRect, station: Station) {
         
@@ -69,6 +72,34 @@ class PlayerView : UIView {
         
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    func updateProgress(_ progress: Double) {
+        self.progressView.updateProgress(CGFloat(progress/100))
+    }
+    
+    // MARK: State
+    func updateState(_ state:Jukebox.State) {
+        
+        let shouldLoad = (state == .loading)
+        setLoading(shouldLoad)
+
+        switch state {
+        case .loading,
+             .ready,
+             .failed:
+            break
+        case .playing:
+            play()
+        case .paused:
+            pause()
+        }
+
+    }
+    
     func play() {
         playButton.setImage(UIImage(named: "buttonPause"), for: UIControlState())
     }
@@ -85,17 +116,6 @@ class PlayerView : UIView {
         self.progressView.enableIndeterminate(loading, completion: nil)
     }
     
-    func updateProgress(_ progress: Double) {
-        self.progressView.updateProgress(CGFloat(progress/100))
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         for subview in subviews as [UIView] {
@@ -105,5 +125,7 @@ class PlayerView : UIView {
         }
         return false
     }
+    
+
 
 }
