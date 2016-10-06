@@ -110,7 +110,7 @@ class AudioPlayer : NSObject {
     
     // MARK: Remote Events
     /// Starts listening to remote events (controls on the lock screen)
-    internal func startRemote() {
+    fileprivate func startRemote() {
         UIApplication.shared.beginReceivingRemoteControlEvents()
         
         do {
@@ -123,6 +123,7 @@ class AudioPlayer : NSObject {
     
     /// Stops listening to remote events
     internal func stopRemote() {
+       // UIApplication.shared.endReceivingRemoteControlEvents()
     }
     
     //MARK: Debugging
