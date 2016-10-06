@@ -37,7 +37,6 @@ class PlayerViewController : UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
-        AudioPlayer.instance.startRemote()
     }
     
     override func viewDidLoad() {
@@ -154,8 +153,6 @@ class PlayerViewController : UIViewController {
     
     func reloadPlayer() {
         AudioPlayer.instance.setItems(self.podcasts)
-        AudioPlayer.instance.printPodcasts()
-        printPodcasts()
     }
     
     // MARK: Play and pause
@@ -213,8 +210,7 @@ class PlayerViewController : UIViewController {
         printError(code, message: message)
         
         if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
-            if let currentIndexPath = currentIndexPath, let currentUrl : URL = self.podcasts[currentIndexPath.item].audioUrl, url as URL == currentUrl {
-                
+            if let currentIndexPath = currentIndexPath, let currentPodcast = self.podcasts[safe: currentIndexPath.item], url as URL == currentPodcast.audioUrl {
                 // show an alert if we're on the current page
                 showSkipAlert(url as URL)
             } else {

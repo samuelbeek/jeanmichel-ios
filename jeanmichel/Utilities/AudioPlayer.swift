@@ -60,6 +60,7 @@ class AudioPlayer : NSObject {
 
     fileprivate override init() {
         super.init()
+        startRemote()
         audioPlayer = Jukebox(delegate: self, items: [])
     }
     
@@ -122,7 +123,6 @@ class AudioPlayer : NSObject {
     
     /// Stops listening to remote events
     internal func stopRemote() {
-        UIApplication.shared.endReceivingRemoteControlEvents()
     }
     
     //MARK: Debugging
