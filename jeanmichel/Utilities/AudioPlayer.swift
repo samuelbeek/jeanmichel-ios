@@ -114,6 +114,7 @@ class AudioPlayer : NSObject {
         
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             printError(00, message: "unable to set audio category")
         }
