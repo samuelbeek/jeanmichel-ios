@@ -241,6 +241,7 @@
 				TargetAttributes = {
 					5BAC54A41CEE4E680068BECA = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = RS662E2L2G;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -465,6 +466,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RS662E2L2G;
 				INFOPLIST_FILE = jeanmichel/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamsamdy.jeanmichel;
@@ -479,6 +481,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RS662E2L2G;
 				INFOPLIST_FILE = jeanmichel/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamsamdy.jeanmichel;

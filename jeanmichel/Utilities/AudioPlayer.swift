@@ -8,6 +8,7 @@
 
 import Jukebox
 import UIKit
+import AVFoundation
 
 protocol AudioPlayerDelegate : class {
     func progressDidChange(_ progress: Double)
@@ -50,11 +51,6 @@ class AudioPlayer : NSObject {
         }
     }
     
-    /// Return if player is playing
-    internal var isPlaying : Bool {
-        return audioPlayer.state == .playing
-    }
-    
     /// Return players state
     internal var state : Jukebox.State {
         return audioPlayer.state
@@ -67,11 +63,21 @@ class AudioPlayer : NSObject {
         audioPlayer = Jukebox(delegate: self, items: [])
     }
     
+    // MARK: Load Data
     /// Change content
     internal func setItems(_ podcasts: [Podcast]) {
         self.podcasts = podcasts
     }
     
+    /// Remove all Content
+    internal func reset() {
+        self.audioPlayer.stop()
+        for item in self.audioPlayer.queuedItems {
+            self.audioPlayer.remove(item: item)
+        }
+    }
+    
+    // MARK: Playback
     /// Pause index
     internal func pause() {
         audioPlayer.pause()
@@ -101,14 +107,30 @@ class AudioPlayer : NSObject {
         audioPlayer.playPrevious()
     }
     
+    // MARK: Remote Events
     /// Starts listening to remote events (controls on the lock screen)
     internal func startRemote() {
         UIApplication.shared.beginReceivingRemoteControlEvents()
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+        } catch {
+            printError(00, message: "unable to set audio category")
+        }
     }
     
     /// Stops listening to remote events
     internal func stopRemote() {
         UIApplication.shared.endReceivingRemoteControlEvents()
+    }
+    
+    //MARK: Debugging
+    internal func printPodcasts() {
+        debugPrint("🌎 AudioPlayer.podcasts: ")
+        
+        for podcast in podcasts {
+            debugPrint(podcast.title)
+        }
     }
     
 }

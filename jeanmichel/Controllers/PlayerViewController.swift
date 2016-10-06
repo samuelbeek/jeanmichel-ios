@@ -28,7 +28,6 @@ class PlayerViewController : UIViewController {
         NotificationCenter.default.removeObserver(self)
         collectionView.delegate = nil
         collectionView.dataSource = nil
-        AudioPlayer.instance.delegate = nil
     }
     
     // MARK: View LifeCycle
@@ -106,6 +105,12 @@ class PlayerViewController : UIViewController {
         fetchData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        
+    }
+    
     // MARK : Fetch Data
     
     func fetchData() {
@@ -128,7 +133,6 @@ class PlayerViewController : UIViewController {
     }
     
     // MARK: Handle paging and what to play
-    
     func setCurrentPage() {
         for cell in self.collectionView.visibleCells {
             if let indexPath = self.collectionView.indexPath(for: cell) {
@@ -136,7 +140,6 @@ class PlayerViewController : UIViewController {
             }
         }
     }
-    
     
     func setCurrentIndexPath(_ indexPath: IndexPath) {
         if currentIndexPath != indexPath {
@@ -147,10 +150,11 @@ class PlayerViewController : UIViewController {
     
     func reloadPlayer() {
         AudioPlayer.instance.setItems(self.podcasts)
+        AudioPlayer.instance.printPodcasts()
+        printPodcasts()
     }
     
     // MARK: Play and pause
-    
     func playPause() {
         if AudioPlayer.instance.state == .playing {
             pause()
@@ -205,7 +209,8 @@ class PlayerViewController : UIViewController {
         printError(code, message: message)
         
         if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
-            if let currentUrl = AudioPlayer.instance.currentUrl , url as URL == currentUrl {
+            if let currentIndexPath = currentIndexPath, let currentUrl : URL = self.podcasts[currentIndexPath.item].audioUrl, url as URL == currentUrl {
+                
                 // show an alert if we're on the current page
                 showSkipAlert(url as URL)
             } else {
@@ -257,6 +262,15 @@ class PlayerViewController : UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    /// MARK: Debugging 
+    fileprivate func printPodcasts() {
+        debugPrint("🔗 PlayerViewController.podcasts:")
+        
+        for podcast in podcasts {
+            debugPrint(podcast.title)
+        }
     }
 
 }
