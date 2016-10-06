@@ -108,6 +108,10 @@ class PlayerViewController : UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        if self.isMovingFromParentViewController {
+            AudioPlayer.instance.reset()
+            AudioPlayer.instance.delegate = nil
+        }
         
     }
     
@@ -322,11 +326,15 @@ extension PlayerViewController : UICollectionViewDelegate {
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        setCurrentPage()
+        DispatchQueue.main.async(execute: { _ in
+            self.setCurrentPage()
+        })
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        setCurrentPage()
+        DispatchQueue.main.async(execute: { _ in
+            self.setCurrentPage()
+        })
     }
 }
 
