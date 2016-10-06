@@ -72,7 +72,7 @@ class AudioPlayer : NSObject {
     
     /// Remove all Content
     internal func reset() {
-        self.audioPlayer.stop()
+        stop()
         for item in self.audioPlayer.queuedItems {
             self.audioPlayer.remove(item: item)
         }
