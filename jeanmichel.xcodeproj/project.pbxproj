@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B28BB511D7DA7110072B8B0 /* PrintExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B28BB501D7DA7110072B8B0 /* PrintExtensions.swift */; };
+		5B76C23B1DA7BA8C005FD440 /* Jukebox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B76C2371DA7BA7E005FD440 /* Jukebox.framework */; };
 		5B841B3B1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3A1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift */; };
 		5B841B3D1D2AE56B001A719A /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3C1D2AE56B001A719A /* PlayerView.swift */; };
 		5B841B3F1D2AEE66001A719A /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3E1D2AEE66001A719A /* PodcastCollectionViewCell.swift */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		5B28BB501D7DA7110072B8B0 /* PrintExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrintExtensions.swift; path = Extensions/PrintExtensions.swift; sourceTree = "<group>"; };
+		5B76C2371DA7BA7E005FD440 /* Jukebox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Jukebox.framework; path = Carthage/Build/iOS/Jukebox.framework; sourceTree = "<group>"; };
 		5B841B3A1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredCellCollectionViewLayout.swift; sourceTree = "<group>"; };
 		5B841B3C1D2AE56B001A719A /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		5B841B3E1D2AEE66001A719A /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD7B90E725843AE806E7F4C0 /* Pods_jeanmichel.framework in Frameworks */,
+				5B76C23B1DA7BA8C005FD440 /* Jukebox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +82,7 @@
 		5BAC549C1CEE4E680068BECA = {
 			isa = PBXGroup;
 			children = (
+				5B76C2371DA7BA7E005FD440 /* Jukebox.framework */,
 				5BAC54A71CEE4E680068BECA /* jeanmichel */,
 				E98538736B85E0E253532A5B /* Frameworks */,
 				E817AC09F95ECA11AC598BA4 /* Pods */,
@@ -219,6 +223,7 @@
 				5BAC54A31CEE4E680068BECA /* Resources */,
 				ADCC4F335CD8DEE439188D3B /* [CP] Embed Pods Frameworks */,
 				EA7A2ED4AC2FEE494C0D6AFF /* [CP] Copy Pods Resources */,
+				5B76C23C1DA7BA9C005FD440 /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -277,6 +282,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5B76C23C1DA7BA9C005FD440 /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Jukebox.framework",
+			);
+			name = Carthage;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
 		ADCC4F335CD8DEE439188D3B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -464,9 +484,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6151EB817A0A56E4929BC15E /* Pods-jeanmichel.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RS662E2L2G;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = jeanmichel/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamsamdy.jeanmichel;
@@ -479,9 +502,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D1FE79C6C12FD9BD3B9039C4 /* Pods-jeanmichel.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RS662E2L2G;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = jeanmichel/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamsamdy.jeanmichel;

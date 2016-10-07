@@ -1,38 +1,30 @@
 PODS:
   - Alamofire (4.0.1)
-  - Cartography (1.0.0)
-  - Jukebox (0.2.0)
+  - Cartography (1.0.1)
   - RPCircularProgress (0.3.0)
-  - SwiftyJSON (3.1.0)
+  - SwiftyJSON (3.1.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
   - Cartography
-  - Jukebox (from `https://github.com/samuelbeek/Jukebox.git`)
   - RPCircularProgress (from `https://github.com/iwasrobbed/RPCircularProgress`)
   - SwiftyJSON
 
 EXTERNAL SOURCES:
-  Jukebox:
-    :git: https://github.com/samuelbeek/Jukebox.git
   RPCircularProgress:
     :git: https://github.com/iwasrobbed/RPCircularProgress
 
 CHECKOUT OPTIONS:
-  Jukebox:
-    :commit: f2d5b13314fa164d60880dbf257df5182f4aabe0
-    :git: https://github.com/samuelbeek/Jukebox.git
   RPCircularProgress:
     :commit: 1e1eaaa42a208db47af4f7c5629f32d2e6cb5ee6
     :git: https://github.com/iwasrobbed/RPCircularProgress
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
-  Cartography: e576cf19c0c1f201686180bcf4537f981574ce8d
-  Jukebox: 7526061487018bb66e687cd38abf8c637901b78f
+  Cartography: c1460e99395b824d9d75360b0382faeb0b33dcd7
   RPCircularProgress: 46bee24642e0cb8de53f49e6c85733b9c45dee33
-  SwiftyJSON: 29b9f2a64f118c07e691667c2ba1efe536acfe0b
+  SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
 
-PODFILE CHECKSUM: 68fcefd8f29c4c489e01e004fde9031e6bcac97e
+PODFILE CHECKSUM: 3daa0b7cfb436cdbb584d3fc8c04caaf676a4542
 
 COCOAPODS: 1.1.0.rc.2
