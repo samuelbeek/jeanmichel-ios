@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Jukebox
 
 struct Podcast : Playable, Equatable {
     
@@ -26,17 +25,7 @@ struct Podcast : Playable, Equatable {
         }
         return "\(minutes):\(seconds)"
     }
-    
-    static func getJukeBoxItemsForPodcasts(_ podcasts : [Podcast]) -> [JukeboxItem] {
-        return podcasts.map { podcast -> JukeboxItem in
-            return podcast.getJukeBoxItemForPodcast()
-        }
-    }
-    
-    func getJukeBoxItemForPodcast() -> JukeboxItem {
-        return JukeboxItem(URL: audioUrl, localTitle: title)
-    }
- }
+}
 
 func ==(lhs: Podcast, rhs: Podcast) -> Bool {
     return lhs.title == rhs.title && lhs.audioUrl == rhs.audioUrl

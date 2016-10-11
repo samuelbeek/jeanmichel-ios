@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5B28BB511D7DA7110072B8B0 /* PrintExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B28BB501D7DA7110072B8B0 /* PrintExtensions.swift */; };
-		5B76C23B1DA7BA8C005FD440 /* Jukebox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B76C2371DA7BA7E005FD440 /* Jukebox.framework */; };
 		5B841B3B1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3A1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift */; };
 		5B841B3D1D2AE56B001A719A /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3C1D2AE56B001A719A /* PlayerView.swift */; };
 		5B841B3F1D2AEE66001A719A /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B841B3E1D2AEE66001A719A /* PodcastCollectionViewCell.swift */; };
@@ -36,7 +35,6 @@
 
 /* Begin PBXFileReference section */
 		5B28BB501D7DA7110072B8B0 /* PrintExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrintExtensions.swift; path = Extensions/PrintExtensions.swift; sourceTree = "<group>"; };
-		5B76C2371DA7BA7E005FD440 /* Jukebox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Jukebox.framework; path = Carthage/Build/iOS/Jukebox.framework; sourceTree = "<group>"; };
 		5B841B3A1D2AE3A4001A719A /* CenteredCellCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredCellCollectionViewLayout.swift; sourceTree = "<group>"; };
 		5B841B3C1D2AE56B001A719A /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		5B841B3E1D2AEE66001A719A /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -72,7 +70,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD7B90E725843AE806E7F4C0 /* Pods_jeanmichel.framework in Frameworks */,
-				5B76C23B1DA7BA8C005FD440 /* Jukebox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +79,6 @@
 		5BAC549C1CEE4E680068BECA = {
 			isa = PBXGroup;
 			children = (
-				5B76C2371DA7BA7E005FD440 /* Jukebox.framework */,
 				5BAC54A71CEE4E680068BECA /* jeanmichel */,
 				E98538736B85E0E253532A5B /* Frameworks */,
 				E817AC09F95ECA11AC598BA4 /* Pods */,
@@ -288,7 +284,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Jukebox.framework",
 			);
 			name = Carthage;
 			outputPaths = (

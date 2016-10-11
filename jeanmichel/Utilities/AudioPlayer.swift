@@ -6,62 +6,43 @@
 //  Copyright © 2016 Samuel Beek. All rights reserved.
 //
 
-import Jukebox
 import UIKit
 import AVFoundation
+import KDEAudioPlayer
 
-protocol AudioPlayerDelegate : class {
+protocol SharedAudioPlayerDelegate : class {
     func progressDidChange(_ progress: Double)
-    func stateDidChange(state: Jukebox.State)
+    func stateDidChange(state: AudioPlayerState)
 }
 
 
-class AudioPlayer : NSObject {
+class SharedAudioPlayer : NSObject {
     
-    internal static let instance = AudioPlayer()
+    internal static let instance = SharedAudioPlayer()
     
     internal var currentUrl : URL? {
-        return audioPlayer.currentItem?.URL
+        return audioPlayer.currentItem?.mediumQualityURL.URL
     }
     
-    fileprivate var audioPlayer : Jukebox!
+    fileprivate var audioPlayer : AudioPlayer!
     fileprivate var podcasts = [Podcast]() {
         didSet {
-            
-            // init an audioPlayer if there's no items
-            if audioPlayer.queuedItems.count <= 0 {
-                self.audioPlayer = Jukebox(delegate: self, items: Podcast.getJukeBoxItemsForPodcasts(self.podcasts))
-            } else {
-                
-                for oldPodcast in oldValue {
-                    if !podcasts.contains(oldPodcast) {
-                        self.audioPlayer.removeItems(withURL: oldPodcast.audioUrl)
-                    }
-                }
-                
-                // add diff
-                for newPodcast in podcasts {
-                    if !oldValue.contains(newPodcast) {
-                        self.audioPlayer.append(item: newPodcast.getJukeBoxItemForPodcast(), loadingAssets: true)
-                    }
-                }
-            }
-            
-
+            audioPlayer.playItems(Podcast.getAudioItemsForPodcasts(podcasts) as! [AudioItem], startAtIndex: 0)
         }
     }
     
     /// Return players state
-    internal var state : Jukebox.State {
+    internal var state : AudioPlayerState {
         return audioPlayer.state
     }
     
-    internal weak var delegate : AudioPlayerDelegate?
+    internal weak var delegate : SharedAudioPlayerDelegate?
 
     fileprivate override init() {
         super.init()
         startRemote()
-        audioPlayer = Jukebox(delegate: self, items: [])
+        audioPlayer = AudioPlayer()
+        audioPlayer.delegate = self
     }
     
     // MARK: Load Data
@@ -73,9 +54,7 @@ class AudioPlayer : NSObject {
     /// Remove all Content
     internal func reset() {
         stop()
-        for item in self.audioPlayer.queuedItems {
-            self.audioPlayer.remove(item: item)
-        }
+        self.podcasts = []
     }
     
     // MARK: Playback
@@ -86,10 +65,10 @@ class AudioPlayer : NSObject {
     
     /// Play at index
     internal func play(_ index: Int? = nil) {
-        if let i = index , index != audioPlayer.playIndex{
-            audioPlayer.play(atIndex: i)
+        if let i = index ,index != audioPlayer.currentItemIndexInQueue, let items = audioPlayer.items {
+            audioPlayer.playItems(items, startAtIndex: i)
         } else {
-            audioPlayer.play()
+            audioPlayer.resume()
         }
     }
     
@@ -100,25 +79,23 @@ class AudioPlayer : NSObject {
     
     /// Play next track
     internal func playNext() {
-        audioPlayer.playNext()
+        if audioPlayer.hasNext() {
+            audioPlayer.next()
+        } else {
+            printError(002, message: "AudioPlayer doesn't have a next track")
+        }
+        
     }
     
     /// Play previous track
     internal func playPrevious() {
-        audioPlayer.playPrevious()
+        audioPlayer.previous()
     }
     
     // MARK: Remote Events
     /// Starts listening to remote events (controls on the lock screen)
     fileprivate func startRemote() {
         UIApplication.shared.beginReceivingRemoteControlEvents()
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            printError(00, message: "unable to set audio category")
-        }
     }
     
     /// Stops listening to remote events
@@ -137,30 +114,56 @@ class AudioPlayer : NSObject {
     
 }
 
-extension AudioPlayer : JukeboxDelegate {
-    func jukeboxStateDidChange(_ state : Jukebox) {
-        
-       delegate?.stateDidChange(state: state.state)
-        
-        if state.state == .loading {
-           UIApplication.shared.isNetworkActivityIndicatorVisible = true
+extension SharedAudioPlayer : AudioPlayerDelegate {
+    
+    public func audioPlayer(_ audioPlayer: AudioPlayer, didChangeStateFrom from: AudioPlayerState, toState to: AudioPlayerState) {
+        if to == .buffering {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
         } else {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
         
+        delegate?.stateDidChange(state: to)
     }
     
-    func jukeboxPlaybackProgressDidChange(_ jukebox : Jukebox) {
-        if let delegate = delegate, let currentItem = jukebox.currentItem, let currentTime = currentItem.currentTime, let duration = currentItem.meta.duration {
-            let progress = (currentTime/duration)*100
-            delegate.progressDidChange(progress)
+    public func audioPlayer(_ audioPlayer: AudioPlayer, willStartPlayingItem item: AudioItem) {
+    }
+    
+    public func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateProgressionToTime time: TimeInterval, percentageRead: Float) {
+        delegate?.progressDidChange(Double(percentageRead))
+    }
+    
+    public func audioPlayer(_ audioPlayer: AudioPlayer, didFindDuration duration: TimeInterval, forItem item: AudioItem) {
+    }
+    
+    public func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateEmptyMetadataOnItem item: AudioItem, withData data: Metadata) {
+    }
+    
+    public func audioPlayer(_ audioPlayer: AudioPlayer, didLoadRange range: AudioPlayer.TimeRange, forItem item: AudioItem) {
+    }
+
+    func audioPlayer(audioPlayer: AudioPlayer, didChangeStateFrom from: AudioPlayerState, toState to: AudioPlayerState) {
+
+    }
+    
+    
+}
+
+extension Podcast {
+    static func getAudioItemsForPodcasts(_ podcasts : [Podcast]) -> [AudioItem?] {
+        return podcasts.map { podcast -> AudioItem? in
+            return podcast.getAudioItemForPodcast()
         }
     }
     
-    func jukeboxDidLoadItem(_ jukebox : Jukebox, item : JukeboxItem) {
+    /// Converts Podcast into AudioItem (which is playabale by our AudioPlayer)
+    func getAudioItemForPodcast() -> AudioItem? {
+        if let item : AudioItem = AudioItem(highQualitySoundURL: nil, mediumQualitySoundURL: self.audioUrl, lowQualitySoundURL: nil) {
+            item.artist = self.showTitle
+            item.title = self.title
+            return item
+        } else {
+            return nil
+        }
     }
-    
-    func jukeboxDidUpdateMetadata(_ jukebox : Jukebox, forItem: JukeboxItem) {
-    }
-    
 }

@@ -1,20 +1,27 @@
 PODS:
   - Alamofire (4.0.1)
   - Cartography (1.0.1)
+  - KDEAudioPlayer (0.9.2)
   - RPCircularProgress (0.3.0)
   - SwiftyJSON (3.1.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
   - Cartography
+  - KDEAudioPlayer (from `https://github.com/bartleby/AudioPlayer`)
   - RPCircularProgress (from `https://github.com/iwasrobbed/RPCircularProgress`)
   - SwiftyJSON
 
 EXTERNAL SOURCES:
+  KDEAudioPlayer:
+    :git: https://github.com/bartleby/AudioPlayer
   RPCircularProgress:
     :git: https://github.com/iwasrobbed/RPCircularProgress
 
 CHECKOUT OPTIONS:
+  KDEAudioPlayer:
+    :commit: 0d86b83625e0e1a6035f0f21dddc5222464608be
+    :git: https://github.com/bartleby/AudioPlayer
   RPCircularProgress:
     :commit: 1e1eaaa42a208db47af4f7c5629f32d2e6cb5ee6
     :git: https://github.com/iwasrobbed/RPCircularProgress
@@ -22,9 +29,10 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   Cartography: c1460e99395b824d9d75360b0382faeb0b33dcd7
+  KDEAudioPlayer: 75415de49c3886d6ce21e0422cbf139b1926ddf3
   RPCircularProgress: 46bee24642e0cb8de53f49e6c85733b9c45dee33
   SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
 
-PODFILE CHECKSUM: 3daa0b7cfb436cdbb584d3fc8c04caaf676a4542
+PODFILE CHECKSUM: c8782be2a96b3a1c690e83f68dccc1d3df4f5001
 
 COCOAPODS: 1.1.0.rc.2

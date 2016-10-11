@@ -9,7 +9,7 @@
 import UIKit
 import Cartography
 import RPCircularProgress
-import Jukebox
+import KDEAudioPlayer
 
 class PlayerView : UIView {
     
@@ -82,14 +82,15 @@ class PlayerView : UIView {
     }
     
     // MARK: State
-    func updateState(_ state:Jukebox.State) {
+    func updateState(_ state:AudioPlayerState) {
         
-        let shouldLoad = (state == .loading)
+        let shouldLoad = (state == .buffering)
         setLoading(shouldLoad)
 
         switch state {
-        case .loading,
-             .ready,
+        case .buffering,
+             .waitingForConnection,
+             .stopped,
              .failed:
             break
         case .playing:

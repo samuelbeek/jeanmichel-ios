@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Jukebox
 import Cartography
+import KDEAudioPlayer
 
 class PlayerViewController : UIViewController {
     
@@ -21,7 +21,7 @@ class PlayerViewController : UIViewController {
     init(station: Station) {
         self.station = station
         super.init(nibName: nil, bundle: nil)
-        AudioPlayer.instance.delegate = self
+        SharedAudioPlayer.instance.delegate = self
     }
     
     deinit {
@@ -41,30 +41,12 @@ class PlayerViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+
         self.title = station.title
         view.backgroundColor = Styles.Colors.lightPinkColor
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-
-        // If there's an error, deal with it
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: JukeBoxNotificationError), object: nil, queue: nil, using: { [weak self] notification in
-            
-            guard let strongSelf = self else {
-                return printError(001, message: "self doesn't exist anymore")
-            }
-            
-            strongSelf.handleErrorNotification(notification)
-        })
-        
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil, using: { [weak self]  _ in
-            guard let strongSelf = self else {
-                return printError(001, message: "self doesn't exist anymore")
-            }
-            
-            strongSelf.skip()
-        })
-
-
 
         // CollectionViewLayout
         let layout: UICollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
@@ -108,8 +90,8 @@ class PlayerViewController : UIViewController {
         super.viewWillDisappear(animated)
         
         if self.isMovingFromParentViewController {
-            AudioPlayer.instance.reset()
-            AudioPlayer.instance.delegate = nil
+            SharedAudioPlayer.instance.reset()
+            SharedAudioPlayer.instance.delegate = nil
         }
         
     }
@@ -152,12 +134,12 @@ class PlayerViewController : UIViewController {
     }
     
     func reloadPlayer() {
-        AudioPlayer.instance.setItems(self.podcasts)
+        SharedAudioPlayer.instance.setItems(self.podcasts)
     }
     
     // MARK: Play and pause
     func playPause() {
-        if AudioPlayer.instance.state == .playing {
+        if SharedAudioPlayer.instance.state == .playing {
             pause()
         } else {
             play()
@@ -165,12 +147,12 @@ class PlayerViewController : UIViewController {
     }
    
     func play(index: Int? = nil) {
-        AudioPlayer.instance.play(index)
+        SharedAudioPlayer.instance.play(index)
         playerView.play()
     }
     
     func pause() {
-        AudioPlayer.instance.pause()
+        SharedAudioPlayer.instance.pause()
         playerView.pause()
     }
     
@@ -200,25 +182,6 @@ class PlayerViewController : UIViewController {
 
     
     // MARK : Notification 
-    func handleErrorNotification(_ notification: Notification) {
-        
-        guard let userInfo = (notification as NSNotification).userInfo, let message = userInfo[JukeBoxKeyErrorMessage] as? String, let code : Int = userInfo[JukeBoxKeyErrorCode] as? Int else {
-            printError(999, message: "received error that could not be parsed \(notification)")
-            return
-        }
-        
-        printError(code, message: message)
-        
-        if let url = userInfo[JukeBoxKeyAssetURL] as? NSURL {
-            if let currentIndexPath = currentIndexPath, let currentPodcast = self.podcasts[safe: currentIndexPath.item], url as URL == currentPodcast.audioUrl {
-                // show an alert if we're on the current page
-                showSkipAlert(url as URL)
-            } else {
-                removePodcastWithUrl(url as URL)
-            }
-        }
-    }
-    
     func removePodcastWithUrl(_ url: URL, skip: Bool = false) {
         if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.index(of: podcast) {
             let indexPath = IndexPath(row: index, section: 0) // note: this has to be section 0
@@ -275,16 +238,15 @@ class PlayerViewController : UIViewController {
 
 }
 
-extension PlayerViewController : AudioPlayerDelegate {
+extension PlayerViewController : SharedAudioPlayerDelegate {
     func progressDidChange(_ progress: Double) {
-        if AudioPlayer.instance.state != Jukebox.State.loading {
+        if SharedAudioPlayer.instance.state != AudioPlayerState.buffering {
             playerView.updateProgress(progress)
         }
     }
     
-    func stateDidChange(state: Jukebox.State) {
-        
-        debugPrint(state.description)
+    func stateDidChange(state: AudioPlayerState) {
+        debugPrint(state)
         playerView.updateState(state)
         
     }
@@ -314,6 +276,29 @@ extension PlayerViewController : UICollectionViewDataSource {
         return podcasts.count
     }
     
+    override func remoteControlReceived(with event: UIEvent?) {
+        if event?.type == .remoteControl {
+            switch event!.subtype {
+            case .remoteControlPlay :
+                SharedAudioPlayer.instance.play()
+            case .remoteControlPause :
+                SharedAudioPlayer.instance.pause()
+            case .remoteControlNextTrack :
+                SharedAudioPlayer.instance.playNext()
+            case .remoteControlPreviousTrack:
+                SharedAudioPlayer.instance.playPrevious()
+            case .remoteControlTogglePlayPause:
+                if SharedAudioPlayer.instance.state == .playing {
+                    SharedAudioPlayer.instance.pause()
+                } else {
+                    SharedAudioPlayer.instance.play()
+                }
+            default:
+                break
+            }
+        }
+    }
+
 }
 
 extension PlayerViewController : UICollectionViewDelegate {

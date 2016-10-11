@@ -6,6 +6,7 @@ use_frameworks!
 target 'jeanmichel' do
   pod 'Alamofire', '~> 4.0'
   pod 'Cartography'
+  pod 'KDEAudioPlayer', :git => 'https://github.com/bartleby/AudioPlayer'
   pod 'RPCircularProgress', :git => 'https://github.com/iwasrobbed/RPCircularProgress'
   pod 'SwiftyJSON'
 end
