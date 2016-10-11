@@ -179,45 +179,6 @@ class PlayerViewController : UIViewController {
             }
         }
     }
-
-    
-    // MARK : Notification 
-    func removePodcastWithUrl(_ url: URL, skip: Bool = false) {
-        if let podcast = getPodcastWithAudioUrl(url), let index = podcasts.index(of: podcast) {
-            let indexPath = IndexPath(row: index, section: 0) // note: this has to be section 0
-            collectionView.performBatchUpdates({
-                self.podcasts.removeObject(podcast)
-                // after the podcasts have been updated, reload the player and collectionView
-                self.reloadPlayer()
-                self.collectionView.deleteItems(at: [indexPath])
-                self.collectionView.reloadData()
-                }, completion: { _ in
-                    printError(0, message: "\(podcast.title) wouldn't play, we removed the cell at indexPath: \(indexPath.description))")
-                    self.setCurrentPage()
-                    
-            })
-            
-        }
-    }
-    
-    /// Returns podcast object that's in the current scrope with the same url, if it's there
-    func getPodcastWithAudioUrl(_ audioUrl: URL) -> Podcast? {
-        for podcast in podcasts {
-            if podcast.audioUrl as URL == audioUrl {
-                return podcast
-            }
-        }
-        return nil
-    }
-    
-    func showSkipAlert(_ url: URL) {
-        self.showAlert(String.localized("Can't be played"),
-                       message:  String.localized("This podcast can't be played. Sorry! Is it OK if we skip to the next one?"),
-                       button:  String.localized("Skip"),
-                       handler: { [unowned self] _ in
-                        self.removePodcastWithUrl(url, skip: true)
-            })
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -227,20 +188,32 @@ class PlayerViewController : UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    /// MARK: Debugging 
-    fileprivate func printPodcasts() {
-        debugPrint("🔗 PlayerViewController.podcasts:")
-        
-        for podcast in podcasts {
-            debugPrint(podcast.title)
-        }
-    }
-
 }
 
 extension PlayerViewController : SharedAudioPlayerDelegate {
     func shouldSkip(withMessage message: String) {
         self.skip()
+
+        let height : CGFloat = 60
+        
+        let skipLabel = UILabel(frame: CGRect(x: 0, y: -height, width: view.bounds.width, height: height))
+        skipLabel.text = "The previous podcast wasn't available in your country"
+        skipLabel.backgroundColor = .red
+        skipLabel.textColor = .white
+        skipLabel.font = UIFont.systemFont(ofSize: 12)
+        skipLabel.textAlignment = .center
+        UIApplication.shared.keyWindow?.addSubview(skipLabel)
+    
+        UIView.animate(withDuration: 0.3, animations: {
+            skipLabel.frame.origin.y = 0
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.3, delay: 2, options: .curveEaseIn, animations: {
+            skipLabel.frame.origin.y = -height
+                    }, completion: { _ in
+                skipLabel.removeFromSuperview()
+                })
+        })
+        
     }
     
     func progressDidChange(_ progress: Double) {
@@ -322,4 +295,5 @@ extension PlayerViewController : UICollectionViewDelegate {
         })
     }
 }
+
 

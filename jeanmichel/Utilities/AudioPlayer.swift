@@ -28,7 +28,9 @@ class SharedAudioPlayer : NSObject {
     fileprivate var audioPlayer : AudioPlayer!
     fileprivate var podcasts = [Podcast]() {
         didSet {
-            audioPlayer.playItems(Podcast.getAudioItemsForPodcasts(podcasts) as! [AudioItem], startAtIndex: 0)
+            if let items = Podcast.getAudioItemsForPodcasts(podcasts) as? [AudioItem] {
+                audioPlayer.playItems(items)
+            }
         }
     }
     
@@ -66,11 +68,14 @@ class SharedAudioPlayer : NSObject {
     
     /// Play at index
     internal func play(_ index: Int? = nil) {
-        if let i = index ,index != audioPlayer.currentItemIndexInQueue, let items = audioPlayer.items {
-            audioPlayer.playItems(items, startAtIndex: i)
+        
+        // Somehow the startAtIndex method is not 0 based
+        if let index = index, index + 1 != audioPlayer.currentItemIndexInQueue, let items = audioPlayer.items {
+            audioPlayer.playItems(items, startAtIndex: index + 1)
         } else {
             audioPlayer.resume()
         }
+        
     }
     
     /// Stop playback
@@ -120,7 +125,7 @@ extension SharedAudioPlayer : AudioPlayerDelegate {
     public func audioPlayer(_ audioPlayer: AudioPlayer, didChangeStateFrom from: AudioPlayerState, toState to: AudioPlayerState) {
         
         let state = to
-                
+        
         // Show network indicator if nessecary
         if state == .buffering {
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
