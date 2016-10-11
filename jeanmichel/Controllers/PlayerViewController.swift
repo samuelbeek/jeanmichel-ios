@@ -239,6 +239,10 @@ class PlayerViewController : UIViewController {
 }
 
 extension PlayerViewController : SharedAudioPlayerDelegate {
+    func shouldSkip(withMessage message: String) {
+        self.skip()
+    }
+    
     func progressDidChange(_ progress: Double) {
         if SharedAudioPlayer.instance.state != AudioPlayerState.buffering {
             playerView.updateProgress(progress)

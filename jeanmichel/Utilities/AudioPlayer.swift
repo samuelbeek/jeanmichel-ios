@@ -11,6 +11,7 @@ import AVFoundation
 import KDEAudioPlayer
 
 protocol SharedAudioPlayerDelegate : class {
+    func shouldSkip(withMessage message: String)
     func progressDidChange(_ progress: Double)
     func stateDidChange(state: AudioPlayerState)
 }
@@ -117,13 +118,23 @@ class SharedAudioPlayer : NSObject {
 extension SharedAudioPlayer : AudioPlayerDelegate {
     
     public func audioPlayer(_ audioPlayer: AudioPlayer, didChangeStateFrom from: AudioPlayerState, toState to: AudioPlayerState) {
-        if to == .buffering {
+        
+        let state = to
+                
+        // Show network indicator if nessecary
+        if state == .buffering {
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
         } else {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
         
-        delegate?.stateDidChange(state: to)
+        if case .failed(let error) = state {
+            printError(0, message: error)
+            delegate?.shouldSkip(withMessage: "Unfortunately this Podcast isn't available in your country")
+        } else {
+            delegate?.stateDidChange(state: to)
+        }
+        
     }
     
     public func audioPlayer(_ audioPlayer: AudioPlayer, willStartPlayingItem item: AudioItem) {
