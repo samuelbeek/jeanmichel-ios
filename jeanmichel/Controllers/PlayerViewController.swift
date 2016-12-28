@@ -257,18 +257,18 @@ extension PlayerViewController : UICollectionViewDataSource {
         if event?.type == .remoteControl {
             switch event!.subtype {
             case .remoteControlPlay :
-                SharedAudioPlayer.instance.play()
+                self.play()
             case .remoteControlPause :
-                SharedAudioPlayer.instance.pause()
+                self.pause()
             case .remoteControlNextTrack :
-                SharedAudioPlayer.instance.playNext()
+                self.skip()
             case .remoteControlPreviousTrack:
-                SharedAudioPlayer.instance.playPrevious()
+                self.previous()
             case .remoteControlTogglePlayPause:
                 if SharedAudioPlayer.instance.state == .playing {
-                    SharedAudioPlayer.instance.pause()
+                    self.pause()
                 } else {
-                    SharedAudioPlayer.instance.play()
+                    self.play()
                 }
             default:
                 break
