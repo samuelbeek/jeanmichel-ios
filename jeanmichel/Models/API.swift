@@ -36,6 +36,9 @@ struct API {
                     let station = Station(id: id, title: title)
                     stations.append(station)
                 }
+                stations = stations.sorted() { first, last in
+                    return first.title < last.title
+                }
                 callback(.value(stations))
                 break
             case .failure(let error):
