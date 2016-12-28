@@ -219,7 +219,6 @@
 				5BAC54A31CEE4E680068BECA /* Resources */,
 				ADCC4F335CD8DEE439188D3B /* [CP] Embed Pods Frameworks */,
 				EA7A2ED4AC2FEE494C0D6AFF /* [CP] Copy Pods Resources */,
-				5B76C23C1DA7BA9C005FD440 /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -278,20 +277,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5B76C23C1DA7BA9C005FD440 /* Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Carthage;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
 		ADCC4F335CD8DEE439188D3B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
