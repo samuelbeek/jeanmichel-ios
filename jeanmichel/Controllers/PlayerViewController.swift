@@ -197,10 +197,10 @@ extension PlayerViewController : SharedAudioPlayerDelegate {
         let height : CGFloat = 60
         
         let skipLabel = UILabel(frame: CGRect(x: 0, y: -height, width: view.bounds.width, height: height))
-        skipLabel.text = "The podcast wasn't available in your country"
+        skipLabel.text = message
         skipLabel.backgroundColor = .red
         skipLabel.textColor = .white
-        skipLabel.font = UIFont.systemFont(ofSize: 12)
+        skipLabel.font = UIFont.systemFont(ofSize: 14)
         skipLabel.textAlignment = .center
         UIApplication.shared.keyWindow?.addSubview(skipLabel)
     

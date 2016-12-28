@@ -135,7 +135,7 @@ extension SharedAudioPlayer : AudioPlayerDelegate {
         
         if case .failed(let error) = state {
             printError(0, message: error)
-            delegate?.shouldSkip(withMessage: "Unfortunately this Podcast isn't available in your country")
+            delegate?.shouldSkip(withMessage: "Unfortunately this Podcast isn't available")
         } else {
             delegate?.stateDidChange(state: to)
         }
