@@ -197,7 +197,7 @@ extension PlayerViewController : SharedAudioPlayerDelegate {
         let height : CGFloat = 60
         
         let skipLabel = UILabel(frame: CGRect(x: 0, y: -height, width: view.bounds.width, height: height))
-        skipLabel.text = "The previous podcast wasn't available in your country"
+        skipLabel.text = "The podcast wasn't available in your country"
         skipLabel.backgroundColor = .red
         skipLabel.textColor = .white
         skipLabel.font = UIFont.systemFont(ofSize: 12)
