@@ -22,14 +22,14 @@ class SharedAudioPlayer : NSObject {
     internal static let instance = SharedAudioPlayer()
     
     internal var currentUrl : URL? {
-        return audioPlayer.currentItem?.mediumQualityURL.URL
+        return audioPlayer.currentItem?.lowestQualityURL.url
     }
     
     fileprivate var audioPlayer : AudioPlayer!
     fileprivate var podcasts = [Podcast]() {
         didSet {
             if let items = Podcast.getAudioItemsForPodcasts(podcasts) as? [AudioItem] {
-                audioPlayer.playItems(items)
+                audioPlayer.play(items: items)
             }
         }
     }
@@ -45,6 +45,9 @@ class SharedAudioPlayer : NSObject {
         super.init()
         startRemote()
         audioPlayer = AudioPlayer()
+//        audioPlayer.defaultQuality = .low
+        audioPlayer.retryTimeout = 15
+        audioPlayer.adjustQualityAutomatically = false
         audioPlayer.delegate = self
     }
     
@@ -71,7 +74,7 @@ class SharedAudioPlayer : NSObject {
         
         // Somehow the startAtIndex method is not 0 based
         if let index = index, index + 1 != audioPlayer.currentItemIndexInQueue, let items = audioPlayer.items {
-            audioPlayer.playItems(items, startAtIndex: index + 1)
+            audioPlayer.play(items: items, startAtIndex: index + 1)
         } else {
             audioPlayer.resume()
         }
@@ -85,7 +88,7 @@ class SharedAudioPlayer : NSObject {
     
     /// Play next track
     internal func playNext() {
-        if audioPlayer.hasNext() {
+        if audioPlayer.hasNext {
             audioPlayer.next()
         } else {
             printError(002, message: "AudioPlayer doesn't have a next track")
@@ -122,9 +125,9 @@ class SharedAudioPlayer : NSObject {
 
 extension SharedAudioPlayer : AudioPlayerDelegate {
     
-    public func audioPlayer(_ audioPlayer: AudioPlayer, didChangeStateFrom from: AudioPlayerState, toState to: AudioPlayerState) {
+    func audioPlayer(_ audioPlayer: AudioPlayer, didChangeStateFrom from: AudioPlayerState, to state: AudioPlayerState) {
         
-        let state = to
+        let state = state
         
         // Show network indicator if nessecary
         if state == .buffering {
@@ -137,29 +140,34 @@ extension SharedAudioPlayer : AudioPlayerDelegate {
             printError(0, message: error)
             delegate?.shouldSkip(withMessage: "Unfortunately this Podcast isn't available")
         } else {
-            delegate?.stateDidChange(state: to)
+            delegate?.stateDidChange(state: state)
         }
         
     }
     
-    public func audioPlayer(_ audioPlayer: AudioPlayer, willStartPlayingItem item: AudioItem) {
+    func audioPlayer(_ audioPlayer: AudioPlayer, willStartPlaying item: AudioItem) {
+        print("will play", NSDate())
     }
     
-    public func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateProgressionToTime time: TimeInterval, percentageRead: Float) {
+    func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateProgressionTo time: TimeInterval, percentageRead: Float) {
         delegate?.progressDidChange(Double(percentageRead))
     }
     
-    public func audioPlayer(_ audioPlayer: AudioPlayer, didFindDuration duration: TimeInterval, forItem item: AudioItem) {
+    func audioPlayer(_ audioPlayer: AudioPlayer, didFindDuration duration: TimeInterval, for item: AudioItem) {
+        print("did find duration")
     }
     
-    public func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateEmptyMetadataOnItem item: AudioItem, withData data: Metadata) {
+    func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateEmptyMetadataOn item: AudioItem, withData data: Metadata) {
     }
     
-    public func audioPlayer(_ audioPlayer: AudioPlayer, didLoadRange range: AudioPlayer.TimeRange, forItem item: AudioItem) {
+    func audioPlayer(_ audioPlayer: AudioPlayer, didLoad range: TimeRange, for item: AudioItem) {
+        print("did load range", range)
+        
+        // TODO: add some sort of progress update here
     }
-
+    
     func audioPlayer(audioPlayer: AudioPlayer, didChangeStateFrom from: AudioPlayerState, toState to: AudioPlayerState) {
-
+        
     }
     
     
@@ -174,7 +182,7 @@ extension Podcast {
     
     /// Converts Podcast into AudioItem (which is playabale by our AudioPlayer)
     func getAudioItemForPodcast() -> AudioItem? {
-        if let item : AudioItem = AudioItem(highQualitySoundURL: nil, mediumQualitySoundURL: self.audioUrl, lowQualitySoundURL: nil) {
+        if let item : AudioItem = AudioItem(highQualitySoundURL: self.audioUrl, mediumQualitySoundURL: self.audioUrl, lowQualitySoundURL: self.audioUrl) {
             item.artist = self.showTitle
             item.title = self.title
             return item

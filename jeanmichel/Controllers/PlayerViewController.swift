@@ -219,11 +219,10 @@ extension PlayerViewController : SharedAudioPlayerDelegate {
     func progressDidChange(_ progress: Double) {
         if SharedAudioPlayer.instance.state != AudioPlayerState.buffering {
             playerView.updateProgress(progress)
-        }
-    }
+        }     }
     
     func stateDidChange(state: AudioPlayerState) {
-        debugPrint(state)
+        debugPrint("state \(state) -- time:", NSDate())
         playerView.updateState(state)
         
     }
